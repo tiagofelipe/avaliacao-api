@@ -1,0 +1,735 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Arrematante
+ *
+ * @ORM\Table(name="arrematante")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\ArrematanteRepository")
+ */
+class Arrematante
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apelido", type="string", length=255)
+     */
+    private $apelido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="conjugeCpf", type="string", length=11, nullable=true)
+     */
+    private $conjugeCpf;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="conjugeNome", type="string", length=255, nullable=true)
+     */
+    private $conjugeNome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="conjugeRg", type="string", length=20, nullable=true)
+     */
+    private $conjugeRg;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dataConferido", type="datetime", nullable=true)
+     */
+    private $dataConferido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacao", type="text", nullable=true)
+     */
+    private $observacao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pj_proprietarioCpf", type="string", length=11, nullable=true)
+     */
+    private $pjProprietarioCpf;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pj_proprietarioNome", type="string", length=255, nullable=true)
+     */
+    private $pjProprietarioNome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pj_proprietarioRg", type="string", length=20, nullable=true)
+     */
+    private $pjProprietarioRg;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pj_proprietarioTelefoneComercial", type="string", length=20, nullable=true)
+     */
+    private $pjProprietarioTelefoneComercial;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="podeComprarSucata", type="boolean", nullable=true)
+     */
+    private $podeComprarSucata;
+
+    /**
+     * @var smallint
+     *
+     * @ORM\Column(name="status", type="smallint", nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="termoRecebido", type="boolean", nullable=true)
+     */
+    private $termoRecbido;
+
+
+    /*ATRIBUTOS DE RELACIONAMENTOS*/
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="ArrematanteDocumento", mappedBy="arrematante")
+     */
+    private $arrematanteDocumento;
+
+
+    /**
+     * Um arrematante é uma pessoa.
+     * @ORM\OneToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaFisica")
+     * @ORM\JoinColumn(name="pessoaFisicaId", referencedColumnName="id")
+     */
+    private $pessoaFisica;
+
+    /**
+     * Um arrematante é uma pessoa.
+     * @ORM\OneToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaJuridica")
+     * @ORM\JoinColumn(name="pessoaJuridicaId", referencedColumnName="id")
+     */
+    private $pessoaJuridica;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Habilitacoes", mappedBy="arrematante")
+     */
+    private $habilitacao;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lance", mappedBy="arrematante")
+     */
+    private $lance;
+
+    /**
+     * @ORM\OneToMany(targetEntity="LanceAutomatico", mappedBy="arrematante")
+     */
+    private $lanceAutomatico;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="TipoInteresseArrematante", inversedBy="arrematante")
+     */
+    private $tipoInteresseArrematante;
+
+    
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set apelido
+     *
+     * @param string $apelido
+     *
+     * @return Arrematante
+     */
+    public function setApelido($apelido)
+    {
+        $this->apelido = $apelido;
+
+        return $this;
+    }
+
+    /**
+     * Get apelido
+     *
+     * @return string
+     */
+    public function getApelido()
+    {
+        return $this->apelido;
+    }
+
+    /**
+     * Set conjugeCpf
+     *
+     * @param string $conjugeCpf
+     *
+     * @return Arrematante
+     */
+    public function setConjugeCpf($conjugeCpf)
+    {
+        $this->conjugeCpf = $conjugeCpf;
+
+        return $this;
+    }
+
+    /**
+     * Get conjugeCpf
+     *
+     * @return string
+     */
+    public function getConjugeCpf()
+    {
+        return $this->conjugeCpf;
+    }
+
+    /**
+     * Set conjugeNome
+     *
+     * @param string $conjugeNome
+     *
+     * @return Arrematante
+     */
+    public function setConjugeNome($conjugeNome)
+    {
+        $this->conjugeNome = $conjugeNome;
+
+        return $this;
+    }
+
+    /**
+     * Get conjugeNome
+     *
+     * @return string
+     */
+    public function getConjugeNome()
+    {
+        return $this->conjugeNome;
+    }
+
+    /**
+     * Set conjugeRg
+     *
+     * @param string $conjugeRg
+     *
+     * @return Arrematante
+     */
+    public function setConjugeRg($conjugeRg)
+    {
+        $this->conjugeRg = $conjugeRg;
+
+        return $this;
+    }
+
+    /**
+     * Get conjugeRg
+     *
+     * @return string
+     */
+    public function getConjugeRg()
+    {
+        return $this->conjugeRg;
+    }
+
+    /**
+     * Set dataConferido
+     *
+     * @param \DateTime $dataConferido
+     *
+     * @return Arrematante
+     */
+    public function setDataConferido($dataConferido)
+    {
+        $this->dataConferido = $dataConferido;
+
+        return $this;
+    }
+
+    /**
+     * Get dataConferido
+     *
+     * @return \DateTime
+     */
+    public function getDataConferido()
+    {
+        return $this->dataConferido;
+    }
+
+    /**
+     * Set observacao
+     *
+     * @param string $observacao
+     *
+     * @return Arrematante
+     */
+    public function setObservacao($observacao)
+    {
+        $this->observacao = $observacao;
+
+        return $this;
+    }
+
+    /**
+     * Get observacao
+     *
+     * @return string
+     */
+    public function getObservacao()
+    {
+        return $this->observacao;
+    }
+
+    /**
+     * Set pjProprietarioCpf
+     *
+     * @param string $pjProprietarioCpf
+     *
+     * @return Arrematante
+     */
+    public function setPjProprietarioCpf($pjProprietarioCpf)
+    {
+        $this->pjProprietarioCpf = $pjProprietarioCpf;
+
+        return $this;
+    }
+
+    /**
+     * Get pjProprietarioCpf
+     *
+     * @return string
+     */
+    public function getPjProprietarioCpf()
+    {
+        return $this->pjProprietarioCpf;
+    }
+
+    /**
+     * Set pjProprietarioNome
+     *
+     * @param string $pjProprietarioNome
+     *
+     * @return Arrematante
+     */
+    public function setPjProprietarioNome($pjProprietarioNome)
+    {
+        $this->pjProprietarioNome = $pjProprietarioNome;
+
+        return $this;
+    }
+
+    /**
+     * Get pjProprietarioNome
+     *
+     * @return string
+     */
+    public function getPjProprietarioNome()
+    {
+        return $this->pjProprietarioNome;
+    }
+
+    /**
+     * Set pjProprietarioRg
+     *
+     * @param string $pjProprietarioRg
+     *
+     * @return Arrematante
+     */
+    public function setPjProprietarioRg($pjProprietarioRg)
+    {
+        $this->pjProprietarioRg = $pjProprietarioRg;
+
+        return $this;
+    }
+
+    /**
+     * Get pjProprietarioRg
+     *
+     * @return string
+     */
+    public function getPjProprietarioRg()
+    {
+        return $this->pjProprietarioRg;
+    }
+
+    /**
+     * Set pjProprietarioTelefoneComercial
+     *
+     * @param string $pjProprietarioTelefoneComercial
+     *
+     * @return Arrematante
+     */
+    public function setPjProprietarioTelefoneComercial($pjProprietarioTelefoneComercial)
+    {
+        $this->pjProprietarioTelefoneComercial = $pjProprietarioTelefoneComercial;
+
+        return $this;
+    }
+
+    /**
+     * Get pjProprietarioTelefoneComercial
+     *
+     * @return string
+     */
+    public function getPjProprietarioTelefoneComercial()
+    {
+        return $this->pjProprietarioTelefoneComercial;
+    }
+
+    /**
+     * Set podeComprarSucata
+     *
+     * @param boolean $podeComprarSucata
+     *
+     * @return Arrematante
+     */
+    public function setPodeComprarSucata($podeComprarSucata)
+    {
+        $this->podeComprarSucata = $podeComprarSucata;
+
+        return $this;
+    }
+
+    /**
+     * Get podeComprarSucata
+     *
+     * @return boolean
+     */
+    public function getPodeComprarSucata()
+    {
+        return $this->podeComprarSucata;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Arrematante
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set termoRecbido
+     *
+     * @param boolean $termoRecbido
+     *
+     * @return Arrematante
+     */
+    public function setTermoRecbido($termoRecbido)
+    {
+        $this->termoRecbido = $termoRecbido;
+
+        return $this;
+    }
+
+    /**
+     * Get termoRecbido
+     *
+     * @return boolean
+     */
+    public function getTermoRecbido()
+    {
+        return $this->termoRecbido;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->arrematanteDocumento = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add arrematanteDocumento
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\ArrematanteDocumento $arrematanteDocumento
+     *
+     * @return Arrematante
+     */
+    public function addArrematanteDocumento(\Uloc\Bundle\AppBundle\Entity\ArrematanteDocumento $arrematanteDocumento)
+    {
+        $this->arrematanteDocumento[] = $arrematanteDocumento;
+
+        return $this;
+    }
+
+    /**
+     * Remove arrematanteDocumento
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\ArrematanteDocumento $arrematanteDocumento
+     */
+    public function removeArrematanteDocumento(\Uloc\Bundle\AppBundle\Entity\ArrematanteDocumento $arrematanteDocumento)
+    {
+        $this->arrematanteDocumento->removeElement($arrematanteDocumento);
+    }
+
+    /**
+     * Get arrematanteDocumento
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArrematanteDocumento()
+    {
+        return $this->arrematanteDocumento;
+    }
+
+    /**
+     * Set pessoa
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa $pessoa
+     *
+     * @return Arrematante
+     */
+    public function setPessoa(\Uloc\Bundle\AppBundle\Entity\Pessoa $pessoa = null)
+    {
+        $this->pessoa = $pessoa;
+
+        return $this;
+    }
+
+    /**
+     * Get pessoa
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Pessoa
+     */
+    public function getPessoa()
+    {
+        return $this->pessoa;
+    }
+
+    /**
+     * Add habilitacao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao
+     *
+     * @return Arrematante
+     */
+    public function addHabilitacao(\Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao)
+    {
+        $this->habilitacao[] = $habilitacao;
+
+        return $this;
+    }
+
+    /**
+     * Remove habilitacao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao
+     */
+    public function removeHabilitacao(\Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao)
+    {
+        $this->habilitacao->removeElement($habilitacao);
+    }
+
+    /**
+     * Get habilitacao
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHabilitacao()
+    {
+        return $this->habilitacao;
+    }
+
+    /**
+     * Add lance
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lance $lance
+     *
+     * @return Arrematante
+     */
+    public function addLance(\Uloc\Bundle\AppBundle\Entity\Lance $lance)
+    {
+        $this->lance[] = $lance;
+
+        return $this;
+    }
+
+    /**
+     * Remove lance
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lance $lance
+     */
+    public function removeLance(\Uloc\Bundle\AppBundle\Entity\Lance $lance)
+    {
+        $this->lance->removeElement($lance);
+    }
+
+    /**
+     * Get lance
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLance()
+    {
+        return $this->lance;
+    }
+
+    /**
+     * Add tipoInteresseArrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\TipoInteresseArrematante $tipoInteresseArrematante
+     *
+     * @return Arrematante
+     */
+    public function addTipoInteresseArrematante(\Uloc\Bundle\AppBundle\Entity\TipoInteresseArrematante $tipoInteresseArrematante)
+    {
+        $this->tipoInteresseArrematante[] = $tipoInteresseArrematante;
+
+        return $this;
+    }
+
+    /**
+     * Remove tipoInteresseArrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\TipoInteresseArrematante $tipoInteresseArrematante
+     */
+    public function removeTipoInteresseArrematante(\Uloc\Bundle\AppBundle\Entity\TipoInteresseArrematante $tipoInteresseArrematante)
+    {
+        $this->tipoInteresseArrematante->removeElement($tipoInteresseArrematante);
+    }
+
+    /**
+     * Get tipoInteresseArrematante
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTipoInteresseArrematante()
+    {
+        return $this->tipoInteresseArrematante;
+    }
+
+    /**
+     * Add lanceAutomatico
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lanceAutomatico
+     *
+     * @return Arrematante
+     */
+    public function addLanceAutomatico(\Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lanceAutomatico)
+    {
+        $this->lanceAutomatico[] = $lanceAutomatico;
+
+        return $this;
+    }
+
+    /**
+     * Remove lanceAutomatico
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lanceAutomatico
+     */
+    public function removeLanceAutomatico(\Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lanceAutomatico)
+    {
+        $this->lanceAutomatico->removeElement($lanceAutomatico);
+    }
+
+    /**
+     * Get lanceAutomatico
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLanceAutomatico()
+    {
+        return $this->lanceAutomatico;
+    }
+
+    /**
+     * Set pessoaFisica
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaFisica $pessoaFisica
+     *
+     * @return Arrematante
+     */
+    public function setPessoaFisica(\Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaFisica $pessoaFisica = null)
+    {
+        $this->pessoaFisica = $pessoaFisica;
+
+        return $this;
+    }
+
+    /**
+     * Get pessoaFisica
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaFisica
+     */
+    public function getPessoaFisica()
+    {
+        return $this->pessoaFisica;
+    }
+
+    /**
+     * Set pessoaJuridica
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaJuridica $pessoaJuridica
+     *
+     * @return Arrematante
+     */
+    public function setPessoaJuridica(\Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaJuridica $pessoaJuridica = null)
+    {
+        $this->pessoaJuridica = $pessoaJuridica;
+
+        return $this;
+    }
+
+    /**
+     * Get pessoaJuridica
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaJuridica
+     */
+    public function getPessoaJuridica()
+    {
+        return $this->pessoaJuridica;
+    }
+}

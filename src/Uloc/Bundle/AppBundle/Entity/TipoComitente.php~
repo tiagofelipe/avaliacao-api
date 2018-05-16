@@ -1,0 +1,115 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Entity\Comitente;
+
+/**
+ * TipoComitente
+ *
+ * @ORM\Table(name="tipo_comitente")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\TipoComitenteRepository")
+ */
+class TipoComitente
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=255, unique=true)
+     */
+    private $nome;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comitente", mappedBy="tipoComitente")
+     */
+    private $comitente;
+    
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return TipoComitente
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comitente = new ArrayCollection();
+    }
+
+    /**
+     * Add comitente
+     *
+     * @param Comitente $comitente
+     *
+     * @return TipoComitente
+     */
+    public function addComitente(Comitente $comitente)
+    {
+        $this->comitente[] = $comitente;
+
+        return $this;
+    }
+
+    /**
+     * Remove comitente
+     *
+     * @param Comitente $comitente
+     */
+    public function removeComitente(Comitente $comitente)
+    {
+        $this->comitente->removeElement($comitente);
+    }
+
+    /**
+     * Get comitente
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComitente()
+    {
+        return $this->comitente;
+    }
+}

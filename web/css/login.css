@@ -1,0 +1,277 @@
+.page-login {
+    background: url("../images/login-bg.jpg") center no-repeat;
+    /* margin-top: -18px; */
+}
+.app-auth{
+    margin-bottom: -60px;
+    position: relative;
+    z-index: 99;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.app-auth a, .app-auth button, .app-auth input {
+    outline: none !important
+}
+.app-auth input:hover, .app-auth input:focus{
+    background: none !important;
+}
+
+
+.app-auth .login-tab {
+    width: 450px;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: left !important;
+    overflow: hidden;
+    margin: auto;
+    -webkit-box-shadow: 3px 2px 20px 0px rgba(0,0,0,0.26);
+    -moz-box-shadow: 3px 2px 20px 0px rgba(0,0,0,0.26);
+    box-shadow: 3px 2px 20px 0px rgba(0,0,0,0.26);
+}
+
+.app-auth .login-tab form {
+    margin: 0;
+    padding: 0 20px
+}
+
+.app-auth .login-tab ul.options {
+    list-style: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+.app-auth .login-tab ul.options li a {
+    font-size: 20px;
+    float: left;
+    width: 50%;
+    display: block;
+    font-weight: 300;
+    color: #fff;
+    padding: 30px 20px 20px;
+    margin: 0;
+    background-color: #427fed;
+    text-decoration: none !important
+}
+
+.app-auth .login-tab ul.options li a:hover {
+    text-decoration: none;
+    -webkit-filter: brightness(1.1);
+    -moz-filter: brightness(1.1);
+    -ms-filter: brightness(1.1);
+    -o-filter: brightness(1.1);
+    filter: brightness(1.1)
+}
+
+.app-auth .login-tab ul.options li.selected a {
+    color: #333;
+    background-color: transparent
+}
+
+.app-auth .form-login {
+    clear: both
+}
+
+.app-auth .form-login label {
+    display: none;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.app-auth .input-login {
+    display: block;
+    background: none;
+    width: 100%;
+    margin: 20px 0;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: text;
+    transition: all .15s linear, border-color 0s;
+    font-size: 16px
+}
+
+.app-auth input:hover.input-login {
+    background-color: #f8f8f8
+}
+
+.app-auth .s-i-l {
+    width: 100%;
+    display: block;
+    margin: auto
+}
+
+.app-auth label[for=remember_me2], .app-auth label[for=remember_me] {
+    display: block;
+    float: left;
+    font-weight: 400;
+    margin-bottom: 20px
+}
+
+.app-auth input.lembrar {
+    float: left;
+    margin-right: 6px;
+    margin-bottom: 20px
+}
+
+.app-auth .hdiv {
+    margin-bottom: 40px
+}
+
+.app-auth .btn-login {
+    border: none;
+    display: block;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 400;
+    background-color: #427fed;
+    border-radius: 3px
+}
+
+.app-auth .login-errors {
+    padding: 0 20px;
+    color: #900
+}
+
+.app-auth .login-tab.dev {
+    background-color: #000
+}
+
+.app-auth .login-tab.dev ul.options li.selected a {
+    color: #fff;
+    background-color: #000
+}
+
+.app-auth .login-tab.dev .input-login {
+    display: inline-block;
+    background: none;
+    width: 70%;
+    margin: 0;
+    float: left;
+    border: none;
+    border-radius: 0;
+    padding: 5px;
+    border-bottom: none;
+    cursor: default;
+    color: #fff;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.app-auth .login-tab.dev input:hover.input-login {
+    background-color: transparent
+}
+
+.app-auth .login-tab.dev input.password {
+    margin-bottom: 40px;
+    display: none
+}
+
+.app-auth .login-tab.dev .btn-login {
+    background: none;
+    background-color: transparent;
+    border: none;
+    text-indent: -5000px;
+    overflow: hidden;
+    width: 1px;
+    height: 1px
+}
+
+.app-auth .login-tab.dev label {
+    float: left;
+    clear: left;
+    margin-left: 15px;
+    display: none;
+    color: #fff;
+    font-weight: 400;
+    padding: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px
+}
+
+.app-auth .login-tab.dev label[for=username2] {
+    display: block
+}
+
+.app-auth .login-tab.dev .username {
+    margin-top: 0
+}
+
+.app-auth .recover-pw{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+
+@media screen and (max-width: 840px) {
+    .app-auth{
+        margin-bottom: 0;
+        margin-top: 30px;
+        padding: 15px !important;
+    }
+    .app-auth .login-tab, .app-auth .logo {
+        margin: auto
+    }
+
+    .app-auth .text-bottom-right {
+        margin-top: 10px
+    }
+
+    .app-auth .d-t {
+        bottom: 0;
+        left: 0;
+        position: relative;
+        right: 0;
+        top: 0;
+        display: table;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 30px auto
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .app-auth .login-tab, .app-auth .login-tab.dev {
+        width: 100%;
+        border-radius: 0
+    }
+
+    .app-auth .login-tab.dev {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0
+    }
+
+    .app-auth .login-tab ul.options li a {
+        font-size: 13px !important;
+        padding: 10px
+    }
+
+    .app-auth .login-tab.dev label {
+        font-size: 12px;
+        font-weight: 400
+    }
+
+    .app-auth .login-tab.dev .input-login {
+        width: 50%;
+        font-size: 12px
+    }
+
+    .app-auth .login-tab.dev label[for=password2] {
+        clear: left
+    }
+
+    .app-auth .text-bottom-left {
+        display: none
+    }
+}

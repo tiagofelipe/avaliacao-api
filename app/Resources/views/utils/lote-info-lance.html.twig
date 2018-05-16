@@ -1,0 +1,14 @@
+{% if lote.valorInicial > 0 or lote.ultimoLanceValor > 0 %}
+    {% if lote.ultimoLanceValor %}
+        <p class="lance-atual">R$ {{ lote.ultimoLanceValor | number_format(2, ',', '.') }}</p>
+        <p class="lance-atual-usuario">Por: {{ lote.ultimoLanceApelido | upper }}</p>
+    {% else %}
+        <p class="lance-atual">R$ {{ lote.valorInicial | number_format(2, ',', '.') }}</p>
+        <p class="lance-atual-usuario">Lance inicial</p>
+    {% endif %}
+    {% if lote.status < 4 %}
+        <div class="lance-action">
+            <a href="{{ path('lote', {id: lote.id, slug: lote.slug}) }}#lances" target="_blank" class="btn btn-success btn-sm btn-block">Efetuar lance</a>
+        </div>
+    {% endif %}
+{% endif %}

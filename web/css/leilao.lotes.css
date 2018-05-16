@@ -1,0 +1,507 @@
+.leilao-header {
+    /* margin-top: -18px; */
+    background: #353435;
+    color: #FFFFFF;
+    padding: 18px 0;
+}
+
+.leilao-header .titulo h1 {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.leilao-header .titulo span {
+    font-size: 12px;
+}
+
+.leilao-header .data {
+    text-align: right;
+}
+
+.leilao-header .data span.data {
+    background-color: #414042;
+    padding: 12px 14px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.leilao-header .tipo {
+    padding-top: 12px;
+    text-align: right;
+}
+
+.leilao-docs {
+    padding-top: 11px;
+    padding-bottom: 11px;
+    border-bottom: #CCCCCC 1px solid;
+    margin-bottom: 20px;
+}
+
+.leilao-docs a {
+    color: #353435;
+    padding-right: 20px;
+}
+
+.leilao-docs a:hover {
+    font-weight: bold;
+}
+
+.leilao-docs a.compartilhar {
+    padding-right: 0;
+}
+
+/* Filtros */
+.leilao-filtros {
+    float: left;
+    width: 200px;
+    margin-right: 24px;
+}
+
+.leilao-filtros .filtro {
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.leilao-filtros .filtro span {
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+    display: block;
+}
+
+.leilao-filtros a.selected {
+    color: #000000 !important;
+    text-decoration: underline !important;
+    font-weight: bold;
+}
+
+.leilao-filtros a.btn-tudo.selected {
+    font-weight: normal;
+}
+
+.leilao-filtros .filtro a {
+    color: #666666;
+}
+
+.leilao-filtros a:hover {
+    font-weight: bold;
+}
+
+/* Itens */
+.leilao-itens {
+    float: left;
+    width: 976px;
+}
+
+.item-favorite-btn {
+    position: relative;
+    font-size: 22px;
+    margin-top: -5px;
+}
+
+.item-favorite-btn span {
+    font-size: 12px;
+    display: inline-block;
+}
+
+.item-favorite-btn .show-hover {
+    display: none;
+}
+
+.item-favorite-btn:hover .hide-hover, .item-favorite-btn.active .hide-hover {
+    display: none;
+}
+
+.item-favorite-btn:hover .show-hover, .item-favorite-btn.active .show-hover {
+    display: inline-block;
+    color: crimson;
+}
+
+.btn-fechar-filtros {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .leilao-header .titulo {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    .leilao-header .data {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    .leilao-header .data .btn {
+        margin-top: 12px;
+    }
+
+    .leilao-content {
+    }
+
+    .btn-fechar-filtros {
+        position: fixed;
+        z-index: 1002;
+        right: 10px;
+        margin: auto;
+        width: auto;
+        text-align: center;
+        top: 10px;
+    }
+
+    .leilao-filtros {
+        position: fixed;
+        top: 4%;
+        left: 4%;
+        right: 4%;
+        bottom: 4%;
+        background-color: #11AAFF;
+        float: none;
+        width: auto;
+        z-index: 1001;
+        display: none;
+        overflow: auto;
+        padding: 10px;
+        color: #FFFFFF !important;
+    }
+
+    .leilao-filtros .filtro a {
+        font-size: 16px;
+        text-align: left;
+        display: block;
+        width: 100%;
+        padding: 6px;
+        color: #FFFFFF;
+    }
+
+    .leilao-itens {
+        float: none;
+        width: 100%;
+    }
+
+    .leilao-filtros .filtro span {
+        color: #000000;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .leilao-docs {
+        text-align: center;
+    }
+
+    .item-favorite-btn {
+        float: none !important;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .leilao-docs a {
+        color: #353435;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+/**
+* ITEM LIST V2
+ */
+.leilao-itens2 {
+    float: left;
+    width: 976px;
+}
+
+.lote-item {
+    display: block;
+    background-color: #FFFFFF;
+    margin-bottom: 8px;
+}
+
+.lote-item .item {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: -moz-flex;
+}
+
+.lote-item .img-destaque {
+    flex: 0 0 240px;
+    display: flex;
+}
+
+.lote-item .img-destaque .img {
+    float: left;
+    flex: 0 0 160px;
+    width: 160px;
+    height: 120px;
+    overflow: hidden;
+}
+
+.lote-item .img-destaque .img span {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(228, 69, 58, 0.8);
+    color: #FFFFFF;
+    font-size: 10px;
+    padding: 0 2px;
+}
+
+.lote-item .lote-num {
+    float: left;
+    flex: 1;
+    height: 120px;
+    display: flex;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /*font-family: Arial, Helvetica, sans-serif;*/
+}
+
+.lote-item .lote-num strong {
+    display: block;
+    font-size: 26px;
+    margin-top: -4px;
+}
+
+.lote-item .info {
+    flex: 1;
+    display: flex;
+}
+
+.lote-item .info > div {
+    padding: 15px;
+    flex: 1;
+}
+
+.lote-item .info .panel-lance {
+    flex: 0 0 170px;
+}
+
+.lote-item .info .panel-lance .lance-atual {
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+}
+
+.lote-item .info .panel-lance p {
+    margin: 0 0 2px 0;
+}
+
+.lote-item .info .panel-lance .lance-atual-usuario {
+    font-size: 11px;
+}
+
+.lote-item .info .panel-lance .lance-action {
+    margin-top: 5px;
+}
+
+.lote-item h3 {
+    font-size: 16px;
+    color: #333333;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.lote-item .favorito {
+    font-size: 12px;
+    color: #666666;
+}
+
+.lote-item .favorito i {
+    font-size: 20px;
+    color: #FFDE5F;
+    float: left;
+    margin-right: 6px;
+}
+
+.lote-item .favorito .active {
+    display: none;
+}
+
+.lote-item .favorito.selected .active, .lote-item a:hover.favorito .active {
+    display: inline-block;
+}
+
+.lote-item .favorito.selected .no-active, .lote-item a:hover .no-active {
+    display: none;
+}
+
+.leilao-filtros2 {
+    float: left;
+    width: 200px;
+    margin-right: 24px;
+}
+
+.leilao-filtros2 .filtro {
+    background-color: #414042;
+    margin-bottom: 10px;
+    color: #FFFFFF !important;
+}
+
+.leilao-filtros2 .filtro > span {
+    font-size: 14px;
+    background-color: #000000;
+    font-weight: bold;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    display: block;
+}
+
+.leilao-filtros2 .filtro .lista {
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+.leilao-filtros2 .filtro .lista li {
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.leilao-filtros2 .filtro .lista li input[type="checkbox"] {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    height: 13px;
+}
+
+.leilao-filtros2 .filtro .lista li label {
+    display: inline-block;
+    font-weight: normal;
+    vertical-align: top;
+    margin: 0;
+    font-size: 12px;
+    margin-top: 1px;
+    line-height: 1;
+}
+.leilao-filtros2 .intervalo-ano input{
+    width: 100%;
+    color: #666666;
+    text-align: center;
+}
+.no-padder{
+    padding: 0;
+}
+.m-t-xs{
+    margin-top: 4px;
+}
+.filter-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    z-index: 9999;
+}
+.filter-overlay.hide{
+    display: none;
+}
+
+@media screen and (max-width: 1218px) and (min-width: 976px) {
+    .leilao-filtros2{
+        width: 20%;
+        max-width: 200px;
+        margin-right: 0;
+    }
+    .leilao-itens2{
+        width: 78%;
+        float: right;
+    }
+}
+
+.hide-normal{
+    display: none;
+}
+@media screen and (max-width: 976px) {
+    .btn-filtros {
+        display: block !important;
+        margin-bottom: 20px;
+    }
+    .leilao-filtros2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000000;
+        float: none;
+        width: auto;
+        z-index: 1001;
+        margin-right: 0;
+        display: none;
+        overflow: auto;
+        padding: 10px;
+        color: #FFFFFF !important;
+    }
+
+    .hide-normal{
+        display: block;
+    }
+
+    .leilao-filtros2 .filtro span {
+        color: #FFFFFF;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+    .leilao-filtros2 .filtro input[type="text"]{
+        padding: 10px;
+    }
+
+    .leilao-itens2{
+        width: 100%;
+    }
+    .lote-item .item{
+        flex-direction: column;
+    }
+    .lote-item .img-destaque {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-content: space-between;
+    }
+    .lote-item .img-destaque .img{
+        flex: 1;
+        width: auto;
+        height: auto;
+        float: none;
+    }
+    .lote-item .lote-num{
+        height: auto;
+    }
+    .lote-item .img-destaque .img img{
+        width: 100%;
+        height: auto;
+    }
+    .lote-item .info{
+        flex-direction: column;
+    }
+    .lote-item .info .panel-lance{
+        flex: 1;
+        padding-top: 0;
+    }
+    .lote-item .info .panel-lance .btn{
+        text-transform: uppercase;
+    }
+    .pagination2{
+        text-align: center;
+    }
+}

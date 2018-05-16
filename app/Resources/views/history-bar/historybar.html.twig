@@ -1,0 +1,111 @@
+<div id="history-bar" class="history-bar">
+    <div class="history-content">
+        <div class="wrapper-items">
+            <history-item :itens="lotesFavoritos">
+                <span slot="number" class="number">
+                    <strong>${lotesFavoritos.length}</strong>
+                    <i class="fa fa-heart hide"></i>
+                </span>
+                <span class="title" slot="title">Lotes Favoritos</span>
+                <div slot-scope="props" class="item-content">
+                    <div v-if="props.itens.length > 0">
+                        <a :href="lote.url" v-for="lote in props.itens" class="hitem-item">
+                            <img class="item-img" :src="lote.image" :alt="lote.descricao">
+                            <div class="item-text">
+                                <div class="item-text-title">${ lote.descricao }</div>
+                                <div class="item-text-desc">${ lote.acessorios }</div>
+                            </div>
+                            <div class="item-options">
+                                ${ data(lote.leilaoData) }
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hitem-item min" v-else>
+                        <div class="item-text no-margin">
+                            <div class="item-text-desc">Nenhum lote nos favoritos.</div>
+                        </div>
+                    </div>
+                </div>
+            </history-item>
+
+            <history-item :itens="leiloesFavoritos">
+                <span slot="number" class="number">
+                    <strong>${leiloesFavoritos.length}</strong>
+                    <i class="fa fa-briefcase hide"></i>
+                </span>
+                <span class="title" slot="title">Leilões Favoritos</span>
+                <div slot-scope="props" class="item-content">
+                    <div v-if="props.itens.length > 0">
+                        <a :href="leilao.url" v-for="leilao in props.itens" class="hitem-item min">
+                            <div class="item-text no-margin">
+                                <div class="item-text-title">${ leilao.titulo }</div>
+                                <div class="item-text-desc"></div>
+                            </div>
+                            <div class="item-options">
+                                ${ data(leilao.leilaoData) }
+                            </div>
+                        </a>
+                    </div>
+                    <div class="hitem-item min" v-else>
+                        <div class="item-text no-margin">
+                            <div class="item-text-desc">Nenhum leilão nos favoritos.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </history-item>
+
+            <history-item :itens="[]">
+                <span slot="number" class="number">
+                    <strong>${[].length}</strong>
+                    <i class="fa fa-book hide"></i>
+                </span>
+                <span class="title" slot="title">Documentos</span>
+                <div slot-scope="props" class="item-content">
+                    <div class="hitem-item min">
+                        <div class="item-text no-margin">
+                            <div class="item-text-desc">Nenhum documento disponível.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </history-item>
+
+            <history-item :itens="[]">
+                <span slot="number" class="number">
+                    <strong>${[].length}</strong>
+                    <i class="fa fa-bell hide"></i>
+                </span>
+                <span class="title" slot="title">Avisos</span>
+                <div slot-scope="props" class="item-content">
+                    <div class="hitem-item min">
+                        <div class="item-text no-margin">
+                            <div class="item-text-desc">Nenhum aviso no momento.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </history-item>
+
+        </div>
+    </div>
+</div>
+
+<!-- VUE COMPONENTS -->
+<div style="display: none">
+    <div id="history-item">
+        <div class="hitem" v-clickout="close" :class="{'opened': opened}">
+                <span class="hpanel" @click="popoverItem()">
+					<slot name="number"></slot> <slot name="title">Item</slot>
+                    <i class="fa" :class="bindArrow"></i>
+				</span>
+            <!-- Menu -->
+            <div class="hpopover-extended">
+                <div class="hpopover-content">
+                    <slot :itens="itens"></slot>
+                </div>
+            </div>
+            <!-- / MENU -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Leiloeiro
+ *
+ * @ORM\Table(name="leiloeiro")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\LeiloeiroRepository")
+ */
+class Leiloeiro
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * Um arrematante é uma pessoa.
+     * @ORM\OneToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaFisica")
+     * @ORM\JoinColumn(name="pessoaFisicaId", referencedColumnName="id")
+     */
+    private $pessoaFisica;
+
+    /**
+     * Um arrematante é uma pessoa.
+     * @ORM\OneToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaJuridica")
+     * @ORM\JoinColumn(name="pessoaJuridicaId", referencedColumnName="id")
+     */
+    private $pessoaJuridica;
+
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Leilao", mappedBy="leiloeiro")
+     */
+    private $leilao;
+
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set pessoa
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa $pessoa
+     *
+     * @return Leiloeiro
+     */
+    public function setPessoa(\Uloc\Bundle\AppBundle\Entity\Pessoa $pessoa = null)
+    {
+        $this->pessoa = $pessoa;
+
+        return $this;
+    }
+
+    /**
+     * Get pessoa
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Pessoa
+     */
+    public function getPessoa()
+    {
+        return $this->pessoa;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->leilao = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add leilao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Leilao $leilao
+     *
+     * @return Leiloeiro
+     */
+    public function addLeilao(\Uloc\Bundle\AppBundle\Entity\Leilao $leilao)
+    {
+        $this->leilao[] = $leilao;
+
+        return $this;
+    }
+
+    /**
+     * Remove leilao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Leilao $leilao
+     */
+    public function removeLeilao(\Uloc\Bundle\AppBundle\Entity\Leilao $leilao)
+    {
+        $this->leilao->removeElement($leilao);
+    }
+
+    /**
+     * Get leilao
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLeilao()
+    {
+        return $this->leilao;
+    }
+}

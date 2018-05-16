@@ -1,0 +1,215 @@
+.panel-content {
+    display: block;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border: #dddddd 1px solid;
+    border-top: none;
+    margin-bottom: 20px;
+}
+
+.aplicativo-img {
+    margin-bottom: 20px;
+}
+
+.user-status {
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    display: inline-block;
+    padding: 5px;
+}
+
+.user-status i {
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
+    padding: 0 6px;
+}
+
+.user-status span {
+    display: inline-block;
+    background-color: #FFFFFF;
+    text-transform: uppercase;
+    padding: 4px 6px;
+    font-weight: bold;
+}
+
+/* Pendente de análise */
+.user-status.status-0 {
+    background: #f5e38f; /* Old browsers */
+    background: -moz-linear-gradient(top, #f5e38f 1%, #ad7632 43%, #eca949 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #f5e38f 1%, #ad7632 43%, #eca949 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #f5e38f 1%, #ad7632 43%, #eca949 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5e38f', endColorstr='#eca949', GradientType=0); /* IE6-9 */
+}
+
+.user-status.status-0 span {
+    color: #AD7632;
+}
+
+/* Aprovado */
+.user-status.status-1 {
+    background: #56b446; /* Old browsers */
+    background: -moz-linear-gradient(top, #56b446 43%, #34ad05 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #56b446 43%, #34ad05 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #56b446 43%, #34ad05 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#56b446', endColorstr='#34ad05', GradientType=0); /* IE6-9 */
+}
+
+.user-status.status-1 i {
+}
+
+.user-status.status-1 span {
+    color: #56B446;
+}
+
+/* Não aprovado */
+.user-status.status-98 {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f94645+0,c61000+100 */
+    background: #f94645; /* Old browsers */
+    background: -moz-linear-gradient(top, #f94645 0%, #c61000 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #f94645 0%, #c61000 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #f94645 0%, #c61000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f94645', endColorstr='#c61000', GradientType=0); /* IE6-9 */
+}
+
+.user-status.status-98 span {
+    color: #F94645;
+}
+
+/* Bloqueado */
+.user-status.status-99 {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f94645+0,c61000+100 */
+    background: #f94645; /* Old browsers */
+    background: -moz-linear-gradient(top, #f94645 0%, #c61000 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #f94645 0%, #c61000 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #f94645 0%, #c61000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f94645', endColorstr='#c61000', GradientType=0); /* IE6-9 */
+}
+.user-status.status-99 span {
+    color: #F94645;
+}
+
+.fileLineContainer{
+    margin-top: 10px;
+}
+.fileLine{
+    margin-bottom: 20px;
+}
+.fileLineContainer div.fileLine:nth-child(3n + 4){
+    clear: both !important;
+}
+.dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    background: white;
+}
+.lineTitle{
+    padding-bottom: 6px;
+}
+.lineTitle strong{
+    display: block;
+}
+
+.documento-item-container{
+    text-align: center;
+    max-width: 120px;
+}
+.documento-item-container .remove-item{
+    cursor: pointer;
+    display: block;
+    margin-bottom: -6px;
+    padding-bottom: 0;
+}
+.documento-item-container .status{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    max-width: 70%;
+    margin: auto;
+    z-index: 99;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    display: inline-block;
+    padding: 5px;
+    font-size: 11px;
+    background: #f5860b; /* Old browsers */
+}
+.documento-item-container .status span {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+.documento-item-container .status.status-0 {
+
+}
+.documento-item-container .status.status-2 {
+    background-color: #56b446;
+}
+.documento-item-container .status.status-3 {
+    background-color: #000000;
+}
+.documento-item-container .status.status-4 {
+    background-color: #f94645;
+}
+
+@media screen and (max-width: 1220px) {
+    .content-overflow{
+        margin: 15px;
+    }
+    .info-conta > div{
+        display: block;
+        width: 100%;
+    }
+    .info-conta .user-status{
+        width: 100%;
+        margin-top: 12px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .btn-nav-mobile{
+        display: block !important;
+        float: right;
+        margin-bottom: 10px;
+    }
+    .nav-bar .nav{
+        display: none;
+        background-color: #f2f2f2;
+        border: #CCCCCC 1px solid;
+        margin-bottom: 10px;
+    }
+    .nav-bar .nav li, .nav-bar .nav li a{
+        display: block;
+        width: 100%;
+    }
+    .list-table .def-history-item .def-hitem, .def-history-item .def-hitem {
+        align-items: stretch;
+        /* flex-wrap: wrap; */
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+    .list-table .def-history-item .def-hitem .item-col.data, .def-history-item .def-hitem .item-col.data{
+        display: block;
+        max-width: none;
+        width: 100%;
+        flex-basis: 100%;
+    }
+    .list-table .def-history-item .def-hitem .item-col.foto, .def-history-item .def-hitem .item-col.foto{
+        max-width: none;
+        flex-basis: 100%;
+        width: 100%;
+        display: block;
+    }
+    .def-history-item .def-hitem .item-col.titulo{
+        padding: 15px 0 !important;
+    }
+}

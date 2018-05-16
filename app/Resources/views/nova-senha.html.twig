@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>SAMPLE TITLE | Rogério Menezes</title>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {# if use particular css, make this
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sobre.css') }}">
+    #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# if use particular javascript, make this
+    <script src="{{ asset('js/pages/sobre.js') }}"></script>
+    #}
+{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>Redefina sua senha</h2>
+        {{ form_start(novasenha) }}
+        {{ form_widget(novasenha) }}
+        {% if error is defined %}
+            {{ error }}
+        {% endif %}
+        <button class="btn btn-primary">Enviar</button>
+        {{ form_end(novasenha) }}
+    </div>
+{% endblock %}

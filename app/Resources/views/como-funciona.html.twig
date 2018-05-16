@@ -1,0 +1,343 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Como Funciona | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Saiba passo a passo como funciona nossos leilões."/>
+    <meta property="og:title" content="Como Funciona"/>
+    <meta property="og:description"
+          content="Saiba passo a passo como funciona nossos leilões."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-sobre.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/como-funciona.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/pages/como-funciona.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="page-como-funciona">
+
+        <div class="page-container">
+            <div class="center-1200">
+                <div class="page-regulamento">
+                    <div class="center-1200">
+                        <ol class="breadcrumb nobg">
+                            <li><a href="{{ path('home') }}" style="color:#666666">Home</a></li>
+                            <li class="active"><h1>Como Funciona</h1></li>
+                        </ol>
+                    </div>
+                <ul class="lista-funcionalidades">
+                    <li class="selected"><a href="#arrematacao">Arrematação</a></li>
+                    <li><a href="#cadastro">Cadastro</a></li>
+                    <li><a href="#comissao">Comissão e Taxas</a></li>
+                    <li><a href="#desistencia">Desistência</a></li>
+                    <li><a href="#documentos">Documentos</a></li>
+                    <li><a href="#lance">Lance</a></li>
+                    <li><a href="#leilao">Leilão</a></li>
+                    <li><a href="#pagamentos">Pagamentos</a></li>
+                    <li><a href="#retirada">Retirada</a></li>
+                    <li><a href="#visitacao">Visitação</a></li>
+                    <li><a href="#vender">Vender</a></li>
+                </ul>
+
+                <div class="functionalidades-container">
+                    <div class="funcionalidades selected" id="arrematacao">
+                        <h3>O que fazer se o meu lance for vencedor?</h3>
+                        <p>Caso seu lance seja o vencedor, o pagamento e retirada dos lotes deve ser feito no dia
+                            seguinte ao leilão (ou após a aprovação dos lances condicionais por parte da Comitente
+                            Vendedora), cada arrematante receberá um e-mail (no endereço cadastrado no site) com
+                            instruções para realização do devido depósito, cujas informações também podem ser
+                            encontradas no próprio EDITAL do leilão. Caso não receba, o arrematante deve entrar em
+                            contato.</p>
+                    </div>
+
+                    <div class="funcionalidades" id="cadastro">
+                        <h3>Como Faço meu Cadastro?</h3>
+                        <p>Para realizar o cadastro, siga os passos abaixo: 1 - Acessar a Página Inicial
+                            (www.rogeriomenezes.com.br); 2 - Clicar em “cadastre-se” (lado direito superior); 3 -
+                            Escolher o cadastro para Pessoa Física ou Pessoa Jurídica; 4 - Insira os dados
+                            solicitados; Também criamos um MANUAL DO USUÁRIO para que você possa sanar as dúvidas
+                            sobre cadastramento, habilitação e lances. Acesse: www.rogeriomenezes.com.br</p>
+
+                        <h3>Como alterar meus dados de cadastro?</h3>
+                        <p>Para alterar os dados do cadastro, faça o seguinte procedimento: 1 – Efetuar Login; 2 –
+                            Acessar a “MEU CADASTRO” (canto superior direito, disponível após a efetuação do Login);
+                            3 - Clicar em “Alteração de Login” ou “Alteração de Senha” ou “Alteração de Dados
+                            Cadastrais”; Também criamos um MANUAL DO USUÁRIO para que você possa sanar as dúvidas
+                            sobre cadastramento, habilitação e lances. Acesse: www.rogeriomenezes.com.br</p>
+
+                        <h3>Posso cadastrar qualquer login?</h3>
+                        <p>Conforme cláusula dos Termos de Uso do Site, alguns logins não são permitidos: O login
+                            (apelido) a ser cadastrado pelo Usuário para acesso ao site não poderá guardar
+                            semelhança com o nome ROGÉRIO MENEZES NUNES, como também não poderá ser cadastrado
+                            login: I) considerado ofensivo (palavrões, palavras de racismo ou baixo calão); II) que
+                            contenha dados pessoais do usuário, tais como telefones, e-mails ou alguma URL; III) que
+                            levem outros usuários a erros de interpretação sobre as informações do site (ex:
+                            “lotecancelado”). O cadastro de um login impróprio causará o bloqueio do cadastro. Para
+                            liberação, o usuário deverá informar um novo login para que realizemos a alteração e
+                            para que o cadastro seja liberado novamente para uso no site.</p>
+
+                        <h3>Como recupero minha senha?</h3>
+                        <p>Para a recuperação de senha de acesso, siga os passos a seguir: 1 - Acessar a Pagina
+                            Inicial 2 - Clicar em “Esqueci minha senha”; 3 – Inserir E-mail ou CPF/CNPJ (devem ser os
+                            mesmos que foram criados no momento do cadastro); 4 – A senha será enviada ao e-mail
+                            fornecido no cadastro. "POR FAVOR VERIFIQUE SE O E-MAIL NÃO ESTÁ NO LIXO ELETRÔNICO" ou
+                            na “CAIXA DE SPAMs” (pode acontecer). ?MEU CADASTRO ESTÁ BLOQUEADO. O QUE FAZER? Caso o
+                            seu cadastro esteja bloqueado, entre em contato através do link de contato
+                            <a href="{{ path('contato') }}">www.rogeriomenezes.com.br/contato</a> ou envie e-mail para contato@rogeriomenezes.com.br. Se preferir, entre em
+                            contato através do telefone (21) 3812-4300 de segunda à sexta, das 8:00h às 18:00h.</p>
+
+                        <h3>Quem pode Participar?</h3>
+                        <p>Qualquer pessoa, física maior de idade ou pessoa jurídica, pode participar do leilão. Nos
+                            leilões online é necessário que o interesado seja cadastrado, comprovando a titularidade
+                            dos dados inseridos no cadastro.</p>
+
+                        <h3>O que quer dizer Habilitação?</h3>
+                        <p>Habilitação é o processo pelo qual o usuário cadastrado solicita autorização para
+                            participação em determinado leilão. Para cada novo leilão de interesse, é necessário que
+                            o usuário solicite uma nova habilitação.</p>
+                    </div>
+                    <div class="funcionalidades" id="comissao">
+                        <h3>O que é a comissão do leiloeiro?</h3>
+                        <p>A Comissão do Leiloeiro é uma remuneração pela prestação dos serviços que é paga pelo
+                            Arrematante. O percentual de comissão está descrito no edital do leilão e será aplicado
+                            sobre o valor vencedor do lote.</p>
+
+                        <h3>Existe custo para se cadastrar?</h3>
+                        <p>Não. O Cadastro é gratuito.</p>
+
+                        <h3>O que signigica despesas administrartivas?</h3>
+                        <p>A Despesa Administrativa é uma despesa adicional paga pelo usuário arrematante. Ela
+                            consta no edital do leilão e varia de acordo com o valor do arremate e tipos de
+                            bens.</p>
+                    </div>
+                    <div class="funcionalidades" id="desistencia">
+                        <h3>Posso desistir da arrematação</h3>
+                        <p>Conforme consta no edital dos leilões, não serão cancelados lances já ofertados. Antes e
+                            durante o leilão, o lance poderá ser superado por outro usuário. Caso seu lance seja
+                            vencedor, o usuário poderá desistir do mesmo, pagando uma multa por desistência (cujo
+                            valor varia de acordo com o Leilão). O Edital do Leilão traz a informação sobre os
+                            valores da multa.</p>
+                    </div>
+                    <div class="funcionalidades" id="documentos">
+                        <h3>Por que meu cadastro está bloqueado?</h3>
+                        <p>Se seu cadastro já foi validado (por contato telefônico) e permanece bloqueado, para
+                            participar dos leilões promovidos, é necessário enviar cópias digitalizadas: 1. cópias
+                            RG e CPF ou CNH; 2. cópia comprovante de endereço atual; 3. cópia do contrato social (em
+                            caso de Pessoa Jurídica) e; 4. declaração devidamente preenchida e assinada, que pode
+                            ser impresso através do link: www.rogeriomenezes.com.br OBS: Por gentileza IMPRIMA a
+                            declaração que corresponde ao tipo de cadastro (pessoa física ou pessoa jurídica),
+                            preencha os dados e assine conforme documentação enviada. Sua documentação será anexada
+                            junto ao seu cadastro. A ausência dos referidos documentos acarretará em suspensão do
+                            cadastro, permanecendo válidos os lances já efetivados, passíveis de aplicação de multa
+                            em caso de desistência. Anexe os documentos na sua conta, conforme as instruções a
+                            seguir.</p>
+
+                        <h3>Recebi um E-mail solicitando documento. O que fazer?</h3>
+                        <p>Para que possa enviar a documentação necessária para participar do leilão, segue abaixo o
+                            passo a passo: 1 - Acessar o site com seu login e senha; 2 - Ir na área "Minha Conta"; 3
+                            - Ir na área "Meus Documentos" - nesta etapa, consta a relação de documentos, bem como
+                            declaração de termo de uso para download - fazer upload dos documentos escaneados.</p>
+                    </div>
+                    <div class="funcionalidades" id="lance">
+                        <h3>O que significa incremento mínimo?</h3>
+                        <p>O Incremento mínimo é o valor (mínimo) adicional que o sistema aceita para um novo lance.
+                            Ele varia de acordo com o Lote/Leilão. Também criamos um MANUAL DO USUÁRIO para que você
+                            possa sanar as dúvidas sobre cadastramento, habilitação e lances. Acesse:
+                            www.rogeriomenezes.com.br</p>
+
+                        <h3>Como faço para dar Lances?</h3>
+                        <p>Para que o usuário possa dar lances, recomendamos o acesso ao MANUAL DO USUÁRIO através
+                            do link: www.rogeriomenezes.com.br O usuário pode dar lances seguindo o seguinte passo a
+                            passo: 1 – Efetuar Login (topo da página clicar em “ LOGIN”, e em seguida forneça suas
+                            informações de acesso nos campos Login e Senha); 2 – Escolha o Leilão que lhe interessa
+                            participar e clique em “Lance Aqui” (faixa vermelha inferior ao logotipo da empresa
+                            vendedora); 3 – Solicite a habilitação para participar do Leilão online – pode levar até
+                            1 dia útil e pode não ser concedida, caso o requisitante não esteja de acordo com o
+                            Edital do Leilão. OBS: Para cada Leilão que você tenha interesse em participar, será
+                            necessário solicitar uma habilitação diferente. 4 – Uma vez concedida a habilitação para
+                            o Leilão (somente após realizar os passos 1 a 3 acima), você estará apto a dar lances
+                            online. 5 – Para dar um lance online, clique sobre o lote para o qual você quer dar um
+                            lance e siga as instruções da tela;</p>
+
+                        <h3>Como faço para gerenciar meus Lances?</h3>
+                        <p>Para gerenciar seus lances, siga os procedimentos abaixo: 1 – Efetuar Login ; 2 – Acessar
+                            “MEUS LANCES” (canto superior direito, disponível após a efetuação do Login); 3 - Clicar
+                            em “Lances Ofertados”; 4 – Escolher o período de realização do Leilão.</p>
+
+                        <h3>O que siginifica automático?</h3>
+                        <p>LANCE AUTOMÁTICO – O usuário interessado pode cadastrar um valor máximo para que o
+                            sistema efetue automaticamente os lances em nome do usuário, toda vez que sua oferta for
+                            superada, tendo como base o incremento mínimo. O sistema lançará até alcançar o valor
+                            limite de lance cadastrado. Em caso de empate de valores, o lance automático prevalecerá
+                            sobre o lance manual, por ter sido cadastrado em data posterior ao lance manual.</p>
+
+                        <h3>O que siginifica lance condicional?</h3>
+                        <p>Os lances vencedores poderão ser considerados como condicionais a critério exclusivo do
+                            Leiloeiro Oficial e serão submetidos à aprovação da Comitente Vendedor. Nesse caso, a
+                            venda só será concretizada após aprovação da Comitente.</p>
+
+                        <h3>O que significa lances manual?</h3>
+                        <p>LANCE MANUAL – o usuário poderá cadastrar um lance manualmente aplicando um incremento
+                            mínimo disponível ou com valor de lance a seu exclusivo critério, tendo como base o
+                            lance inicial ou o maior lance dado para o lote até o momento do cadastramento do lance.
+                            Caso o lote não tenha recebido nenhum lance, o usuário tem a opção “Confirmar o Lance
+                            Mínimo”, que significa efetuar um lance de valor igual ao lance inicial do Lote.</p>
+
+                        <h3>Posso cancelar lances?</h3>
+                        <p>Conforme consta no edital do leilão, o portal de leilões ROGÉRIO MENEZES NÃO CANCELA, NEM
+                            TAMPOUCO ANULA LANCES EFETUADOS ATRAVÉS DA INTERNET EM NENHUMA HIPÓTESE. LANCES
+                            EFETUADOS SÃO IRREVOGÁVEIS E IRRETRATÁVEIS E SIGNIFICAM COMPROMISSO ASSUMIDO. O Usuário
+                            é responsável por todas as ofertas e lances registrados em seu nome. Caso o lance seja
+                            vencedor, o usuário poderá desistir do mesmo, pagando a multa descrita no edital.</p>
+
+                        <h3>Pode haver empate entre lances eletrônicos?</h3>
+                        <p>Em caso de empate entre Usuários que efetivaram lances no mesmo lote e de mesmo valor,
+                            prevalecerá vencedor aquele que lançou primeiro (data e hora do registro do lance no
+                            portal), devendo ser considerado inclusive que o lance automático fica registrado na
+                            data em que foi programado. Para desempate, o lance automático prevalecerá sobre o lance
+                            manual.</p>
+                    </div>
+                    <div class="funcionalidades" id="leilao">
+                        <h3>O que é um leilão presencial?</h3>
+                        <p>O leilão presencial é um leilão realizado em auditório, com a presença dos participantes,
+                            que lançarão durante o pregão. Quando o leilão estiver assinalado como PRESENCIAL, não
+                            serão aceitos lances por meio eletrônico.</p>
+                        <h3>O que é um leilão online?</h3>
+                        <p>O leilão eletrônico é um leilão realizado através de plataforma disposta na internet e os
+                            lances são feitos somente por meio eletrônico, através do site
+                            www.rogeriomenezes.com.br.</p>
+                        <h3>O que é leilão presencial/online?</h3>
+                        <p>O leilão presencial/eletrônico é realizado em auditório com a presença dos participantes,
+                            que lançarão durante o pregão, porém, nesta modalidade de leilão são aceitos tanto os
+                            lances do público presencial, quanto os lances por meio eletrônico.</p>
+                        <h3>O que é lance?</h3>
+                        <p>Lance é o valor real a ser ofertado por um determinado lote.</p>
+                        <h3>Como fico sabendo sobre novos leilões em minha cidade?</h3>
+                        <p>Para saber sobre novos leilões, cadastre-se em nossa newsletter e passa a receber nossos
+                            informativos: www.rogeriomenezes.com.br/cadastro, assim o usuário passará a fazer parte
+                            do nosso mailing.</p>
+                        <h3>O que é lance mínimo?</h3>
+                        <p>Lance mínimo significa o valor estipulado pela empresa COMITENTE (vendedoro) que pode ser
+                            aceito por um determinado lote, não necessariamente sendo o menor valor de venda do
+                            bem.</p>
+                        <h3>O que é lance condicional?</h3>
+                        <p>Lance condicional é quando o valor mínimo estipulado pelo comitente para a venda não é
+                            atingido, neste caso, o lance ofertado será analisado pelo comitente que poderá liberar
+                            ou não a venda do lote pelo valor ofertado. Vale ressaltar que uma vez aceito o valor
+                            mínimo pelo comitente, o arrematante se obriga a fazer o pagamento do mesmo.</p>
+
+                        <h3>O que é incremento mínimo?</h3>
+                        <p>Incremento mínimo é o valor (mínimo) adicional que o sistema aceita para um novo lance.
+                            Ele varia de acordo com o Lote/Leilão.</p>
+                        <h3>O que quer dizer comitente?</h3>
+                        <p>Comitente é o nome dado à empresa proprietária dos bens vendidos na modalidade de
+                            leilão.</p>
+                        <h3>O que quer dizer arrematante?</h3>
+                        <p>Arrematante é o nome dado ao interessado vencedor de um determinado lote.</p>
+                        <h3>O que quer dizer edital?</h3>
+                        <p>Edital é o documento oficial de exposição das condições de venda dos lotes, contendo
+                            diversas informações importantes tais como o nome da Comitente, nome do leiloeiro
+                            oficial, condições gerais de participação, localização do lote, período e local de
+                            visitação, valores que serão cobrados do arrematante, forma de pagamento, multa em caso
+                            de desistência, data e local de retirada, etc.. Lembrando que ao participar do leilão, o
+                            arrematante automaticamente aceita todas as condições estipuladas no edital.</p>
+                        <h3>O que quer dizer arremate?</h3>
+                        <p>Arremate é o nome dado ao maior lance dado no fechamento do lote, consagrado como
+                            vencedor do lote.</p>
+
+                        <h3>O que é recibo de arrematação?</h3>
+                        <p>Recibo de Arrematação é o documento oficial emitido pelo leiloeiro como prova de
+                            recebimento dos valores de arrematação, comissão e despesa administrativa (comprovante
+                            de pagamento).</p>
+
+                        <h3>O que é o termo de entrega?</h3>
+                        <p>Termo de entrega é o termo que deve ser assinado pelo arrematante no momento da retirada
+                            do lote, servindo de prova de recebimento do lote.</p>
+
+                        <h3>O que é auditório virtual?</h3>
+                        <p>Auditório Virtual é o ambiente onde são realizados os lances ao vivo, online, nos lotes
+                            em leilão em andamento no portal.</p>
+
+                        <h3>Como proceder para solicitar habilitação?</h3>
+                        <p>Para solicitar habilitação para participação em um determinado leilão, o interessado
+                            deve: 1 – Efetuar Login; 2 – Acessar a “MINHAS HABILITAÇÕES” (canto superior direito,
+                            disponível após a efetuação do Login); 3 - Escolha o leilão que deseja participar; 4 -
+                            Clicar em “Habilite-se”; Também criamos um MANUAL DO USUÁRIO para que você possa sanar
+                            as dúvidas sobre cadastramento, habilitação e lances. Acesse:
+                            www.rogeriomenezes.com.br</p>
+
+                        <h3>Como verifico minhas habilitações</h3>
+                        <p>Para verificar suas habilitações, siga os procedimentos a seguir: 1 – Efetuar Login; 2 –
+                            Acessar a “MINHAS HABILITAÇÕES” (canto superior direito, disponível após a efetuação do
+                            Login); 3 - Clicar em “Habilitação de Leilões”;</p>
+                    </div>
+                    <div class="funcionalidades" id="pagamentos">
+                        <h3>O que acontece se o pagamento for realizado fora do prazo ou não intentificado?</h3>
+                        <p>Caso o pagamento não seja realizado na data informada no edital e, consequentemente, não
+                            constatado pelo financeiro, os lotes serão cancelados. Caso já tenha algum valor pago
+                            pelo arrematante os valores pagos serão devolvidos, descontados os valores de multa por
+                            desistência.</p>
+                    </div>
+                    <div class="funcionalidades" id="retirada">
+                        <h3>Moro em outro estado. Caso eu seja vencedor os lotes poderam ser enviados para mim?</h3>
+                        <p>Não. A responsabilidade de retirada e transporte de bens é do arrematante. Não enviamos
+                            lotes arrematados.</p>
+                        <h3>São disponibilizados ajudantes para desmontagem e transporte dos bens arrematados?</h3>
+                        <p>Não. Os funcionários são responsáveis apenas pelo acompanhamento da retirada do lote. É o
+                            arrematante quem deve providenciar mão de obra para desmontar, retirar e transportar os
+                            bens arrematados.</p>
+                        <h3>Posso autorizar terceiros a retirar o lote?</h3>
+                        <p>Sim. No caso de um terceiro retirar os bens arrematados, é necessário o preenchimento de
+                            autorização através do site ou que o mesmo esteja munido de uma autorização própria com
+                            firma reconhecida por autenticidade, além de documento oficial com foto. Caso queira
+                            proceder com a autorização através do nosso site, siga os passos abaixo: 1. Acesse o
+                            site www.rogeriomenezes.com.br 2. Insira Login e Senha; 3. Acesse a área "Minha Conta";
+                            4. Acesse "Minhas Autorizações"; 5. Encontre o leilão referente o lote a ser retirado;
+                            6. Clique em "Autorização de Retirada"; 7. Escolha se a retirada será realizada por
+                            "Pessoa Física" ou "Pessoa Jurídica"; 8. Preencha os dados corretamente e clique em
+                            "Enviar".</p>
+                        <h3>Não pude retirada no dia. Como proceder com a retirada atrasada?</h3>
+                        <p>Caso o Arrematante não consiga retirar o lote no dia designado, a retirada poderá ser
+                            feita em data a ser designada pelo departamento financeiro e de acordo com a
+                            disponibilidade da Comitente, mediante pagamento de multa por estadia conforme descrito
+                            no edital. O mesmo acontece se o Arrematante não retirar a totalidade dos lotes no dia
+                            designado no edital.</p>
+                    </div>
+                    <div class="funcionalidades" id="visitacao">
+                        <h3>É possível visitar os bens leiloados?</h3>
+                        <p>Sim. Para alguns leilões será necessário agendar a visita e para outros, não. Quando
+                            necessário, estará especificado ao lado do lote no site (no campo “VISITAÇÃO”). ?QUAL O
+                            ENDEREÇO PARA VISITAÇÃO DOS LOTES? A disponibilização do endereço para visitação dos
+                            lotes varia de acordo com o leilão. Para alguns leilões, o endereço pode ser encontrado
+                            no edital, na página do leilão ou na descrição do próprio lote. Em alguns casos, a
+                            localização dos lotes só será fornecida mediante agendamento de visitação ou em caso de
+                            pagamento de arrematação para retirada.</p>
+                    </div>
+                    <div class="funcionalidades" id="vender">
+                        <h3>Como faço para vender bens em leilão?</h3>
+                        <p>Realizamos Leilões apenas para empresas (pessoas jurídicas), cujos bens estejam dentro do
+                            nosso escopo de atuação / possuam origem comprovada (ex: notas fiscais de compra).</p>
+                    </div>
+                </div>
+                <div class="clearfloat"></div>
+            </div><!-- Fim Center -->
+        </div>
+    </div>
+
+{% endblock %}

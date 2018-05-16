@@ -1,0 +1,65 @@
+{% extends ':conta:base.html.twig' %}
+
+{% block title %}
+    <title>Meus Lotes Favoritos | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('.removerFavorito').click(function (e) {
+          e.preventDefault();
+          var id = $(this).data('id');
+          $(this).closest('a').remove();
+          $.ajax(services.FavoritosUrl.lote.replace('__ID__', id), {type: 'DELETE'})
+            .done(function () {
+              localStorage.removeItem('favoritos-lote');
+              console.log('Favorito removido');
+              appHistoryBar._mount();
+            });
+        });
+      });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="tab1">
+        <h4>Lotes salvos como favoritos</h4>
+        <div class="def-history-item">
+            {% if favoritos|length > 0 %}
+                {% for favorito in favoritos %}
+                    {% set diff = favorito.leilaoData|date('Y-m-d H:i') < "now"|date('Y-m-d H:i') %}
+                    <a href="{{ path('lote', {id: favorito.id, slug: favorito.slug}) }}"
+                       class="def-hitem {{ diff or favorito.status > 2 ? 'encerrado' : '' }}">
+                        <div class="item-col data">{{ diff or favorito.status > 2 ? 'Encerrado' : 'Encerra' }} {{ favorito.leilaoData|date('d/m/Y H:i') }}</div>
+                        <div class="item-col foto"><img
+                                    src="{{ absolute_url(asset('public/leiloes/'~favorito.leilaoid~'/lotes/'~favorito.id~'/'~favorito.fotoid~'-min.jpg')) }}">
+                        </div>
+                        <div class="item-col titulo">
+                            <div class="titulo">{{ favorito.titulo }}</div>
+                            <div class="subtitulo">
+                                {{ favorito.descricao }}
+                            </div>
+                        </div>
+                        <div class="item-col actions">
+                            <div class="removerFavorito tip" title="Remover este item da minha lista"
+                                 data-id="{{ favorito.id }}"><i class="fa fa-remove"></i></div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <div class="m-t">Você ainda não adicionou nenhum lote como favorito. Quando acessar o lote, basta clicar no <i class="fa fa-heart"></i> para adicioná-lo em sua lista de favoritos. Adicionar um lote aos favoritos facilita para que possamos te manter informado sobre a priximidade do leilão, recomendar lotes parecidos e muito mais. </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

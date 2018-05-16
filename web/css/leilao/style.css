@@ -1,0 +1,63 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    background: #353435; /* eceff1 */
+    -webkit-font-smoothing: antialiased;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.clearfloat {
+    clear: both;
+    height: 0;
+    font-size: 1px;
+    line-height: 0;
+}
+
+.center-1200 {
+    max-width: 1200px;
+    margin: auto;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.m-l-sm{
+    margin-left: 5px;
+}
+.m-l-md{
+    margin-left: 10px;
+}
+.pos-relative{
+    position: relative;
+}
+
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+/* Global CSS3 */

@@ -1,0 +1,218 @@
+{% extends 'base.html.twig' %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Leilões online e presencial de veículos, bens e materiais. A melhor infraestrutura de leilões do país."/>
+    <meta name="keywords"
+          content="leilões, leilão online, veículos, motos, carros, bens, leilão judicial, leilão de casas, leilão de carros, rogério menezes, leiloeiro"/>
+    <meta property="og:title" content="Rogério Menezes Leiloeiro Oficial"/>
+    <meta property="og:description"
+          content="Leilões online e presencial de veículos, bens e materiais. A melhor infraestrutura do país"/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/facebook.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1139">
+    <meta property="og:image:height" content="436">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/pages/home.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {#<div class="tmp-popup hide">
+        <div class="popup-content">
+            <button class="btn btn-warning pull-right m-b-md" onclick="$('.tmp-popup').hide()">Fechar</button>
+            <img src="{{ asset('images/popup1b.jpg') }}">
+        </div>
+    </div>#}
+    <div class="home">
+        <div class="center-1200 content-1200">
+
+            {#<div class="m-t m-b-md">
+                <div class="alert alert-warning">
+                    Caro usuário, <strong>estamos finalizando a implementação do nosso novo site</strong>, que proporcionará a você muito mais agilidade para participar de leilões e visualizar lotes do seu interesse. Neste período, novos cadastros estão temporariamente indisponíveis. Se você já estava cadastrado no antigo site e apto a participar de leilões online, não se preocupe, seu cadastro será transferido hoje para esta nova plataforma. Se você ainda não é cadastrado e deseja participar, online, dos próximos leilões, o sistema de cadastro será liberado hoje, a partir das 23h59. A partir do próximo leilão, que será realizado 28/02/2018, nossos leilões presenciais também estarão disponíveis simultaneamente de forma online.
+                </div>
+            </div>#}
+
+            <div class="slide slide-home">
+                {% for banner in banners %}
+                    <div>
+                        <a href="{{ banner.url }}" target="_blank">
+                            <img src="{{ asset('public/images/slides/'~banner.nomeArquivo) }}" class="img-responsive" alt="Banner {{ banner.id }}" />
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="clearfloat"></div>
+            <div class="destaques">
+                <div class="row">
+                    <div class="col-xs-6"><h2>Destaques</h2></div>
+                    <div class="col-xs-6">
+                        <div class="rss">
+                            <span>acompanhe-nos nas mídias sociais:</span>
+                            <ul class="lista-rss">
+                                <li>
+                                    <a href="https://www.facebook.com/rogeriomenezesleiloeiro" target="_blank">
+                                        <img src="{{ asset('images/icon-facebook.png') }}" alt="Facebook">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/rogeriomenezesleiloeiro/" target="_blank"> <img
+                                                src="{{ asset('images/icon-instagram.png') }}" alt="Instagram">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/rogeriomenezesleiloeirorml" target="_blank">
+                                        <img src="{{ asset('images/icon-youtube.png') }}" alt="Youtube">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- Fim Redes Sociais -->
+                    </div>
+                </div>
+                <div class="lista-destaques lista-destaques-home clearfix">
+                    {% for lote in lotes %}
+                        {% include 'utils/lista-lotes.html.twig' %}
+                    {% endfor %}
+                </div>
+            </div><!-- Fim Destaques -->
+        </div><!-- Fim Center -->
+
+        {% if leiloes|length > 0 %}
+            <div class="agenda">
+                <div class="center-1200 content-1200 agenda-title">
+                    <strong>Agenda</strong> de Leilões
+                </div><!-- Fim Center -->
+                <div class="agenda-content">
+                    <div class="center-1200">
+                        <ul class="leiloes">
+
+                            {% for leilao in leiloes %}
+                                {% set diff = leilao.dataAbertura.diff(date( "now"|date('Y-m-d')~' '~leilao.dataAbertura|date('H:i:s'))).days %}
+                                <li>
+                                    <div class="leilao-content">
+                                        <div class="leilao-header">
+                                            <span class="data">{{ leilao.dataAbertura|date('d/m/Y') }}</span>
+                                            {% set dias = diff > 1 ? ' dias' : ' dia' %}
+                                            <span class="previsao">{{ diff > 0 ? 'Daqui '~diff~dias : 'Hoje' }}.
+                                                {{ leilao.dataAbertura| localizeddate('none', 'none', 'pt-BR', null, "EEE" )|capitalize }}
+                                                - {{ leilao.dataAbertura|date('H\\hi') }}</span>
+                                        </div>
+                                        <div class="leilao-info">
+                                            {% if leilao.tipo == 0 %}
+                                                <span class="tipo tipo-0">Online</span>
+                                            {% elseif leilao.tipo == 1 %}
+                                                <span class="tipo tipo-1">Presencial</span>
+                                            {% else %}
+                                                <span class="tipo tipo-2"><span>Online</span> / Presencial</span>
+                                            {% endif %}
+                                            <span class="titulo">{{ leilao.titulo }}</span>
+                                        </div>
+                                        <div class="leilao-comitentes">
+                                            {% if leilao.fotoDestaque %}
+                                                <div class="text-center">
+                                                    <img alt="{{ leilao.titulo }}" style="margin: auto"
+                                                         src="{{ asset('public/leiloes/'~leilao.id~'/'~leilao.fotoDestaque) }}">
+                                                </div>
+                                            {% elseif leilao.comitentesCompleto|length > 0 %}
+                                                <div id="comitente-anim{{ loop.index }}"
+                                                     class="leilao-comitente-images">
+                                                    {% for comitente in leilao.comitentesCompleto %}
+                                                        <img alt="Comitente" class="{{ loop.index==1 ? 'show' : '' }}"
+                                                             src="{{ asset('public/comitentes/'~comitente.imagem) }}">
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+                                        <a href="{% if leilao.status == 6 %}{{ path('pregao_index', {id: leilao.id}) }}{% else %}{{ path('leilao', {id: leilao.id}) }}{% endif %}"
+                                           class="btn-leilao btn-status-{{ leilao.status }}">{{ tipos.status_leilao[leilao.status].nome }}</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div><!-- Fim Center -->
+                </div>
+            </div><!-- Fim Agenda -->
+        {% endif %}
+
+        <div class="blog hide">
+            <div class="center-1200">
+                <h2>Acompanhe nosso blog</h2>
+                <ul class="lista-blog">
+                    <li>
+                        <div class="cont-img-blog">
+                            <a href="">
+                                <img src="{{ asset('images/blog/post1.png') }}" alt="Blog Post">
+                            </a>
+                        </div>
+                        <div class="cont-info-blog">
+                            <h3>
+                                <a href="">Novo Chevrolet Camaro chega por R$ 297 mil</a>
+                            </h3>
+                            <p>por <span>André Borges</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cont-img-blog">
+                            <a href="">
+                                <img src="{{ asset('images/blog/post2.png') }}" alt="Blog Post">
+                            </a>
+                        </div>
+                        <div class="cont-info-blog">
+                            <h3>
+                                <a href="">Novo Chevrolet Camaro chega por R$ 297 mil</a>
+                            </h3>
+                            <p>por <span>André Borges</span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cont-img-blog">
+                            <a href="">
+                                <img src="{{ asset('images/blog/post3.png') }}" alt="Blog Post">
+                            </a>
+                        </div>
+                        <div class="cont-info-blog">
+                            <h3>
+                                <a href="">Novo Chevrolet Camaro chega por R$ 297 mil</a>
+                            </h3>
+                            <p>por <span>André Borges</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- Fim Center -->
+        </div><!-- Fim Blog -->
+        <div class="clearfloat"></div>
+        <div class="referencia">
+            <div class="overlay"></div>
+            <div class="referencia-content center-1200">
+                <h3>29 anos de referência em leilões</h3>
+                <p>Infraestrutura moderna, pátios totalmente pavimentados com 70 mil m².<br>
+                    Maior público da leiloaria carioca, num auditório para 1.200 pessoas sentadas. Leilões online com
+                    grande
+                    disputa para alavancar as vendas de bens específicos.</p>
+                <a href="{{ path('contato') }}" class="btn btn-referencia-contato">fale conosco</a>
+                <a href="{{ path('sobre-nos') }}" class="btn btn-referencia-conheca">conheça mais sobre nós</a>
+            </div><!-- Fim Center -->
+        </div><!-- Fim Referência -->
+        <div class="mapa">
+            <iframe marginheight="0"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1837.87922067952!2d-43.64714388759272!3d-22.88538007992868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bfb5a1cb5aba1%3A0x42dd35e3aa4e7372!2sAv.+Brasil%2C+51467+-+Campo+Grande%2C+Rio+de+Janeiro+-+RJ!5e0!3m2!1spt-BR!2sbr!4v1511296469888"
+                    width="100%" height="490" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div><!-- Fim Mapa -->
+    </div>
+{% endblock %}

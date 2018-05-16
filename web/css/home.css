@@ -1,0 +1,256 @@
+/* Agenda está no style.css */
+.slide-home {
+    max-height: 289px;
+    display: block;
+    overflow: hidden;
+}
+
+.blog{
+    display: block;
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+.blog h2{
+    width: 100%;
+    font-size: 42px;
+    text-align: center;
+    display: block;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+.blog .lista-blog{
+    float: left;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 50px;
+}
+.blog .lista-blog li{
+    display: inline-block;
+    float: left;
+    width: 350px;
+    margin-right: 25px;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+.blog .lista-blog li:nth-child(3){
+    margin-right: 0 !important;
+}
+.blog .lista-blog li .cont-img-blog{
+    overflow: hidden;
+    height: 191px;
+}
+.blog .lista-blog li .cont-img-blog img{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.blog .lista-blog li .cont-img-blog img:hover{
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.blog .lista-blog li .cont-info-blog h3{
+    font-size: 18px;
+    font-weight: 300;
+    padding: 20px;
+}
+.blog .lista-blog li .cont-info-blog h3 a{
+    color: #333333;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.blog .lista-blog li .cont-info-blog h3 a:hover{
+    color: #777777;
+}
+.blog .lista-blog li .cont-info-blog p{
+    margin: 0;
+    padding: 0px 20px 12px 20px;
+    font-size: 13px;
+    color: #BABABA;
+}
+.blog .lista-blog li .cont-info-blog p span{
+    color: #929292;
+}
+.referencia{
+    width: 100%;
+    display: block;
+    background: url(../images/banner2.jpg) center;
+    background-size: cover;
+    color: #FFFFFF;
+    position: relative;
+}
+.referencia .overlay{
+    display: block;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient( to bottom, #000000, transparent );
+}
+.referencia .referencia-content{
+    position: relative;
+    text-align: center;
+    z-index: 11;
+    padding: 155px;
+}
+.referencia  h3{
+    font-size: 50px;
+}
+.referencia p{
+    font-size: 22px;
+}
+.referencia .btn{
+    text-align: center;
+    color: #FFFFFF;
+    height: 36px;
+    line-height: 23px !important;
+    display: inline-block;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    border-radius: 0 !important;
+}
+.referencia .btn-referencia-contato{
+    background-color: #11AAFF;
+    margin-right: 18px;
+}
+.referencia  .btn-referencia-conheca{
+    background-color: transparent !important;
+    border: 1px solid #6B6D6B;
+}
+.referencia .btn-referencia-contato:hover{
+    background-color: #2d8fc6 !important;
+}
+.referencia .btn-referencia-conheca:hover{
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border-color: #FFFFFF;
+}
+
+.home{
+    margin-top: 18px;
+}
+.home .rss{
+    text-align: right;
+    margin-top: 6px;
+}
+.home .rss > *, .home .rss li, .home .rss li a{
+    display: inline-block;
+    padding-left: 2px;
+}
+.home .rss li a{
+}
+
+.mapa{
+    padding: 0;
+    margin-bottom: -6px;
+    display: block;
+}
+
+.cont-img-destaque{
+    display: flex !important;
+    justify-content: center;
+    background-color: #000000;
+}
+
+@media screen and (max-width: 1218px) {
+    .content-1200{
+        padding: 10px;
+    }
+
+    .destaques .lista-destaques {
+        text-align: center;
+    }
+    .destaques .lista-destaques a .p-item{
+        width: 18%;
+        float: none;
+        margin-right: 2%;
+    }
+    .destaques .cont-img-destaque{
+        width: 100%;
+        text-align: center;
+        position: relative;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+    .destaques .cont-img-destaque img{
+    }
+    .destaques .cont-info-destaque{
+        text-align: left;
+    }
+    .lista-destaques .cont-info-destaque h3 {
+        font-size: 16px !important;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .destaques .lista-destaques a .p-item{
+        width: 23%;
+        float: none;
+        margin-right: 2%;
+    }
+    .home .rss span{
+        display: none;
+    }
+    .referencia .referencia-content{
+        padding: 40px;
+    }
+    .referencia h3 {
+        font-size: 26px;
+        margin-bottom: 18px;
+    }
+    .referencia p {
+        font-size: 16px;
+    }
+    .referencia .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Media de Até 500px */
+@media screen and (max-width: 500px) {
+    /* TODO: Criar slide para mobile */
+    .slide-home{
+        display: none !important;
+    }
+
+}
+
+.tmp-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup-content img{
+    width: 100%;
+    max-width: 679px !important;
+}
+@media screen and (max-width: 680px) {
+    .popup-content{
+        padding: 15px;
+    }
+}
+@media screen and (max-width: 300px) {
+    .tmp-popup{
+        display: none;
+    }
+}

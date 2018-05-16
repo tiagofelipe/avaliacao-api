@@ -1,0 +1,260 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Comitente
+ *
+ * @ORM\Table(name="comitente")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\ComitenteRepository")
+ */
+class Comitente
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="codComitenteRm", type="integer")
+     */
+    private $codComitenteRm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="condicoesBens", type="text", nullable=true)
+     */
+    private $condicoesBens;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="condicoesVeiculo", type="text", nullable=true)
+     */
+    private $condicoesVeiculo;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="mostrar", type="boolean")
+     */
+    private $mostrar;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prazoEntregaDocumentos", type="text")
+     */
+    private $prazoEntregaDocumentos;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoComitente", inversedBy="comitente")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tipoComitente;
+
+    /**
+     * Um arrematante é uma pessoa.
+     * @ORM\OneToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaFisica")
+     * @ORM\JoinColumn(name="pessoaFisicaId", referencedColumnName="id")
+     */
+    private $pessoaFisica;
+
+    /**
+     * Um arrematante é uma pessoa.
+     * @ORM\OneToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaJuridica")
+     * @ORM\JoinColumn(name="pessoaJuridicaId", referencedColumnName="id")
+     */
+    private $pessoaJuridica;
+
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codComitenteRm
+     *
+     * @param integer $codComitenteRm
+     *
+     * @return Comitente
+     */
+    public function setCodComitenteRm($codComitenteRm)
+    {
+        $this->codComitenteRm = $codComitenteRm;
+
+        return $this;
+    }
+
+    /**
+     * Get codComitenteRm
+     *
+     * @return int
+     */
+    public function getCodComitenteRm()
+    {
+        return $this->codComitenteRm;
+    }
+
+    /**
+     * Set condicoesBens
+     *
+     * @param string $condicoesBens
+     *
+     * @return Comitente
+     */
+    public function setCondicoesBens($condicoesBens)
+    {
+        $this->condicoesBens = $condicoesBens;
+
+        return $this;
+    }
+
+    /**
+     * Get condicoesBens
+     *
+     * @return string
+     */
+    public function getCondicoesBens()
+    {
+        return $this->condicoesBens;
+    }
+
+    /**
+     * Set condicoesVeiculo
+     *
+     * @param string $condicoesVeiculo
+     *
+     * @return Comitente
+     */
+    public function setCondicoesVeiculo($condicoesVeiculo)
+    {
+        $this->condicoesVeiculo = $condicoesVeiculo;
+
+        return $this;
+    }
+
+    /**
+     * Get condicoesVeiculo
+     *
+     * @return string
+     */
+    public function getCondicoesVeiculo()
+    {
+        return $this->condicoesVeiculo;
+    }
+
+    /**
+     * Set mostrar
+     *
+     * @param boolean $mostrar
+     *
+     * @return Comitente
+     */
+    public function setMostrar($mostrar)
+    {
+        $this->mostrar = $mostrar;
+
+        return $this;
+    }
+
+    /**
+     * Get mostrar
+     *
+     * @return bool
+     */
+    public function getMostrar()
+    {
+        return $this->mostrar;
+    }
+
+    /**
+     * Set prazoEntregaDocumentos
+     *
+     * @param string $prazoEntregaDocumentos
+     *
+     * @return Comitente
+     */
+    public function setPrazoEntregaDocumentos($prazoEntregaDocumentos)
+    {
+        $this->prazoEntregaDocumentos = $prazoEntregaDocumentos;
+
+        return $this;
+    }
+
+    /**
+     * Get prazoEntregaDocumentos
+     *
+     * @return string
+     */
+    public function getPrazoEntregaDocumentos()
+    {
+        return $this->prazoEntregaDocumentos;
+    }
+
+    /**
+     * Set tipoComitente
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\TipoComitente $tipoComitente
+     *
+     * @return Comitente
+     */
+    public function setTipoComitente(\Uloc\Bundle\AppBundle\Entity\TipoComitente $tipoComitente)
+    {
+        $this->tipoComitente = $tipoComitente;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoComitente
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\TipoComitente
+     */
+    public function getTipoComitente()
+    {
+        return $this->tipoComitente;
+    }
+
+    /**
+     * Set pessoa
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa $pessoa
+     *
+     * @return Comitente
+     */
+    public function setPessoa(\Uloc\Bundle\AppBundle\Entity\Pessoa $pessoa = null)
+    {
+        $this->pessoa = $pessoa;
+
+        return $this;
+    }
+
+    /**
+     * Get pessoa
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Pessoa
+     */
+    public function getPessoa()
+    {
+        return $this->pessoa;
+    }
+}

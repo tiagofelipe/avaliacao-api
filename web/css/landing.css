@@ -1,0 +1,49 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	margin: 0; 
+	padding: 0; 
+	background-color: #000000; 
+	font-family: 'Montserrat', sans-serif;
+}
+.center-472{
+	max-width: 472px; 
+	margin: 0 auto;
+}
+/* Fim Global CSS3 */
+header .cont-logo{
+	width: 182px; 
+	margin: 0 auto;
+}
+header .cont-logo .logo{
+	text-indent: -5000px; 
+	overflow: hidden; 
+	float: left;
+	display: block; 
+	background: url(../images/logo.png); 
+	width: 182px;
+	height: 71px; 
+	margin: 88px 0 38px 0;
+}
+footer a{
+	color: #ffffff; 
+	text-decoration: none !important; 
+	margin-top: 40px; 
+	display: block; 
+	text-align: center; 
+	font-style: italic; 
+	font-size: 25px;
+}
+/* Media CSS3 Menu Mobile */
+@media screen and (max-width: 768px){
+	header .cont-logo .logo{
+		margin-top: 60px;
+	}
+	footer a{
+		font-size: 18px;
+	}
+}

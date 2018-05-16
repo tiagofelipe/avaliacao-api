@@ -1,0 +1,359 @@
+.video {
+    /* margin-top: -18px; */
+    width: 100%;
+}
+
+.video iframe {
+    display: block;
+}
+
+/* Sub-Sobre */
+.historia {
+    position: relative;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 30px 0 60px;
+    background: #334973; /* Old browsers */
+    background: -moz-linear-gradient(top, #334973 0%, #685bad 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #334973 0%, #685bad 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #334973 0%, #685bad 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#334973', endColorstr='#685bad', GradientType=0); /* IE6-9 */
+}
+
+.historia h2 {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.historia p {
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+
+.lista-institucional {
+    display: block;
+    width: 100%;
+}
+
+.lista-institucional li {
+    display: inline-block;
+    width: 33%;
+    float: left;
+}
+
+.lista-institucional li:nth-child(3) {
+    margin-right: 0 !important;
+}
+
+.lista-institucional li .cont-img {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    transition: 0.5s ease-out;
+    -webkit-box-shadow: 1px 1px 50px -5px rgba(0,0,0,0.56);
+    -moz-box-shadow: 1px 1px 50px -5px rgba(0,0,0,0.56);
+    box-shadow: 1px 1px 50px -5px rgba(0,0,0,0.56);
+}
+
+.lista-institucional li .cont-img:hover {
+    background-color: #ffffff;
+}
+
+.lista-institucional li h4 {
+    text-align: center;
+    font-size: 22px;
+    margin: 22px 0 12px;
+    color: #333333;
+}
+
+.lista-institucional li p {
+    font-size: 14px;
+    text-align: center;
+    color: #333333;
+}
+
+.lista-institucional li .lista-valores {
+    font-size: 14px;
+}
+
+.lista-institucional li .lista-valores li {
+    list-style-type: disc !important;
+    width: 100%;
+    display: block;
+    text-align: center;
+    float: left;
+    color: #333333;
+}
+
+.empresa-infra {
+    background-color: #FFFFFF;
+    display: block;
+}
+
+.empresa-infra h4 {
+    margin-top: 60px;
+    margin-bottom: 12px;
+    display: block;
+    text-align: center;
+    font-size: 22px;
+    color: #333333;
+}
+
+.empresa-infra p {
+    padding: 0 40px 60px;
+    display: block;
+    text-align: center;
+}
+
+.list-infra {
+    font-size: 0;
+}
+
+.list-infra li {
+    display: inline-block;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    position: relative;
+}
+
+.list-infra .infra-img .infra-img-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all 0.5s;
+    color: #FFFFFF;
+    z-index: 10;
+}
+
+.list-infra li:hover .infra-img .infra-img-text {
+    opacity: 1 !important;
+}
+
+.list-infra .infra-img .infra-img-text span {
+    color: #FFFFFF;
+    z-index: 11;
+    font-size: 16px;
+    float: left;
+    position: relative;
+    width: 100%;
+    padding: 0 100px;
+    top: 50%;
+    margin: 0;
+    text-align: center;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    display: block;
+}
+
+.cont-sobre .cont-leiloamos {
+    display: block;
+    z-index: 999999;
+    position: relative;
+    padding: 30px 15% 45px 15%;
+    background-color: #f1f1f1;
+}
+
+.cont-sobre .cont-leiloamos h3 {
+    text-align: center;
+    font-size: 25px;
+    margin: 25px 0;
+    text-transform: uppercase;
+}
+
+.cont-sobre .cont-leiloamos li {
+    display: inline-block;
+    width: 33%;
+    padding: 10px;
+}
+
+.cont-sobre .cont-leiloamos li:nth-child(3) {
+    margin-right: 0;
+}
+
+.cont-sobre .cont-leiloamos li .cont-header {
+    float: left;
+    width: 100%;
+    display: block;
+}
+
+.cont-sobre .cont-leiloamos li .cont-header .cont-icone {
+    text-align: center;
+    background-color: #2781b3;
+    color: #ffffff;
+    line-height: 90px;
+    font-size: 25px;
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+    margin: 0 auto 12px auto;
+    transition: 0.5s ease-out;
+}
+
+.cont-sobre .cont-leiloamos li .cont-header .cont-icone:hover {
+    background-color: #1a5677;
+}
+
+.cont-sobre .cont-leiloamos li .cont-header span {
+    text-align: center;
+    display: block;
+    color: #666666;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.cont-sobre .cont-leiloamos li p {
+    text-align: center;
+    color: #a1a1a1;
+}
+
+.parceiros {
+    background-color: #ffffff;
+    display: block;
+    width: 100%;
+    padding: 45px 0;
+    margin-bottom: -15px;
+    text-align: center;
+}
+
+.parceiros h4 {
+    font-size: 25px;
+    color: #555555;
+    margin-bottom: 12px;
+}
+
+.parceiros p {
+    font-size: 18px;
+    color: #888888;
+}
+
+.slide-parceiros div a img,
+.slide-parceiros-mobile div a img {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-transition: 0.8s ease;
+    -moz-transition: 0.8s ease;
+    -o-transition: 0.8s ease;
+    transition: 0.8s ease;
+}
+
+.slide-parceiros div a img:hover,
+.slide-parceiros-mobile div a img:hover {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: none !important;
+}
+
+.slide-parceiros-mobile {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .cont-sobre .cont-institucional {
+        width: 100%;
+        padding: 25px 5%;
+        box-sizing: border-box;
+    }
+
+    .lista-institucional li {
+        width: 100%;
+        display: block;
+        margin: 0 0 20px 0;
+    }
+
+    .lista-institucional li .lista-valores li {
+        margin-bottom: 5px;
+    }
+
+    .cont-infraestrutura,
+    .cont-auditorio {
+        width: 100%;
+        float: left;
+        box-sizing: border-box;
+        padding: 22px 5%;
+        min-height: inherit;
+        max-height: inherit;
+        height: auto;
+    }
+
+    .list-infra {
+        display: none !important;
+    }
+
+    .cont-infraestrutura p,
+    .cont-auditorio p {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    .cont-sobre .cont-leiloamos {
+        padding: 0;
+        width: 90%;
+        float: none;
+        margin: 0 auto;
+    }
+
+    .cont-sobre .cont-leiloamos li {
+        width: 100%;
+        display: block;
+        margin: 0 0 20px 0;
+    }
+
+    .parceiros {
+        width: 100%;
+        padding: 22px 5%;
+        box-sizing: border-box;
+    }
+
+    .parceiros h4 {
+        font-size: 20px;
+    }
+
+    .parceiros p {
+        font-size: 14px;
+    }
+
+    .slide-parceiros {
+        display: none !important;
+    }
+
+    .slide-parceiros-mobile {
+        display: block !important;
+    }
+
+    /* Fim Media Sobre */
+}
+
+/* Media de 769 Até 1000px */
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+    .cont-sobre .cont-institucional,
+    .cont-sobre .cont-leiloamos {
+        width: 100%;
+        padding: 30px 5%;
+        box-sizing: border-box;
+    }
+
+    .parceiros {
+        width: 100%;
+        padding: 30px 5%;
+        box-sizing: border-box;
+    }
+}

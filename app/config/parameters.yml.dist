@@ -1,0 +1,22 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: avaliacao
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: wtis.com.br
+    mailer_user: contato@avaliacao.dev.wtis.com.br
+    mailer_password: '2018#$$#'
+    contato_principal:
+        nome: 'Avaliação'
+        email: 'contato@avaliacao.dev.wtis.com.br'
+    secret: 419b530cbea38f7b1ce6413f663a5de85096159f
+    jwt_key_pass_phrase: 161400
+    websocket_server.host: 10.99.1.10
+    websocket_server.domain: ws.avaliacao.local
+    websocket_server.port: 8888
+    websocket_server.sport: 8443

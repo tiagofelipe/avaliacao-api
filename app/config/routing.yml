@@ -1,0 +1,9 @@
+app_web:
+    resource: "@UlocAppBundle/Controller/Web"
+    type:     annotation
+
+app_api:
+    resource: "@UlocAppBundle/Controller/Api"
+    type:     annotation
+    defaults:
+        _format: json

@@ -1,0 +1,284 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Sobre | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="29 anos de referência em leilões, a melhor e mais moderna infraestrutura do país, auditório com capacidade para mais de 1.000 pessoas sentadas."/>
+    <meta property="og:title" content="Rogério Menezes Leiloeiro Oficial"/>
+    <meta property="og:description"
+          content="29 anos de referência em leilões, a melhor e mais moderna infraestrutura do país."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-sobre.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sobre.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/pages/sobre.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="video">
+        <iframe width="100%" height="400"
+                src="https://www.youtube.com/embed/jkoucvIx8ZI?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1"
+                frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="historia">
+        <div class="center-1200 content-1200">
+            <h1 class="view-seo">Sobre</h1>
+            <h2>29 anos de referência em leilões</h2>
+            <p>Rogério Menezes Nunes, nomeado Leiloeiro Oficial pela Junta Comercial do Estado do Rio de
+                Janeiro - JUCERJA em 1989 (registro 053/89), Bacharel em Direito e pós-graduado em Ciências
+                Humanas, possui uma sólida carreira profissional. Atua nos segmentos de Seguradoras, Bancos,
+                Financeiras, Órgãos Públicos e Empresas Privadas, realizando leilões de veículos, máquinas,
+                equipamentos, imóveis, aeronaves e embarcações para as maiores instituições do nosso
+                país.</p>
+            <ul class="lista-institucional">
+                <li>
+                    <div class="cont-img">
+                        <img src="{{ asset('images/icons/icon-visao.png') }}" alt="#" width="35"
+                             height="35">
+                    </div>
+                    <h4>Visão</h4>
+                    <p>Ser reconhecido pelo mercado como referência nos leilões de bens com credibilidade,
+                        segurança e confiabilidade.</p>
+                </li>
+                <li>
+                    <div class="cont-img">
+                        <img src="{{ asset('images/icons/icon-missao.png') }}" alt="#" width="35"
+                             height="35">
+                    </div>
+                    <h4>Missão</h4>
+                    <p>Atuar com responsabilidade e ética no mercado de leilões, buscando sempre a qualidade
+                        na prestação dos serviços, a satisfação dos clientes e o compromisso com o
+                        meio-ambiental.</p>
+                </li>
+                <li>
+                    <div class="cont-img">
+                        <img src="{{ asset('images/icons/icon-valores.png') }}" alt="#" width="35"
+                             height="35">
+                    </div>
+                    <h4>Valores</h4>
+                    <ul class="lista-valores">
+                        <li>Satisfação de comitentes, arrematantes e colaboradores</li>
+                        <li>Credibilidade</li>
+                        <li>Eficiência</li>
+                        <li>Transparência</li>
+                        <li>Comprometimento</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfloat"></div>
+    <div class="cont-sobre">
+        <div class="empresa-infra clearfix">
+            <div class="center-1200 content-1200">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Infraestrutura</h4>
+                        <p>Pátios totalmente pavimentados com área total de 70 mil m², sendo 10 mil m² cobertos para
+                            armazenar os veículos de maior valor.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Auditório</h4>
+                        <p>Com capacidade para mais de 1.000 pessoas sentadas. Nosso auditório é climatizado e conta com
+                            sistema de som profissional e telão para exibição das imagens dos bens a serem
+                            leiloados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="list-infra">
+            <li>
+                <div class="infra-img">
+                    <img src="{{ asset('images/estrutura2.jpg') }}" alt="#" class="img-responsive"/>
+                    <div class="infra-img-text">
+                        <span>Pátios totalmente pavimentados com área total de 70 mil m², sendo 10 mil m² cobertos para armazenar os veículos de maior valor.</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="infra-img">
+                    <img src="{{ asset('images/estrutura.jpg') }}" alt="#" class="img-responsive"/>
+                    <div class="infra-img-text">
+                        <span>Infraestrutura moderna, pátios totalmente pavimentados com 70 mil m². Maior público da leiloaria carioca, num auditório para 1.200 pessoas sentadas. Leilões online com grande
+                disputa para alavancar as vendas de bens específicos.</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="infra-img">
+                    <img src="{{ asset('images/auditorio.jpg') }}" alt="#" class="img-responsive"/>
+                    <div class="infra-img-text">
+                        <span>Auditório com capacidade para mais de 1.000 pessoas sentadas. Nosso auditório é climatizado e conta com sistema de som profissional e telão para exibição das imagens dos bens a serem leiloados.</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="infra-img">
+                    <img src="{{ asset('images/auditorio2.jpg') }}" alt="#" class="img-responsive"/>
+                    <div class="infra-img-text">
+                        <span>Auditório com capacidade para mais de 1.000 pessoas sentadas. Nosso auditório é climatizado e conta com sistema de som profissional e telão para exibição das imagens dos bens a serem leiloados.</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="cont-leiloamos">
+            <div class="center-1200 content-1200">
+                <h3>O que Leiloamos</h3>
+                <ul class="list-leiloamos">
+                    <li>
+                        <div class="cont-header">
+                            <div class="cont-icone">
+                                <i class="fa fa-car" aria-hidden="true"></i>
+                            </div>
+                            <span>Veículos</span>
+                        </div>
+                        <p>Segmentos de Seguradoras, Bancos, Financeiras, Órgãos Públicos e Empresas
+                            Privadas.</p>
+                    </li>
+                    <li>
+                        <div class="cont-header">
+                            <div class="cont-icone">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                            </div>
+                            <span>Outros Bens</span>
+                        </div>
+                        <p>Máquinas, equipamentos, aeronaves e embarcações para as maiores instituições do nosso
+                            país.</p>
+                    </li>
+                    <li>
+                        <div class="cont-header">
+                            <div class="cont-icone">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </div>
+                            <span>Imóveis</span>
+                        </div>
+                        <p>Bens imóveis como casas, apartamentos, fazendas, terrenos, sítios, de natureza
+                            judicial e extrajudicial.</p>
+                    </li>
+                </ul>
+            </div><!-- Fim Center -->
+        </div>
+        <div class="clearfloat"></div>
+        <div class="parceiros">
+            <div class="center-1200">
+                <h4>Principais Parceiros</h4>
+                <p>A experiência de quase três décadas no mercado leiloeiro, com destaque para o setor
+                    financeiro e segurador,
+                    tem contribuído com soluções inovadoras com forte impacto nos resultados comerciais de seus
+                    diversos clientes.</p>
+                <div class="clearfloat"></div>
+                <div class="cont-slide">
+                    <div class="slide-parceiros">
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/santander.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/bv.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/alfa.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/itapeva.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/porto.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/itau.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/azul.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="slide-parceiros-mobile">
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/santander.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/bv.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/alfa.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank" class="img-roundedr">
+                                <img src="{{ asset('images/parceiros/itapeva.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/porto.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/itau.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" target="_blank">
+                                <img src="{{ asset('images/parceiros/azul.png') }}" alt="#"
+                                     class="img-responsive"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Fim Center -->
+        </div>
+    </div>
+    <div class="clearfloat"></div>
+{% endblock %}

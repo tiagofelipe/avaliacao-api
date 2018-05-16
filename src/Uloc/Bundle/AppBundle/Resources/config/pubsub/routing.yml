@@ -1,0 +1,7 @@
+pregao_topic:
+    channel: pregao/{id}
+    handler:
+        callback: 'pregao.topic' #related to the getName() of your topic
+    requirements:
+        id:
+            pattern: '\d+'

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>SAMPLE TITLE | Rogério Menezes</title>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {# if use particular css, make this
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sobre.css') }}">
+    #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# if use particular javascript, make this
+    <script src="{{ asset('js/pages/sobre.js') }}"></script>
+    #}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>Recuperação de senha</h2>
+        {{ form_start(recuperasenha) }}
+        {{ form_widget(recuperasenha) }}
+
+        {% if error is defined %}
+            {{ error }}
+        {% endif %}
+        <div class="g-recaptcha" data-sitekey="6Lc6M0kUAAAAALeDj-TrnIHLrkX_87XWszPyojHP"></div>
+        <button class="btn btn-primary" >Enviar</button>
+        {{ form_end(recuperasenha) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>{{ leilao.titulo }} | Rogério Menezes</title>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Cache Control Info -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/leilao.lotes.css') }}">
+    <!-- Core CSS file -->
+    <link rel="stylesheet" href="{{ asset('vendors/photoswipe/photoswipe.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('vendors/photoswipe/default-skin/default-skin.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      var __STATSLEILAO_URL__ = "{{ path('uapi_stats_leilao_click', {leilao: leilao.id}) }}";
+      //var __FAVORITO_URL__ = "{{ path('uapi_history_favoritos_add_leilao', {id: '__ID__'}) }}";
+      var __FAVORITO_ID__ = {{ leilao.id }};
+      var __FAVORITO_ITEM__ = {
+        id: {{ leilao.id }},
+        titulo: "{{ leilao.titulo }}",
+        url: "{{ url('leilao', {id: leilao.id}) }}",
+        leilaoData: "{{ leilao.dataAbertura|date('Y-m-d H:i:s') }}"
+      };
+    </script>
+    {{ parent() }}
+    <!-- Core JS file -->
+    <script src="{{ asset('vendors/photoswipe/photoswipe.min.js') }}"></script>
+    <!-- UI JS file -->
+    <script src="{{ asset('vendors/photoswipe/photoswipe-ui-default.min.js') }}"></script>
+    <script src="{{ asset('js/stats.js') }}"></script>
+    <script src="{{ asset('js/pages/leilao.lotes.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="leilao-header clearfix">
+        <div class="center-1200 content-1200">
+            <div class="row">
+                <div class="titulo col-md-6">
+                    <h1>{{ leilao.titulo }}</h1>
+                    <span class="local">{{ leilao.infoVisitacao }}</span>
+                </div>
+                <div class="data col-md-6">
+                    <span class="data">{{ leilao.dataAbertura| localizeddate('none', 'none', 'pt-BR', null, "EEEE" ) }}, Dia {{ leilao.dataAbertura|date('d/m') }}
+                        , às {{ leilao.dataAbertura|date('H') }} horas</span> {# \\hi #}
+                    {% if leilao.tipo == 0 or leilao.tipo == 2 %}
+                        <button class="btn btn-xs btn-success" title="Este leilão acontecerá online">Online</button>
+                    {% endif %}
+                    {% if leilao.tipo == 1 or leilao.tipo == 2 %}
+                        <button class="btn btn-xs btn-dark" title="Este leilão acontecerá presencial">Presencial
+                        </button>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div><!-- Fim Center -->
+
+    <div class="leilao-docs">
+        <div class="center-1200 content-1200">
+            {% for doc in leilao.documentos %}
+                <a target="_blank"
+                   href="{{ asset('public/leiloes/'~leilao.id~'/documentos/'~doc.id~'.'~doc.fileExtension) }}"><i
+                            class="fa fa-file-text-o"></i> {{ doc.nome }}</a>
+            {% endfor %}
+            <a href="{{ path('como-funciona') }}"><i class="fa fa-question"></i> Como participar?</a>
+
+            <!--<a href="#" class="compartilhar pull-right">Compartilhar</a>-->
+            {# TODO: Remover Favorito #}
+            <a href="#adicionar-favorito"
+               title="Clique para adicionar este leilão na sua lista de favoritos. Você receberá avisos quando o pregão estiver próximo."
+               class="item-favorite-btn tip pull-right" data-id="{{ leilao.id }}">
+                <span>Adicionar aos Favoritos</span>
+                <i class="fa fa-heart-o hide-hover"></i>
+                <i class="fa fa-heart show-hover"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="leilao-content center-1200 content-1200">
+        {# TODO: Mostrar filtros selecionados na versão mobile #}
+        <button class="btn btn-default btn-lg btn-filtros hide"><i class="fa fa-filter"></i> Filtros</button>
+        <button class="btn btn-default btn-lg btn-fechar-filtros"><i class="fa fa-close"></i></button>
+        <div class="leilao-filtros2">
+            <div class="filtro">
+                <span>Tipos</span>
+                <a href="{{ url('leilao', {id: leilao.id}) }}"
+                   class="btn-tudo {{ app.request.get('tipo') ? '' : 'selected' }}">Ver Tudo</a>
+                <ul class="lista">
+                    {% for tipo in filtros.tipos %}
+                        <li><a class="{{ app.request.get('tipo') == tipo.id ? 'selected' : '' }}"
+                               href="{{ url('leilao', {tipo: tipo.id, id: leilao.id}) }}">{{ tipo.nome }}
+                                ({{ tipo.totalItens }})</a></li>
+                    {% endfor %}
+                    {#<li><a href="#">Motos (20)</a></li>
+                    <li><a href="#">Vans e Utilitários (1)</a></li>
+                    <li><a href="#">Veículos Leves (10)</a></li>#}
+                </ul>
+            </div>
+            <!-- Fim Category -->
+            <div class="filtro">
+                <span>Marcas</span>
+                <a href="{{ url('leilao', app.request.query.all|merge({marca: null, comitente:null, id: leilao.id, page: 1})) }}"
+                   class="btn-tudo selected">Ver Tudo</a>
+                <ul class="lista">
+                    {% for marca in filtros.marcas %}
+                        <li><a class="{{ app.request.get('marca') == marca.id ? 'selected' : '' }}"
+                               href="{{ url('leilao', app.request.query.all|merge({marca: marca.id, comitente:null, id: leilao.id, page: 1})) }}">{{ marca.nome }}
+                                ({{ marca.totalItens }})</a></li>
+                    {% endfor %}
+                    {#<li><a href="#">Chevrolet (22)</a></li>
+                    <li><a href="#">Fiat (1)</a></li>
+                    <li><a href="#">Ford (27)</a></li>#}
+                </ul>
+            </div>
+            <!-- Fim Category -->
+            {#<div class="filtro">
+                <span>Comitentes</span>
+                <a href="{{ url('leilao', app.request.query.all|merge({comitente: null, id: leilao.id, page: 1})) }}"
+                   class="btn-tudo selected">Ver Tudo</a>
+                <ul class="lista">
+                    {% for comitente in filtros.comitentes %}
+                        <li><a class="{{ app.request.get('comitente') == comitente.id ? 'selected' : '' }}"
+                               href="{{ url('leilao', app.request.query.all|merge({comitente: comitente.id, id: leilao.id, page: 1})) }}">{{ comitente.nome }}
+                                ({{ comitente.totalItens }})</a></li>
+                    {% endfor %}
+                </ul>
+            </div>#}
+            <!-- Fim Category -->
+        </div>
+
+        <div class="leilao-itens2 destaques2 clearfix">
+            {% include 'utils/paginacao.html.twig' %}
+            <div class="lista-destaques2">
+                {% for lote in lotes %}
+                    {% include 'utils/lista-lotes-v2.html.twig' %}
+                {% endfor %}
+            </div>
+            <div class="clearfloat"></div>
+            {% include 'utils/paginacao.html.twig' %}
+        </div>
+    </div>
+    <div class="clearfloat"></div>
+{% endblock %}

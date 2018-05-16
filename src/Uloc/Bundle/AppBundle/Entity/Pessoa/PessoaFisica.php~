@@ -1,0 +1,511 @@
+<?php
+/**
+ * Este arquivo é parte do código fonte Uloc
+ *
+ * (c) Tiago Felipe <tiago@tiagofelipe.com>
+ *
+ * Para informações completas dos direitos autorais, por favor veja o arquivo LICENSE
+ * distribuído junto com o código fonte.
+ */
+
+namespace Uloc\Bundle\AppBundle\Entity\Pessoa;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
+use Uloc\Bundle\AppBundle\Validator\Constraints as DocAssert;
+
+/**
+ * PessoaFisica
+ *
+ * @ORM\Table(name="pessoa_fisica")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Pessoa\PessoaFisicaRepository")
+ */
+class PessoaFisica extends Pessoa
+{
+
+    const TIPO_SEXO = [
+        1 => "Masculino",
+        2 => "Feminino"
+    ];
+
+    /**
+     * @var string
+     * @ORM\Column(name="cpf", type="string", length=11, nullable=true)
+     */
+    private $cpf;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tratamento", type="string", length=50, nullable=true)
+     */
+    private $tratamento;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="sexo", type="smallint", nullable=true)
+     */
+    private $sexo;
+
+    /**
+     * @var \DateTime
+     *
+     * @Assert\NotBlank(groups={"registration"}, message="Data de nascimento inválida")
+     * @ORM\Column(name="dataNascimento", type="date", nullable=true)
+     */
+    private $dataNascimento;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="estadoCivil", type="smallint", nullable=true)
+     */
+    private $estadoCivil;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filiacaoNomePai", type="string", length=100, nullable=true)
+     */
+    private $filiacaoNomePai;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filiacaoNomeMae", type="string", length=100, nullable=true)
+     */
+    private $filiacaoNomeMae;
+
+//    public function __construct()
+//    {
+//        parent::__construct();
+//    }
+
+    /**
+     * Set cpf
+     *
+     * @param string $cpf
+     *
+     * @return PessoaFisica
+     */
+    public function setCpf($cpf)
+    {
+        $this->cpf = preg_replace('/\D/', '$1', $cpf);
+
+        return $this;
+    }
+
+    /**
+     * Get cpf
+     *
+     * @return string
+     */
+    public function getCpf()
+    {
+        return $this->cpf;
+    }
+
+    /**
+     * Set tratamento
+     *
+     * @param string $tratamento
+     *
+     * @return PessoaFisica
+     */
+    public function setTratamento($tratamento)
+    {
+        $this->tratamento = $tratamento;
+
+        return $this;
+    }
+
+    /**
+     * Get tratamento
+     *
+     * @return string
+     */
+    public function getTratamento()
+    {
+        return $this->tratamento;
+    }
+
+    /**
+     * Set sexo
+     *
+     * @param integer $sexo
+     *
+     * @return PessoaFisica
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return int
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
+    public function getSexoString()
+    {
+        return isset($this->sexo) ? self::TIPO_SEXO[$this->sexo] : null;
+    }
+
+    /**
+     * Set dataNascimento
+     *
+     * @param \DateTime $dataNascimento
+     *
+     * @return PessoaFisica
+     */
+    public function setDataNascimento($dataNascimento)
+    {
+        $this->dataNascimento = $dataNascimento;
+
+        return $this;
+    }
+
+    /**
+     * Get dataNascimento
+     *
+     * @return \DateTime
+     */
+    public function getDataNascimento()
+    {
+        return $this->dataNascimento;
+    }
+
+    /**
+     * Set estadoCivil
+     *
+     * @param integer $estadoCivil
+     *
+     * @return PessoaFisica
+     */
+    public function setEstadoCivil($estadoCivil)
+    {
+        $this->estadoCivil = $estadoCivil;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoCivil
+     *
+     * @return int
+     */
+    public function getEstadoCivil()
+    {
+        return $this->estadoCivil;
+    }
+
+    /**
+     * Set filiacaoNomePai
+     *
+     * @param string $filiacaoNomePai
+     *
+     * @return PessoaFisica
+     */
+    public function setFiliacaoNomePai($filiacaoNomePai)
+    {
+        $this->filiacaoNomePai = $filiacaoNomePai;
+
+        return $this;
+    }
+
+    /**
+     * Get filiacaoNomePai
+     *
+     * @return string
+     */
+    public function getFiliacaoNomePai()
+    {
+        return $this->filiacaoNomePai;
+    }
+
+    /**
+     * Set filiacaoNomeMae
+     *
+     * @param string $filiacaoNomeMae
+     *
+     * @return PessoaFisica
+     */
+    public function setFiliacaoNomeMae($filiacaoNomeMae)
+    {
+        $this->filiacaoNomeMae = $filiacaoNomeMae;
+
+        return $this;
+    }
+
+    /**
+     * Get filiacaoNomeMae
+     *
+     * @return string
+     */
+    public function getFiliacaoNomeMae()
+    {
+        return $this->filiacaoNomeMae;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                "id",
+                "nome",
+                "tratamento",
+                "cpf",
+                "sexoString as sexo",
+                "dataNascimento",
+                "estadoCivil",
+                "filiacaoNomePai",
+                "filiacaoNomeMae",
+                "dataCadastro"
+            ]);
+        parent::loadApiRepresentation($representation);
+        $representation->build();
+
+    }
+
+    /**
+     * Remove proprietario
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaProprietario $proprietario
+     */
+    public function removeProprietario(\Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaProprietario $proprietario)
+    {
+        $this->proprietarios->removeElement($proprietario);
+    }
+
+    /**
+     * Add pessoasGerenciada
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaProprietario $pessoasGerenciada
+     *
+     * @return PessoaFisica
+     */
+    public function addPessoasGerenciada(\Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaProprietario $pessoasGerenciada)
+    {
+        $this->pessoasGerenciadas[] = $pessoasGerenciada;
+
+        return $this;
+    }
+
+    /**
+     * Remove pessoasGerenciada
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaProprietario $pessoasGerenciada
+     */
+    public function removePessoasGerenciada(\Uloc\Bundle\AppBundle\Entity\Pessoa\PessoaProprietario $pessoasGerenciada)
+    {
+        $this->pessoasGerenciadas->removeElement($pessoasGerenciada);
+    }
+
+    /**
+     * Add papei
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $papei
+     *
+     * @return PessoaFisica
+     */
+    public function addPapei(\Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $papei)
+    {
+        $this->papeis[] = $papei;
+
+        return $this;
+    }
+
+    /**
+     * Remove papei
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $papei
+     */
+    public function removePapei(\Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $papei)
+    {
+        $this->papeis->removeElement($papei);
+    }
+
+    /**
+     * Add superPapei
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $superPapei
+     *
+     * @return PessoaFisica
+     */
+    public function addSuperPapei(\Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $superPapei)
+    {
+        $this->superPapeis[] = $superPapei;
+
+        return $this;
+    }
+
+    /**
+     * Remove superPapei
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $superPapei
+     */
+    public function removeSuperPapei(\Uloc\Bundle\AppBundle\Entity\Pessoa\Papel $superPapei)
+    {
+        $this->superPapeis->removeElement($superPapei);
+    }
+
+    /**
+     * Add anotaco
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Anotacao $anotaco
+     *
+     * @return PessoaFisica
+     */
+    public function addAnotaco(\Uloc\Bundle\AppBundle\Entity\Pessoa\Anotacao $anotaco)
+    {
+        $this->anotacoes[] = $anotaco;
+
+        return $this;
+    }
+
+    /**
+     * Remove anotaco
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Anotacao $anotaco
+     */
+    public function removeAnotaco(\Uloc\Bundle\AppBundle\Entity\Pessoa\Anotacao $anotaco)
+    {
+        $this->anotacoes->removeElement($anotaco);
+    }
+
+    /**
+     * Add anotacoesHistoricoAlteraco
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\AnotacaoHistorico $anotacoesHistoricoAlteraco
+     *
+     * @return PessoaFisica
+     */
+    public function addAnotacoesHistoricoAlteraco(\Uloc\Bundle\AppBundle\Entity\Pessoa\AnotacaoHistorico $anotacoesHistoricoAlteraco)
+    {
+        $this->anotacoesHistoricoAlteracoes[] = $anotacoesHistoricoAlteraco;
+
+        return $this;
+    }
+
+    /**
+     * Remove anotacoesHistoricoAlteraco
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\AnotacaoHistorico $anotacoesHistoricoAlteraco
+     */
+    public function removeAnotacoesHistoricoAlteraco(\Uloc\Bundle\AppBundle\Entity\Pessoa\AnotacaoHistorico $anotacoesHistoricoAlteraco)
+    {
+        $this->anotacoesHistoricoAlteracoes->removeElement($anotacoesHistoricoAlteraco);
+    }
+
+    /**
+     * Add contatosExtra
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\ContatoExtra $contatosExtra
+     *
+     * @return PessoaFisica
+     */
+    public function addContatosExtra(\Uloc\Bundle\AppBundle\Entity\Pessoa\ContatoExtra $contatosExtra)
+    {
+        $this->contatosExtras[] = $contatosExtra;
+
+        return $this;
+    }
+
+    /**
+     * Remove contatosExtra
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\ContatoExtra $contatosExtra
+     */
+    public function removeContatosExtra(\Uloc\Bundle\AppBundle\Entity\Pessoa\ContatoExtra $contatosExtra)
+    {
+        $this->contatosExtras->removeElement($contatosExtra);
+    }
+
+    /**
+     * Add identificadoresRegistrado
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\IdentificadorRegistrado $identificadoresRegistrado
+     *
+     * @return PessoaFisica
+     */
+    public function addIdentificadoresRegistrado(\Uloc\Bundle\AppBundle\Entity\Pessoa\IdentificadorRegistrado $identificadoresRegistrado)
+    {
+        $this->identificadoresRegistrados[] = $identificadoresRegistrado;
+
+        return $this;
+    }
+
+    /**
+     * Remove identificadoresRegistrado
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\IdentificadorRegistrado $identificadoresRegistrado
+     */
+    public function removeIdentificadoresRegistrado(\Uloc\Bundle\AppBundle\Entity\Pessoa\IdentificadorRegistrado $identificadoresRegistrado)
+    {
+        $this->identificadoresRegistrados->removeElement($identificadoresRegistrado);
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Tag $tag
+     */
+    public function removeTag(\Uloc\Bundle\AppBundle\Entity\Pessoa\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Add tagsCriada
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Tag $tagsCriada
+     *
+     * @return PessoaFisica
+     */
+    public function addTagsCriada(\Uloc\Bundle\AppBundle\Entity\Pessoa\Tag $tagsCriada)
+    {
+        $this->tagsCriadas[] = $tagsCriada;
+
+        return $this;
+    }
+
+    /**
+     * Remove tagsCriada
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Tag $tagsCriada
+     */
+    public function removeTagsCriada(\Uloc\Bundle\AppBundle\Entity\Pessoa\Tag $tagsCriada)
+    {
+        $this->tagsCriadas->removeElement($tagsCriada);
+    }
+
+    /**
+     * Remove usuario
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Usuario $usuario
+     */
+    public function removeUsuario(\Uloc\Bundle\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuarios->removeElement($usuario);
+    }
+
+    /**
+     * Remove historicoComunicacao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\HistoricoComunicacao $historicoComunicacao
+     */
+    public function removeHistoricoComunicacao(\Uloc\Bundle\AppBundle\Entity\Pessoa\HistoricoComunicacao $historicoComunicacao)
+    {
+        $this->historicoComunicacao->removeElement($historicoComunicacao);
+    }
+}

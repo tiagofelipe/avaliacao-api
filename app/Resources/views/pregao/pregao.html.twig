@@ -1,0 +1,282 @@
+<!doctype html>
+<html class="{{ pregoeiro ? 'pregoeiro-telao' : '' }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% block metas %}
+        <meta property="robots" content="index,follow"/>
+        <meta property="googlebot" content="index, follow"/>
+        <meta property="revisit-after" content="2 days"/>
+        <meta property="language" content="pt-br"/>
+        <meta property="rating" content="general"/>
+        <meta property="page-topic"
+              content="{{ metaPageTopic is defined ? metaPageTopic : 'Rogério Menezes Leiloeiro Oficial' }}"/>
+        <meta property="classification"
+              content="{{ metaPageClassification is defined ? metaPageClassification : 'Rogério Menezes Leiloeiro Oficial' }}"/>
+        <meta property="distribution" content="Global"/>
+        <meta property="author" content="Wtis"/>
+        <meta property="copyright" content="wtis"/>
+        <meta property="og:type" content="website">
+        <meta name="theme-color" content="#000000"/>
+        {#<meta http-equiv="refresh" content="5">#}
+    {% endblock %}
+    {% block title %}
+        <title>Sistema Leilão Online - Rogério Menezes - Leiloeiro Oficial</title>
+    {% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}"/>
+        {% if app.environment == 'dev' %}
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/pregao/style.css') }}"/>
+        {% else %}
+            <link href="{{ asset('css/pregao/app.pregao.min.css') }}" rel="stylesheet">
+        {% endif %}
+    {% endblock %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="{{ pregoeiro ? 'pregoeiro-telao' : '' }}">
+
+<!-- CONTENT -->
+<div class="h-100 pos-relative {{ pregoeiro ? 'pregoeiro-telao' : '' }}" id="leilao">
+    <div id="fullLoader" class="fullLoadingContainer">
+        <div class="fullLoadingContent">
+            <i class="fa fa-spin fa-spinner"></i>
+            Aguarde enquanto carregamos a aplicação
+        </div>
+    </div>
+    <div id="app-container" class="h-100 isFullLoading">
+        <!-- CONFIRMs -->
+        <div class="removeHideMe hide">
+            <div class="confirm" v-show="hasConfirm">
+                <!-- INCREMENTO -->
+                <div class="lanceIncremento" :class="{hide: !confirmLanceIncremento}">
+                    <p class="d-block m-b-md">Tem certeza que deseja efetuar um lance de <strong>R$
+                            ${valorLance|moeda}</strong> ?</p>
+                    <p>
+                        <a name="lanceIncrementoBtn" ref="lanceIncrementoBtn" tabindex="1"
+                           class="btn btn-success no-border-radius text-uppercase btn-block m-b-md btn-lg"
+                           @click="lanceIncremento" @keyup.prevent.enter="lanceIncremento">Sim, efetuar
+                            lance</a>
+                        <a class="btn btn-danger btn-lg no-border-radius btn-block text-uppercase m-b-md"
+                           tabindex="2" @click="cancelConfirm">Cancelar</a>
+                    </p>
+                </div>
+                <!-- LANCE MANUAL -->
+                <div class="lanceManual" :class="{hide: !confirmLanceManual}">
+                    <p class="d-block m-b-md">Digite abaixo o valor que você quer lançar</p>
+                    <p>
+                        <input ref="valorLanceFormatado" @keyup.enter="lanceManualConfirmar"
+                               tabindex="1" type="text" v-model.lazy="valorLanceFormatado"
+                               v-money="money">
+                    </p>
+                    <div class="btns-lanceManual">
+                        <a ref="lanceIncremento" tabindex="2"
+                           class="btn btn-success no-border-radius text-uppercase m-b-md btn-lg"
+                           @click="lanceManualConfirmar"
+                           @keyup.prevent.enter="lanceManualConfirmar">Confirmar</a>
+                        <a class="btn btn-danger btn-lg no-border-radius text-uppercase m-b-md"
+                           tabindex="3" @click="cancelConfirm">Cancelar</a>
+                    </div>
+
+                    <div class="lote-confirm-lance-manual">
+                        <label for="confirmLanceManual">
+                            <input id="confirmLanceManual" type="checkbox"
+                                   v-model="confirmLanceManualCheck">
+                            <span>Tem certeza que deseja efetuar um novo lance de ${valorLanceFormatado}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END CONFIRMs -->
+        <div class="leilao-aviso-container" v-if="pregao === null"> {# TODO: Alterar. Não pode ser verificado se existe pregão, mas sim, se o status é igual à Em Pregão #}
+            <!-- Ainda não entrou em Pregão -->
+            <div class="leilao-aviso">
+                <div class="leilao-aviso-content">
+                    <div class="logo"><img src="{{ asset('images/logo.png') }}"></div>
+                    <div class="m-b-md">
+                        {% if leilao.tipo == 0 or leilao.tipo == 2 %}
+                            <button class="btn btn-success" title="Este leilão acontecerá online">Online</button>
+                        {% endif %}
+                        {% if leilao.tipo == 1 or leilao.tipo == 2 %}
+                            <button class="btn btn-dark" title="Este leilão acontecerá presencial">Presencial
+                            </button>
+                        {% endif %}
+                    </div>
+                    <div class="l-titulo">{{ leilao.titulo }}</div>
+                    <div class="l-info">
+                        O pregão será aberto {{ leilao.dataAbertura|date('d/m/Y') }} a partir
+                        das {{ leilao.dataAbertura|date('H\\hi') }}</div>
+                    <div class="btn-back"><a href="{{ path('home') }}">Voltar para o site</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="leilao-container" v-else>
+            <!-- Está em Pregão -->
+            <div class="iterate">
+                <div class="col1 col-flex-column {{ pregoeiro ? 'pregoeiro' : '' }}">
+                    <div class="lote-info-text">
+                        <div class="lote-num-container">
+                            <div class="lote-i-label lote-num-label">LOTE</div>
+                            <div class="lote-input lote-num">${ loteNumero }</div>
+                        </div>
+                        <div class="lote-desc-container">
+                            <div class="lote-i-label lote-desc-label">DESCRIÇÃO</div>
+                            <div class="lote-input lote-desc">${ lote.titulo }</div>
+                        </div>
+                    </div>
+
+                    <div class="lote-img">
+                        <span class="loading">Carregando imagens</span>
+                        <a target="_blank" :href="lote.imagem"><img
+                                    :src="lote.imagem"></a>
+                    </div>
+                    <div class="lance-buttons {{ pregoeiro ? 'pregoeiro' : '' }}">
+                        <button class="btn-efetuar-lance lance-incremento" @click="lanceIncrementoConfirm">LANCE +R$ ${ lote.valorIncremento | moeda }</button>
+                        <button class="btn-efetuar-lance" @click="lanceManual">LANCE MANUAL</button>
+                    </div>
+
+                </div>
+                <div class="col2 col-flex-column {{ pregoeiro ? 'pregoeiro' : '' }}">
+                    <div class="logo">
+                        <img src="{{ asset('images/logo.png') }}">
+                        <img height="50" v-if="lote.comitente" :src="lote.comitente.imagemUrl">
+                    </div>
+                    <div class="lance-status">
+                        <div>
+                            <span>Lance inicial</span>
+                            <div>R$ ${ lote.valorInicial | moeda }</div>
+                        </div>
+                        <div>
+                            <span>Incremento</span>
+                            <div>R$ ${ lote.valorIncremento | moeda }</div>
+                        </div>
+                        <div>
+                            <span>Maior lance</span>
+                            <div class="input-ultimo-lance" :class="{novoLance: hasNovoLance}">R$ ${ valor | moeda }</div>
+                        </div>
+                        <div>
+                            <span>Tempo</span>
+                            <div class="lance-timer" :class="{'lance-danger': countDownTimer <= calcPercentTimer(30)}">${
+                                timerPregaoFormatado }
+                            </div>
+                        </div>
+                        <div>
+                            <span>Status</span>
+                            <div class="status-lote"><span :style="'color: ' + colorStatus">${ statusLote }</span></div>
+                        </div>
+                        <div class="ultimo-lance" :class="{online: apelido !== 'PLATEIA' && apelido !== '-'}">
+                            <span></span>
+                            <div :class="isLanceVencedor">
+                                ${ apelido }
+                                <span>
+                                    ${ lanceLocalidade }
+                                    {#<br>
+                                    ${ lanceData }#}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-hdiv"></div>
+                    <div class="lances-title">
+                        Últimos Lances
+                    </div>
+                    <div class="lances">
+                        <table :class="{nenhumLance: lote.lances.length === 0}">
+                            <tr v-for="lance in lote.lances" :class="{meuLance: lance.arrematante.id === __ARREMATANTEID__}">
+                                <td>
+                                    <strong>${ lance.arrematante.apelido } <span
+                                                v-if="lance.arrematante.id === __ARREMATANTEID__"
+                                                class="label-meu-lance">você</span></strong>
+                                    ${ lance.arrematante.pessoa.essencial.cidade } - ${
+                                    lance.arrematante.pessoa.essencial.uf }<br>
+                                    ${ moment(lance.data.date).format('L') } ${ moment(lance.data.date).format('LTS') }
+                                </td>
+                                <td>R$ ${ lance.valor | moeda }</td>
+                            </tr>
+                            <tr v-if="lote.lances.length === 0">
+                                <td colspan="2">Nenhum lance até o momento</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer {{ pregoeiro ? 'pregoeiro' : '' }}">
+                <div class="f-title">
+                    <div class="title d-block">Pregão Online</div>
+                    <div class="lotePregaoStatus">{{ leilao.titulo }}</div>
+                </div>
+                <div class="f-menu">
+                    <a href="#" class="fmenu-btn"><i class="fa fa-cog"></i></a>
+                    <!--<a href="#" class="fmenu-btn m-r-sm"><i class="fa fa-users"></i> <span>233 participantes</span></a>-->
+                    <a href="#" class="btn-online">Pregão em andamento</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--//// CONTENT -->
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+      /* TODO: Duplicidade disto. Avaliar reaproveitamento */
+      var leilaoService = {
+        lance: "{{ path('uapi_lote_lance', {id: leilao.id, lote: '__ID__'}) }}",
+        ultimosLances: "{{ path('api_lote_lances_get', {id: '__ID__'}) }}",
+        loadPregao: "{{ path('uapi_pregao_show', {id: leilao.id}) }}"
+      };
+      var AudioNotificationFiles = {
+        lance: "{{ absolute_url(asset('audios/lance.mp3')) }}",
+        meuLance: "{{ absolute_url(asset('audios/meulance.mp3')) }}",
+        err: "{{ absolute_url(asset('audios/error.mp3')) }}",
+        vendido: "{{ asset('audios/vendido.mp3') }}"
+      };
+      /* END TODO */
+
+      var leilao = {{ leilaoJson|raw }};
+      var pregao = {{ pregaoJson|raw }};
+      var lances = {{ lancesJson|raw }};
+      var __LEILAO__ = {{ leilao.id }};
+      {% if is_granted('ROLE_USER') %}
+      var __USERID__ = {{ app.user.id }};
+      var __ARREMATANTEID__ = {{ app.user.pessoa.arrematante.id }};
+      {% else %}
+      var __USERID__ = null;
+      var __ARREMATANTEID__ = null
+      {% endif %}
+      {% if app.environment == 'dev' %}
+      var __WSSERVER__ = "{{ ws }}";
+      {% else %}
+      var __WSSERVER__ = "{{ wss }}";
+      {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ asset('js/vendor/jquery.min.js') }}"></script>
+    {% if app.environment == 'dev' %}
+    <script type="text/javascript" src="{{ asset('js/vendor/autobahn.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/gos_web_socket_client.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/php-js/number_format.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/moment.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/vue.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/v-money.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/mixins.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/directives.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/base.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/script.js') }}"></script>
+    {% else %}
+    <script src="{{ asset('js/pregao/app.pregao.min.js') }}"></script>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

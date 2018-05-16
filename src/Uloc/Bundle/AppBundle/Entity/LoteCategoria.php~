@@ -1,0 +1,180 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LoteCategoria
+ *
+ * @ORM\Table(name="lote_categoria")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\LoteCategoriaRepository")
+ */
+class LoteCategoria
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="codigo", type="integer", unique=true)
+     */
+    private $codigo;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="habilitar", type="boolean")
+     */
+    private $habilitar;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=255)
+     */
+    private $nome;
+
+    /**
+     * @var Lote
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Lote", mappedBy="categoria")
+     * @ORM\JoinColumn(name="lote_id", nullable=false)
+     */
+    private $lotes;
+
+    public function __construct()
+    {
+        $this->lotes = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param integer $codigo
+     *
+     * @return LoteCategoria
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return int
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set habilitar
+     *
+     * @param boolean $habilitar
+     *
+     * @return LoteCategoria
+     */
+    public function setHabilitar($habilitar)
+    {
+        $this->habilitar = $habilitar;
+
+        return $this;
+    }
+
+    /**
+     * Get habilitar
+     *
+     * @return bool
+     */
+    public function getHabilitar()
+    {
+        return $this->habilitar;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return LoteCategoria
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @return Lote
+     */
+    public function getLotes()
+    {
+        return $this->lotes;
+    }
+
+    /**
+     * @param Lote $lote
+     */
+    public function addLotes( Lote $lote)
+    {
+        $this->lotes[] = $lote;
+    }
+
+    /**
+     * Add lote
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lote $lote
+     *
+     * @return LoteCategoria
+     */
+    public function addLote(\Uloc\Bundle\AppBundle\Entity\Lote $lote)
+    {
+        $this->lotes[] = $lote;
+
+        return $this;
+    }
+
+    /**
+     * Remove lote
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lote $lote
+     */
+    public function removeLote(\Uloc\Bundle\AppBundle\Entity\Lote $lote)
+    {
+        $this->lotes->removeElement($lote);
+    }
+}

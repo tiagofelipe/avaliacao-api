@@ -1,0 +1,69 @@
+{% extends ':Emails:theme1.html.twig' %}
+
+{% block body %}
+    <img src="https://static.wtis.com.br/c/rogeriomenezes/boasvindas.jpg?20180114094500">
+    <div style="line-height:1.5;font-family:arial, helvetica, sans-serif;color:#4e4e4e;text-align:justify;font-size:16px;min-height:16px;vertical-align:top;padding:10px 30px">
+        <br>
+        <strong>{{ (pessoa.nome|split(' '))|first }}</strong>, damos-lhe as nossas mais cordiais boas-vindas, ficamos
+        felizes em ter
+        você participando dos nossos leilões.<br><br>
+
+        <span style="color: darkcyan">Seu cadastro foi realizado com sucesso</span>, porém, é necessário alguns passos
+        para completar o seu cadastro para que
+        você possa participar dos nossos leilões.<br><br>
+
+        <strong>A Liberação Definitiva de seu cadastro para participação nos leilões somente será efetivada após as
+            seguintes
+            ações:</strong>
+        <br><br>
+
+        1) <a href="{{ url('user_home') }}" target="_blank">Acesse o site</a>, utilize o seu apelido
+        ou email e sua senha cadastrados, faça o upload dos seus documentos de
+        {% if pessoa.tipo == 1 %}
+            pessoa física, RG, CPF ou CNH, Certidão de casamento (se casado) e comprovante de residência atual.
+        {% else %}
+            pessoa jurídica, CNPJ, contrato social e última alteração, RG, CPF ou CNH dos sócios e comprovante de
+            residência.
+        {% endif %}
+        <br><br>
+        2) Faça o download do <a href="{{ app.request.getSchemeAndHttpHost() }}/public/docs/contrato.pdf"
+                                 target="_blank">Contrato de Adesão ao Site do Leiloeiro Rogério Menezes Nunes</a>, que
+        deverá
+        estar rubricado e com firma reconhecida por autenticidade, e o documento deverá ser enviado para o endereço: Av.
+        Brasil, 51.467 - Campo Grande - RJ - CEP: 23065-480 - via correio, aos cuidados do Departamento de leilão. <span
+                style="color: crimson">A liberação definitiva de seu cadastro se dará SOMENTE 24 HORAS APÓS RECEBIMENTO DESTE CONTRATO.</span>
+        Se você deseja participar de um leilão muito próximo, onde não haverá tempo hábil para enviar os documentos via
+        correios, por favor, <a href="{{ url('contato') }}">entre em contato conosco</a> para avaliar sua situação.
+
+        <br><br>
+
+        <strong>Aproveitamos para deixar aqui suas informações cadastrais, para você não esquecer :)</strong>
+        <br><br>
+
+        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+               style="border-collapse: collapse;border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;border-bottom:#E1E1E1 2px solid;">
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Responsável</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">
+                    <strong>{{ pessoa.nome }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Apelido/Login</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">
+                    <strong>{{ pessoa.arrematante.apelido }}</strong></td>
+            </tr>
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Email</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;"><strong>{{ email }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Senha</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;"><strong>{{ senha }}</strong>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+{% endblock %}

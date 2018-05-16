@@ -1,0 +1,131 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    # - { resource: "@FidelidadeBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    # a hack - should be configurable under jms_serializer, but the property_naming.id
+    # doesn't seem to be taken into account at all.
+    # OBSERVAR USO...
+    #jms_serializer.camel_case_naming_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+    locale: en
+    public_upload_dir: 'public'
+    files_upload_directory: '%kernel.project_dir%/web/%public_upload_dir%'
+    files_upload_private_directory: '%kernel.project_dir%/var/private'
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets:
+        version: 'v43'
+        version_format: '%%s?version=%%s'
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        ws: "ws://%websocket_server.domain%:%websocket_server.port%/ws"
+        wss: "wss://%websocket_server.domain%:%websocket_server.sport%/ws"
+        tipos:
+            tipo_leilao:
+                0: {nome: 'Online'}
+                1: {nome: 'Presencial'}
+                2: {nome: 'Online/Presencial'}
+            status_leilao:
+                0: {nome: 'Rascunho'}
+                1: {nome: 'Em Breve'}
+                2: {nome: 'Em Loteamento'}
+                3: {nome: 'Ver Mais'}
+                4: {nome: 'Aberto para Lances'}
+                5: {nome: 'Aberto para Propostas'}
+                6: {nome: 'Em Pregão'}
+                98: {nome: 'Suspenso'}
+                99: {nome: 'Encerrado'}
+
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    encryption: tls
+    port: 587
+    spool:     { type: memory }
+    stream_options:
+          ssl:
+            allow_self_signed: true
+            verify_peer: false
+
+lexik_jwt_authentication:
+    private_key_path: "%kernel.root_dir%/../var/jwt/private.pem"
+    public_key_path:  "%kernel.root_dir%/../var/jwt/public.pem"
+    pass_phrase:      "%jwt_key_pass_phrase%"
+    token_ttl:        3600
+
+# Observar uso...
+#bazinga_hateoas:
+#    serializer:
+#        json: custom_hateoas_json_serializer
+
+# Web Socket Configuration
+gos_web_socket:
+    server:
+        port: "%websocket_server.port%"        #The port the socket server will listen on
+        host: "%websocket_server.host%"   #The host ip to bind to
+        router:
+            resources:
+                - '@UlocAppBundle/Resources/config/pubsub/routing.yml'
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost:6379

@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Regulamento| Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Saiba todas as regras para participar dos nossos leilões online e presencial."/>
+    <meta property="og:title" content="Regulamento"/>
+    <meta property="og:description"
+          content="Saiba todas as regras para participar dos nossos leilões online e presencial."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-sobre.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/regulamento.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('js/pages/sobre.js') }}"></script>#}
+{% endblock %}
+
+{% block body %}
+    <div class="page-regulamento">
+        <div class="center-1200">
+            <ol class="breadcrumb nobg">
+                <li><a href="{{ path('home') }}">Home</a></li>
+                <li class="active">Regulamento</li>
+            </ol>
+        </div>
+
+        <div class="center-1200 content-1200">
+            <div class="row">
+                <div class="col-md-12 grupo-lotes">
+                    <h1 class="text-uppercase">
+                        Regulamento
+                    </h1>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="fundo">
+                        <div class="row">
+                            <div class="col-sm-12 box">
+                                <span class="text-success text-uppercase">Leilão Online</span>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Os horários estabelecidos são sempre os de Brasília. Somente serão
+                                    aceitos lances através da Internet. A abertura para lances ocorre com
+                                    vários dias de antecedência do dia estabelecido para o fechamento
+                                    do leilão. Para dar lances através da Internet, os interessados deverão
+                                    se cadastrar previamente através do site: www.rogeriomenezes.com.br
+                                    e solicitar a sua habilitação no
+                                    leilão desejado, em até 01 (uma) hora antes do início do fechamento
+                                    do leilão, aceitando todas as condições estabelecidas para o mesmo.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    • Cadastramento Preencha corretamente todos os campos do
+                                    CADASTRO (Pessoa Física ou Jurídica), para que o mesmo possa ser
+                                    validado por nossa equipe. A liberação definitiva e permanente do
+                                    cadastro para participação nos leilões, somente será efetivada após
+                                    o interessado anexar no “site” os documentos abaixo descritos ou
+                                    enviá-los para o e-mail: contato@rogeriomenezes.com.br, tendo como
+                                    assunto o número do CPF ou CNPJ: Pessoa Física: RG e CPF ou CNH,
+                                    Certidão de Casamento (se casado) e comprovante de residência
+                                    atualizado.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    • Pessoa Jurídica: Contrato social e última alteração ou ata de
+                                    eleição da diretoria e estatuto social, RG e CPF ou CNH dos sócios e
+                                    comprovantes de residência atualizados.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Tão logo seja concluído o processo de cadastramento, o interessado
+                                    receberá através de email, sua confirmação acompanhada de uma
+                                    senha de acesso ao sistema.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Habilitação Somente poderá se habilitar nos leilões o interessado
+                                    que tiver o seu CADASTRO validado por nossa equipe.
+                                    Estar cadastrado em nosso “site” não significa que o interessado
+                                    possa participar dos leilões “on-line”.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Para participar, será necessário solicitar uma habilitação específica
+                                    para cada leilão
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Para participar, será necessário solicitar uma habilitação específica
+                                    para cada leilão, concordando com as condições estabelecidas para o mesmo.
+                                </p>
+                            </div>
+
+                            <div class="col-sm-12 texto">
+                                <a href="#" class="btn btn-success btn-block text-uppercase">
+                                    Baixar Regulamento de Leilão Online
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6">
+                    <div class="fundo">
+                        <div class="row">
+                            <div class="col-sm-12 box">
+                                <span class="text-primary text-uppercase ">Leilão Presencial e Online</span>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Os horários estabelecidos são sempre os de Brasília. Os interessados
+                                    podem ofertar lances através da Internet ou no leilão presencial de
+                                    fechamento.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    PARTICIPAÇÃO PRESENCIAL
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Não é necessário o cadastramento prévio, basta comparecer munido
+                                    dos documentos abaixo: Pessoa Física: RG e CPF ou CNH, mais o
+                                    comprovante de residência atualizado. Pessoa Jurídica: Contrato
+                                    social ou ata de eleição de diretoria, estatuto social e cartão do CNPJ,
+                                    bem como a documentação dos representantes legais da empresa
+                                    (RG e CPF ou CNH) e prova de representação (ex.: procuração/ata de
+                                    eleição).
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    OBS: No caso de representação por terceiros, tanto pessoa física
+                                    quanto pessoa jurídica, a
+                                    procuração deverá ser por outorgada para fins específicos.
+                                    Menores de 18 anos somente poderão arrematar se emancipados,
+                                    representados ou assistidos pelo responsável legal. Estrangeiros,
+                                    além da apresentação da documentação indicada para pessoa física,
+                                    deverão comprovar sua permanência legal e definitiva no país.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    PARTICIPAÇÃO ATRAVÉS DA INTERNET
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    A abertura para lances “on-line” ocorre com vários dias de
+                                    antecedência do dia estabelecido para o fechamento presencial do
+                                    leilão.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Os lances através da INTERNET continuarão sendo acolhidos
+                                    simultaneamente com os ofertados à viva voz durante o LEILÃO
+                                    PRESENCIAL e concorrerão em igualdade de condições.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 texto">
+                                <p class="text-justify">
+                                    Para dar lances através da Internet, os interessados deverão se
+                                    cadastrar previamente através do site: www.rogeriomenezes.com.br e solicitar a sua
+                                    habilitação
+                                    no leilão desejado, em até 01 (uma) hora antes do início do LEILÃO
+                                    PRESENCIAL de fechamento.
+                                </p>
+                            </div>
+
+                            <div class="col-sm-12 texto">
+                                <a href="#" class="btn btn-primary btn-block text-uppercase">
+                                    Baixar Regulamento de Leilão Presencial e Online
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,119 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CategoriaLeilao
+ *
+ * @ORM\Table(name="categoria_leilao")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\CategoriaLeilaoRepository")
+ */
+class CategoriaLeilao
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo", type="string", length=255, unique=true)
+     */
+    private $codigo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=255, unique=true)
+     */
+    private $nome;
+
+    /**
+     * @var Leilao
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Leilao", inversedBy="documentos")
+     * @ORM\JoinColumn(name="leilao_id", referencedColumnName="id", nullable=false)
+     */
+    private $leilao;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     *
+     * @return CategoriaLeilao
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return CategoriaLeilao
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @return Leilao
+     */
+    public function getLeilao()
+    {
+        return $this->leilao;
+    }
+
+    /**
+     * @param Leilao $leilao
+     */
+    public function setLeilao($leilao)
+    {
+        $this->leilao = $leilao;
+    }
+}

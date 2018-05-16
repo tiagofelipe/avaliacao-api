@@ -1,0 +1,319 @@
+{% extends ':conta:base.html.twig' %}
+
+{% block title %}
+    <title>Dados Cadastrais | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cadastro.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% if pessoa.tipo == 1 %}
+        {% set fpfClass = 'isActive' %}
+        {% set fpjClass = '' %}
+        {# $('.form-pessoa-fisica').addClass('isActive');
+         $('.form-pessoa-juridica').removeClass('isActive');#}
+        {% if pessoa.pfEstadoCivil == 2 %}
+            {#$('.estado-civil-casado').removeClass('hide')#}
+            {% set estadoCivilCasadoClass = '' %}
+        {% else %}
+            {% set estadoCivilCasadoClass = 'hide' %}
+        {% endif %}
+    {% else %}
+        {% set fpfClass = '' %}
+        {% set fpjClass = 'isActive' %}
+        {#$('.form-pessoa-juridica').addClass('isActive');
+        $('.form-pessoa-fisica').removeClass('isActive');#}
+    {% endif %}
+
+    <div class="tab1">
+        Dados cadastrais
+        <br><br>
+        <div class="cadastro-completo">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <label for="pessoa_nome"><span class="form-pessoa-fisica {{ fpfClass }}">Nome</span><span
+                                class="form-pessoa-juridica {{ fpjClass }}">Razão Social</span></label>
+                    {{ form_widget(form.nome, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.nome) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="row form-pessoa-fisica {{ fpfClass }}">
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_cpf">CPF</label>
+                    {{ form_widget(form.cpf, {attr: {'class': 'form-control mask-cpf', 'disabled': true}}) }}
+                    {{ form_errors(form.cpf) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_rg">RG</label>
+                    {{ form_widget(form.rg, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.rg) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_rgOrgaoEmissor">Órgão Emissor</label>
+                    {{ form_widget(form.rgOrgaoEmissor, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.rgOrgaoEmissor) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_dataNascimento">Data de Nascimento</label>
+                    {{ form_widget(form.dataNascimento, {attr: {'class': 'form-control mask-date', 'disabled': true}}) }}
+                    {{ form_errors(form.dataNascimento) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="row form-pessoa-juridica {{ fpjClass }}">
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_cnpj">CNPJ</label>
+                    {{ form_widget(form.cnpj, {attr: {'class': 'form-control mask-cnpj', 'disabled': true}}) }}
+                    {{ form_errors(form.cnpj) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_inscricaoEstadual">Inscrição Estadual</label>
+                    {{ form_widget(form.inscricaoEstadual, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.inscricaoEstadual) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                    <label for="pessoa_nomeFantasia">Nome Fantasia</label>
+                    {{ form_widget(form.nomeFantasia, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.nomeFantasia) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="row form-pessoa-juridica {{ fpjClass }}">
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for="pessoa_arrematante_pjProprietarioNome">Nome do Proprietário</label>
+                    {{ form_widget(form.arrematante.pjProprietarioNome, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.arrematante.pjProprietarioNome) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                    <label for=pessoa_arrematante_pjProprietarioCpf"">CPF do Proprietário</label>
+                    {{ form_widget(form.arrematante.pjProprietarioCpf, {attr: {'class': 'form-control mask-cpf', 'disabled': true}}) }}
+                    {{ form_errors(form.arrematante.pjProprietarioCpf) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                    <label for="pessoa_arrematante_pjProprietarioRg">RG do Proprietário</label>
+                    {{ form_widget(form.arrematante.pjProprietarioRg, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.arrematante.pjProprietarioRg) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="row form-pessoa-fisica {{ fpfClass }}">
+                <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                    <label for="pessoa_nacionalidade">Nacionalidade</label>
+                    {{ form_widget(form.nacionalidade, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.nacionalidade) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                    <label for="pessoa_estadoCivil">Estado Civil</label>
+                    {{ form_widget(form.estadoCivil, {attr: {'class': 'form-control'}}) }}
+                    {{ form_errors(form.estadoCivil) }}
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                    <label for="pessoa_sexo">Sexo</label>
+                    {{ form_widget(form.sexo, {attr: {'class': 'form-control', 'disabled': true}}) }}
+                    {{ form_errors(form.sexo) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="row form-pessoa-fisica-block estado-civil-casado {{ estadoCivilCasadoClass }}">
+                <div class="form-group col-md-12">
+                    <h4>Dados necessários para aquisição de Imóveis</h4>
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-6">
+                    <label for="pessoa_arrematante_conjugeNome">Nome do Cônjuge</label>
+                    {{ form_widget(form.arrematante.conjugeNome, {attr: {'class': 'form-control'}}) }}
+                    {{ form_errors(form.arrematante.conjugeNome) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-3">
+                    <label for="pessoa_arrematante_conjugeRg">RG do Cônjuge</label>
+                    {{ form_widget(form.arrematante.conjugeRg, {attr: {'class': 'form-control'}}) }}
+                    {{ form_errors(form.arrematante.conjugeRg) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-3">
+                    <label for="pessoa_arrematante_conjugeCpf">CPF do Cônjuge</label>
+                    {{ form_widget(form.arrematante.conjugeCpf, {attr: {'class': 'form-control mask-cpf'}}) }}
+                    {{ form_errors(form.arrematante.conjugeCpf) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            {% for endereco in form.enderecos %}
+                {{ form_errors(form.enderecos) }}
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <h4>Informações de Endereço</h4>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-2 col-md-2">
+                        <label for="endereco_cep">CEP</label>
+                        {{ form_widget(endereco.cep, {attr: {'class': 'form-control mask-cep endereco_cep'}}) }}
+                        {{ form_errors(endereco.cep) }}
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-8 col-md-8">
+                        <label for="endereco_endereco">Endereço</label>
+                        {{ form_widget(endereco.logradouro, {attr: {'class': 'form-control endereco_logradouro'}}) }}
+                        {{ form_errors(endereco.logradouro) }}
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-2 col-md-2">
+                        <label for="endereco_numero">Número</label>
+                        {{ form_widget(endereco.numero, {attr: {'class': 'form-control endereco_numero'}}) }}
+                        {{ form_errors(endereco.numero) }}
+                    </div>
+                </div><!-- Fim Row -->
+
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-4 col-md-3">
+                        <label for="endereco_bairro">Bairro</label>
+                        {{ form_widget(endereco.bairro, {attr: {'class': 'form-control endereco_bairro'}}) }}
+                        {{ form_errors(endereco.bairro) }}
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-8 col-md-3">
+                        <label for="endereco_complemento">Complemento</label>
+                        {{ form_widget(endereco.complemento, {attr: {'class': 'form-control endereco_complemento'}}) }}
+                        {{ form_errors(endereco.complemento) }}
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4 col-md-2">
+                        <label for="d_endereco_uf">UF</label>
+                        <input name="d_endereco_uf" id="d_endereco_uf" type="text"
+                               value="{{ app.request.get('endereco_uf') }}" class="form-control endereco_uf">
+                        <input name="endereco_uf" id="endereco_uf" type="hidden"
+                               value="{{ app.request.get('endereco_uf') }}" class="form-control endereco_uf">
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-8 col-md-4">
+                        <label for="d_endereco_cidade">Cidade</label>
+                        <input name="d_endereco_cidade" id="d_endereco_cidade"
+                               value="{{ app.request.get('endereco_cidade') }}" type="text"
+                               class="form-control endereco_cidade">
+                        <input name="endereco_cidade" id="endereco_cidade"
+                               value="{{ app.request.get('endereco_cidade') }}" type="hidden"
+                               class="form-control endereco_cidade">
+                        <input name="endereco_cidade_id" value="{{ app.request.get('endereco_cidade_id') }}"
+                               type="hidden" class="form-control">
+                    </div>
+                </div><!-- Fim Row -->
+            {% endfor %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Informações de Contato</h4>
+                    {{ form_errors(form.telefones) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                    <label for=contato_celular"">Celular</label>
+                    {{ form_widget(form.telefones[0].telefone, {attr: {'class': 'form-control mask-phone'}}) }}
+                    {{ form_errors(form.telefones[0].telefone) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                    <label for="contato_telefone1">Telefone Residencial</label>
+                    {{ form_widget(form.telefones[1].telefone, {attr: {'class': 'form-control mask-phone'}}) }}
+                    {{ form_errors(form.telefones[1].telefone) }}
+                </div>
+                <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                    <label for="contato_telefone2">Telefone Comercial</label>
+                    {{ form_widget(form.telefones[2].telefone, {attr: {'class': 'form-control mask-phone'}}) }}
+                    {{ form_errors(form.telefones[2].telefone) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="dados-acesso">
+                <div>
+                    <h4>Dados para acesso ao site</h4>
+                </div>
+                <div class="box-acesso clearfix">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                            <label for="pessoa_arrematante_apelido">Apelido</label>
+                            {{ form_widget(form.arrematante.apelido, {attr: {'class': 'form-control arrematante_apelido', 'disabled': true}}) }}
+                            {#<input name="arrematante[apelido]" id="arrematante_apelido" type="text" class="form-control" value="{{ app.request.get('apelido') }}">#}
+                            {{ form_errors(form.arrematante.apelido) }}
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-8 col-md-8">
+                            <label for="cadastro_email">Email</label>
+                            {{ form_widget(form.emails[0].email, {attr: {'class': 'form-control cadastro_email'}}) }}
+                            {{ form_errors(form.emails[0].email) }}
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Caso queira alterar a senha, preencha abaixo. Deixe em branco para não alterar</h4>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <label for="senha_atual">Informe sua Senha atual</label>
+                            <div class="pos-relative">
+                                <input name="senha_atual" id="senha_atual" minlength="6" type="password"
+                                       value="{{ app.request.get('senha') }}"
+                                       class="form-control">
+                                <a class="input-tip-acion mostrar-senha"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                    </div><!-- Fim Row -->
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <label for="senha">Informe uma Nova Senha</label>
+                            <div class="pos-relative">
+                                <input name="senha" id="senha" minlength="6" type="password"
+                                       value="{{ app.request.get('senha') }}"
+                                       class="form-control">
+                                <a class="input-tip-acion mostrar-senha"><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <label for="senha2">Confirmação da nova Senha</label>
+                            <input name="senha2" id="senha2" minlength="6" type="password"
+                                   value="{{ app.request.get('senha2') }}"
+                                   class="form-control">
+                        </div>
+                    </div><!-- Fim Row -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Quais seus interesses ?</h4>
+                </div>
+                <div class="form-group col-xs-12">
+                    {{ form_widget(form.arrematante.tipoInteresseArrematante, {attr: {'class': 'form-checkboxes interesses'}}) }}
+                    {{ form_errors(form.arrematante.tipoInteresseArrematante) }}
+                </div>
+            </div><!-- Fim Row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Receba nossas novidades sobre os próximos leilões</h4>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6">
+                    {{ form_widget(form.arrematante.newsletter) }}
+                    <label for="pessoa_arrematante_newsletter">Desejo receber informativos sobre os próximos
+                        leilões</label>
+                </div>
+            </div><!-- Fim Row -->
+
+
+            <div class="hide">
+                {{ form_widget(form.tipo, {attr: {'type': 'hidden'}}) }}
+            </div>
+            <input type="submit" value="Atualizar meu cadastro" class="btn btn-lg btn-success text-uppercase"/>
+            <span id="cadastro-verificar" class="m-l-sm hide"><i class="fa fa-spin fa-spinner"></i> <small
+                        class="text-left">Aguarde enquanto verificamos as informações</small></span>
+            <div class="m-t-md">
+                <small><input type="checkbox" checked> Estou ciente que a atualização do cadastro pode impactar na
+                    aprovação do mesmo. Será realizada uma nova análise nos dados alterados.
+                </small>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

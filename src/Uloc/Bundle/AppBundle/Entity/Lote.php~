@@ -1,0 +1,788 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Lote
+ *
+ * @ORM\Table(name="lote")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\LoteRepository")
+ */
+class Lote
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bveCodBem", type="string", length=255)
+     */
+    private $bveCodBem;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bveLoteId", type="integer")
+     */
+    private $bveLoteId;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="condicional", type="boolean")
+     */
+    private $condicional;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dataFechamento", type="datetime")
+     */
+    private $dataFechamento;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=255)
+     */
+    private $descricao;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="destaque", type="boolean")
+     */
+    private $destaque;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="icms", type="decimal", precision=10, scale=2)
+     */
+    private $icms = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="iss", type="decimal", precision=10, scale=2)
+     */
+    private $iss = 0.0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="loteCondicao", type="integer")
+     */
+    private $loteCondicao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numeroLote", type="string", length=255)
+     */
+    private $numeroLote;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacao", type="string", length=255)
+     */
+    private $observacao;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="status", type="smallint")
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="taxaMateriaisEspeciais", type="decimal", precision=10, scale=2)
+     */
+    private $taxaMateriaisEspeciais = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valorAvaliacao", type="decimal", precision=10, scale=2)
+     */
+    private $valorAvaliacao = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valorIncremento", type="decimal", precision=10, scale=2)
+     */
+    private $valorIncremento = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valorInicial", type="decimal", precision=10, scale=2)
+     */
+    private $valorInicial = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valorMinimo", type="decimal", precision=10, scale=2)
+     */
+    private $valorMinimo = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valorRemocao", type="decimal", precision=10, scale=2)
+     */
+    private $valorRemocao = 0.0;
+
+    /**
+     * @var FotoLote
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\FotoLote", mappedBy="lote")
+     * @ORM\JoinColumn(name="foto", nullable=true)
+     */
+    private $fotos;
+
+    /**
+     * @var Lance
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Lance", mappedBy="lote")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lance;
+
+    /**
+     * @var LoteCategoria
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\LoteCategoria", inversedBy="lotes")
+     * @ORM\JoinColumn(name="categoria_id", nullable=false)
+     */
+    private $categoria;
+
+    /**
+     * @var LanceAutomatico
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\LanceAutomatico", mappedBy="lote")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lancesAutomaticos;
+
+
+    public function __construct()
+    {
+        $this->fotos = new ArrayCollection();
+        $this->lances = new ArrayCollection();
+        $this->lancesAutomaticos = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set bveCodBem
+     *
+     * @param string $bveCodBem
+     *
+     * @return Lote
+     */
+    public function setBveCodBem($bveCodBem)
+    {
+        $this->bveCodBem = $bveCodBem;
+
+        return $this;
+    }
+
+    /**
+     * Get bveCodBem
+     *
+     * @return string
+     */
+    public function getBveCodBem()
+    {
+        return $this->bveCodBem;
+    }
+
+    /**
+     * Set bveLoteId
+     *
+     * @param integer $bveLoteId
+     *
+     * @return Lote
+     */
+    public function setBveLoteId($bveLoteId)
+    {
+        $this->bveLoteId = $bveLoteId;
+
+        return $this;
+    }
+
+    /**
+     * Get bveLoteId
+     *
+     * @return int
+     */
+    public function getBveLoteId()
+    {
+        return $this->bveLoteId;
+    }
+
+    /**
+     * Set condicional
+     *
+     * @param boolean $condicional
+     *
+     * @return Lote
+     */
+    public function setCondicional($condicional)
+    {
+        $this->condicional = $condicional;
+
+        return $this;
+    }
+
+    /**
+     * Get condicional
+     *
+     * @return bool
+     */
+    public function getCondicional()
+    {
+        return $this->condicional;
+    }
+
+    /**
+     * Set dataFechamento
+     *
+     * @param \DateTime $dataFechamento
+     *
+     * @return Lote
+     */
+    public function setDataFechamento($dataFechamento)
+    {
+        $this->dataFechamento = $dataFechamento;
+
+        return $this;
+    }
+
+    /**
+     * Get dataFechamento
+     *
+     * @return \DateTime
+     */
+    public function getDataFechamento()
+    {
+        return $this->dataFechamento;
+    }
+
+    /**
+     * Set descricao
+     *
+     * @param string $descricao
+     *
+     * @return Lote
+     */
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    /**
+     * Get descricao
+     *
+     * @return string
+     */
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    /**
+     * Set destaque
+     *
+     * @param boolean $destaque
+     *
+     * @return Lote
+     */
+    public function setDestaque($destaque)
+    {
+        $this->destaque = $destaque;
+
+        return $this;
+    }
+
+    /**
+     * Get destaque
+     *
+     * @return bool
+     */
+    public function getDestaque()
+    {
+        return $this->destaque;
+    }
+
+    /**
+     * Set icms
+     *
+     * @param string $icms
+     *
+     * @return Lote
+     */
+    public function setIcms($icms)
+    {
+        $this->icms = $icms;
+
+        return $this;
+    }
+
+    /**
+     * Get icms
+     *
+     * @return string
+     */
+    public function getIcms()
+    {
+        return $this->icms;
+    }
+
+    /**
+     * Set iss
+     *
+     * @param string $iss
+     *
+     * @return Lote
+     */
+    public function setIss($iss)
+    {
+        $this->iss = $iss;
+
+        return $this;
+    }
+
+    /**
+     * Get iss
+     *
+     * @return string
+     */
+    public function getIss()
+    {
+        return $this->iss;
+    }
+
+    /**
+     * Set loteCondicao
+     *
+     * @param integer $loteCondicao
+     *
+     * @return Lote
+     */
+    public function setLoteCondicao($loteCondicao)
+    {
+        $this->loteCondicao = $loteCondicao;
+
+        return $this;
+    }
+
+    /**
+     * Get loteCondicao
+     *
+     * @return int
+     */
+    public function getLoteCondicao()
+    {
+        return $this->loteCondicao;
+    }
+
+    /**
+     * Set numeroLote
+     *
+     * @param string $numeroLote
+     *
+     * @return Lote
+     */
+    public function setNumeroLote($numeroLote)
+    {
+        $this->numeroLote = $numeroLote;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroLote
+     *
+     * @return string
+     */
+    public function getNumeroLote()
+    {
+        return $this->numeroLote;
+    }
+
+    /**
+     * Set observacao
+     *
+     * @param string $observacao
+     *
+     * @return Lote
+     */
+    public function setObservacao($observacao)
+    {
+        $this->observacao = $observacao;
+
+        return $this;
+    }
+
+    /**
+     * Get observacao
+     *
+     * @return string
+     */
+    public function getObservacao()
+    {
+        return $this->observacao;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Lote
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set taxaMateriaisEspeciais
+     *
+     * @param string $taxaMateriaisEspeciais
+     *
+     * @return Lote
+     */
+    public function setTaxaMateriaisEspeciais($taxaMateriaisEspeciais)
+    {
+        $this->taxaMateriaisEspeciais = $taxaMateriaisEspeciais;
+
+        return $this;
+    }
+
+    /**
+     * Get taxaMateriaisEspeciais
+     *
+     * @return string
+     */
+    public function getTaxaMateriaisEspeciais()
+    {
+        return $this->taxaMateriaisEspeciais;
+    }
+
+    /**
+     * Set valorAvaliacao
+     *
+     * @param string $valorAvaliacao
+     *
+     * @return Lote
+     */
+    public function setValorAvaliacao($valorAvaliacao)
+    {
+        $this->valorAvaliacao = $valorAvaliacao;
+
+        return $this;
+    }
+
+    /**
+     * Get valorAvaliacao
+     *
+     * @return string
+     */
+    public function getValorAvaliacao()
+    {
+        return $this->valorAvaliacao;
+    }
+
+    /**
+     * Set valorIncremento
+     *
+     * @param string $valorIncremento
+     *
+     * @return Lote
+     */
+    public function setValorIncremento($valorIncremento)
+    {
+        $this->valorIncremento = $valorIncremento;
+
+        return $this;
+    }
+
+    /**
+     * Get valorIncremento
+     *
+     * @return string
+     */
+    public function getValorIncremento()
+    {
+        return $this->valorIncremento;
+    }
+
+    /**
+     * Set valorInicial
+     *
+     * @param string $valorInicial
+     *
+     * @return Lote
+     */
+    public function setValorInicial($valorInicial)
+    {
+        $this->valorInicial = $valorInicial;
+
+        return $this;
+    }
+
+    /**
+     * Get valorInicial
+     *
+     * @return string
+     */
+    public function getValorInicial()
+    {
+        return $this->valorInicial;
+    }
+
+    /**
+     * Set valorMinimo
+     *
+     * @param string $valorMinimo
+     *
+     * @return Lote
+     */
+    public function setValorMinimo($valorMinimo)
+    {
+        $this->valorMinimo = $valorMinimo;
+
+        return $this;
+    }
+
+    /**
+     * Get valorMinimo
+     *
+     * @return string
+     */
+    public function getValorMinimo()
+    {
+        return $this->valorMinimo;
+    }
+
+    /**
+     * Set valorRemocao
+     *
+     * @param string $valorRemocao
+     *
+     * @return Lote
+     */
+    public function setValorRemocao($valorRemocao)
+    {
+        $this->valorRemocao = $valorRemocao;
+
+        return $this;
+    }
+
+    /**
+     * Get valorRemocao
+     *
+     * @return string
+     */
+    public function getValorRemocao()
+    {
+        return $this->valorRemocao;
+    }
+
+    /**
+     * @return FotoLote
+     */
+    public function getFotos()
+    {
+        return $this->fotos;
+    }
+
+    /**
+     * @param FotoLote $fotos
+     */
+    public function addFotos(FotoLote $fotos)
+    {
+        $this->fotos[] = $fotos;
+    }
+
+    /**
+     * @return Lances
+     */
+    public function getLances()
+    {
+        return $this->lances;
+    }
+
+    /**
+     * @param Lances $lances
+     */
+    public function addLances(Lance $lance)
+    {
+        $this->lances[] = $lance;
+    }
+
+    /**
+     * @return LoteCategoria
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * @param LoteCategoria $categoria
+     */
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+    }
+
+    /**
+     * @return LanceAutomatico
+     */
+    public function getLanceAutomatico()
+    {
+        return $this->lancesAutomaticos;
+    }
+
+    /**
+     * @param LanceAutomatico $lancesAutomaticos
+     */
+    public function addLanceAutomatico(LanceAutomatico $lancesAutomaticos)
+    {
+        $this->lancesAutomaticos[] = $lancesAutomaticos;
+    }
+
+    /**
+     * Add foto
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\FotoLote $foto
+     *
+     * @return Lote
+     */
+    public function addFoto(\Uloc\Bundle\AppBundle\Entity\FotoLote $foto)
+    {
+        $this->fotos[] = $foto;
+
+        return $this;
+    }
+
+    /**
+     * Remove foto
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\FotoLote $foto
+     */
+    public function removeFoto(\Uloc\Bundle\AppBundle\Entity\FotoLote $foto)
+    {
+        $this->fotos->removeElement($foto);
+    }
+
+    /**
+     * Add lance
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lance $lance
+     *
+     * @return Lote
+     */
+    public function addLance(\Uloc\Bundle\AppBundle\Entity\Lance $lance)
+    {
+        $this->lance[] = $lance;
+
+        return $this;
+    }
+
+    /**
+     * Remove lance
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lance $lance
+     */
+    public function removeLance(\Uloc\Bundle\AppBundle\Entity\Lance $lance)
+    {
+        $this->lance->removeElement($lance);
+    }
+
+    /**
+     * Get lance
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLance()
+    {
+        return $this->lance;
+    }
+
+    /**
+     * Add lancesAutomatico
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lancesAutomatico
+     *
+     * @return Lote
+     */
+    public function addLancesAutomatico(\Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lancesAutomatico)
+    {
+        $this->lancesAutomaticos[] = $lancesAutomatico;
+
+        return $this;
+    }
+
+    /**
+     * Remove lancesAutomatico
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lancesAutomatico
+     */
+    public function removeLancesAutomatico(\Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lancesAutomatico)
+    {
+        $this->lancesAutomaticos->removeElement($lancesAutomatico);
+    }
+
+    /**
+     * Get lancesAutomaticos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLancesAutomaticos()
+    {
+        return $this->lancesAutomaticos;
+    }
+}

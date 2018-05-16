@@ -1,0 +1,112 @@
+{% extends ':conta:base.html.twig' %}
+
+{% block title %}
+    <title>Meu Cadastro | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="{{ asset('js/vendor/dropzone/min/dropzone.min.js') }}"></script> <!-- Manter aqui devido ao pré-carregamento -->
+    <script>
+      Dropzone.autoDiscover = false;
+      var fileExtension = function (filename) {
+        return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+      };
+    </script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="tab1">
+        {% if app.request.get('sucesso') %}
+            <div class="alert alert-success">
+                <strong>Parabéns! Seu cadastro foi realizado com sucesso.</strong>
+            </div>
+        {% endif %}
+        {% if status == 0 %}
+            {% include ':conta:inc.documentos.html.twig' %}
+        {% endif %}
+
+        <div class="alert alert-success">
+            <strong>Lembre-se! As regras para participar do leilão Online mudaram, será necessário enviar um cheque caução. O cadastro somente será aprovado após recebimento do mesmo.</strong>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="list-table m-t">
+                    {% if lotesProximos|length > 0 %}
+                        <h4>{{ app.user.pessoa.primeiroNome }}, alguns lotes que você visitou irão entrar em pregão em
+                            breve.</h4>
+                        <div class="def-history-item">
+                            {% for favorito in lotesProximos %}
+                                <a href="{{ path('lote', {id: favorito.id, slug: favorito.slug}) }}"
+                                   class="def-hitem">
+                                    <div class="item-col data">{{ favorito.leilaoData|date('d/m/Y H:i') }}</div>
+                                    <div class="item-col foto"><img
+                                                src="{{ absolute_url(asset('public/leiloes/'~favorito.leilaoid~'/lotes/'~favorito.id~'/'~favorito.fotoid~'-min.jpg')) }}">
+                                    </div>
+                                    <div class="item-col titulo">
+                                        <div class="titulo">{{ favorito.descricao }}</div>
+                                        <div class="subtitulo">
+                                            {{ favorito.acessorios }}
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="wrapper">
+                            {{ app.user.pessoa.primeiroNome }}, esta área te avisará dos lotes e leilões do seu
+                            interesse que estão próximos de acontecer, assim, ficará fácil de lembrar de participar dos
+                            leilões do seu interesse.
+                            <br><br>
+                            E não se preocupe, para este aviso aparecer você não precisa fazer nada, iremos detectar os
+                            lotes que você mais visitou e te informar aqui.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="list-table m-t">
+                    {% if interesses|length > 0 %}
+                        <h4>Com base em seu interesse, achamos muito importante de mostrar estes lotes que serão leiloados:</h4>
+                        <div class="def-history-item">
+                            {% for item in interesses %}
+                                <a href="{{ path('lote', {id: item.id, slug: item.slug}) }}"
+                                   class="def-hitem">
+                                    <div class="item-col data">{{ item.leilaoData|date('d/m/Y H:i') }}</div>
+                                    <div class="item-col foto"><img
+                                                src="{{ absolute_url(asset('public/leiloes/'~item.leilaoid~'/lotes/'~item.id~'/'~item.fotoid~'-min.jpg')) }}">
+                                    </div>
+                                    <div class="item-col titulo">
+                                        <div class="titulo">{{ item.descricao }}</div>
+                                        <div class="subtitulo">
+                                            {{ item.acessorios }}
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="wrapper">
+                            Aqui iremos apresentar para você lotes que identificamos como do seu interesse. No momento
+                            não temos nenhum histórico seu para fazer esta recomendação.
+                            <br><br>
+                            Com base em seu histórico de buscas no site, lances, e leilões visitados poderemos filtrar o
+                            que é do seu interesse e apresentar as novidades aqui e em seu e-mail, para te manter sempre
+                            informado e não deixar passar nenhum leilão importante para você.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

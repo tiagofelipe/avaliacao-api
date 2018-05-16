@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Contato</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contato.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ contato.nome }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ contato.email }}</td>
+            </tr>
+            <tr>
+                <th>Telefone</th>
+                <td>{{ contato.telefone }}</td>
+            </tr>
+            <tr>
+                <th>Assunto</th>
+                <td>{{ contato.assunto }}</td>
+            </tr>
+            <tr>
+                <th>Mensagem</th>
+                <td>{{ contato.mensagem }}</td>
+            </tr>
+            <tr>
+                <th>Isrespondido</th>
+                <td>{% if contato.isRespondido %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{% if contato.data %}{{ contato.data|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('contato_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('contato_edit', { 'id': contato.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

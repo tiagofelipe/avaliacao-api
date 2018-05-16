@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% block metas %}
+        <meta property="robots" content="index,follow"/>
+        <meta property="googlebot" content="index, follow"/>
+        <meta property="revisit-after" content="2 days"/>
+        <meta property="language" content="pt-br"/>
+        <meta property="rating" content="general"/>
+        <meta property="page-topic"
+              content="{{ metaPageTopic is defined ? metaPageTopic : 'Rogério Menezes Leiloeiro Oficial' }}"/>
+        <meta property="classification"
+              content="{{ metaPageClassification is defined ? metaPageClassification : 'Rogério Menezes Leiloeiro Oficial' }}"/>
+        <meta property="distribution" content="Global"/>
+        <meta property="author" content="Wtis"/>
+        <meta property="copyright" content="wtis"/>
+        <meta property="og:type" content="website">
+        <meta name="theme-color" content="#000000"/>
+        {#<meta http-equiv="refresh" content="5">#}
+    {% endblock %}
+    {% block title %}
+        <title>Sistema Leilão Online - Rogério Menezes - Leiloeiro Oficial</title>
+    {% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/pregao/webframe.css') }}"/>
+    {% endblock %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<!-- CONTENT -->
+<div class="h-100 pos-relative" id="leilao">
+    <div class="aba2 col-md-4">
+        <table class="table-lote-lance-status">
+            <tbody>
+            <tr>
+                <td>Lote:</td>
+                <td>${ loteNumero }</td>
+            </tr>
+            <tr>
+                <td>Lance inicial:</td>
+                {# TODO: implement socket event to update this #}
+                <td>R$ ${ lote.valorInicial | moeda }</td>
+            </tr>
+            <tr>
+                {# TODO: implement socket event to update this #}
+                <td>Incremento:</td>
+                <td>R$ ${ lote.valorIncremento | moeda }</td>
+            </tr>
+            <tr>
+                <td>Maior lance:</td>
+                <td class="big input-ultimo-lance" :class="{novoLance: hasNovoLance}">R$ ${ valor | moeda }</td>
+            </tr>
+            <tr>
+                <td>Tempo:</td>
+                <td class="lance-timer" :class="{'lance-danger': countDownTimer <= calcPercentTimer(30)}">${ timerPregaoFormatado }</td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td class="status-lote"><span :style="'color: ' + colorStatus">${ statusLote }</span></td>
+            </tr>
+
+            <tr>
+                <td>Melhor lance:</td>
+                <td>
+                    <div class="melhorLance">
+                        <strong>${ apelido }</strong><br>
+                        ${ lanceLocalidade }<br>
+                        ${ lanceData }
+                        <br>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="aba3 col-md-5">
+        <p class="aba-title">Últimos lances</p>
+        <table class="table-lote-lance-historico" :class="{nenhumLance: lote.lances.length === 0}">
+            <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Data</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="lance in lote.lances">
+                <td>${ lance.arrematante.apelido }</td>
+                <td>${ moment(lance.data.date).format('LTS') }</td>
+                <td>R$ ${ lance.valor | moeda }</td>
+            </tr>
+            <tr v-if="lote.lances.length == 0">
+                <td colspan="3" style="text-align: left; font-weight: normal">Nenhum lance registrado para este lote.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--//// CONTENT -->
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+      /* TODO: Duplicidade disto. Avaliar reaproveitamento */
+      var leilaoService = {
+        lance: "{{ path('uapi_lote_lance', {id: leilao.id, lote: '__ID__'}) }}",
+        ultimosLances: "{{ path('api_lote_lances_get', {id: '__ID__'}) }}",
+        loadPregao: "{{ path('uapi_pregao_show', {id: leilao.id}) }}"
+      };
+      var AudioNotificationFiles = {
+        lance: "{{ absolute_url(asset('audios/lance.mp3')) }}",
+        meuLance: "{{ absolute_url(asset('audios/meulance.mp3')) }}",
+        err: "{{ absolute_url(asset('audios/error.mp3')) }}",
+        vendido: "{{ asset('audios/vendido.mp3') }}"
+      };
+      /* END TODO */
+
+      var leilao = {{ leilaoJson|raw }};
+      var pregao = {{ pregaoJson|raw }};
+      var lances = {{ lancesJson|raw }};
+      var __LEILAO__ = {{ leilao.id }};
+      {% if is_granted('ROLE_USER') %}
+      var __USERID__ = {{ app.user.id }};
+      var __ARREMATANTEID__ = {{ app.user.pessoa.arrematante.id }};
+      {% else %}
+      var __USERID__ = null;
+      var __ARREMATANTEID__ = null
+      {% endif %}
+      {% if app.environment == 'dev' %}
+      var __WSSERVER__ = "{{ ws }}";
+      {% else %}
+      var __WSSERVER__ = "{{ wss }}";
+      {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ asset('js/vendor/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/autobahn.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/gos_web_socket_client.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/php-js/number_format.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/moment.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendor/vue.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/mixins.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/directives.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/base.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pregao/script.webframe.js') }}"></script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Verificar Documento | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Arrematou um bem e está aguardando a entrega da documentação? Verifique aqui se o documento chegou."/>
+    <meta property="og:title" content="Meu Documento Chegou?"/>
+    <meta property="og:description"
+          content="Arrematou um bem e está aguardando a entrega da documentação? Verifique aqui se o documento chegou."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-sobre.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/documento.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/pages/documento.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="documento-chegou">
+        <h1>Meu documento chegou?</h1>
+        <div class="m-t-md"><h2 class="h1-normal">Consulte aqui se a documentação do lote arrematado já está disponível em nosso escritório</h2></div>
+        <form id="formVerificaDocumento" method="post" action="{{ path('documento') }}">
+            <div class="input-group m-t">
+                <input name="documento" type="text" class="form-control" required placeholder="CPF/CNPJ"
+                       value="{{ documento }}">
+                <span class="input-group-btn">
+                    <button class="btn btn-info" type="submit">Pesquisar</button>
+                </span>
+            </div>
+        </form>
+        {% if error %}
+            <div class="clearfloat"></div>
+            <div class="m-t"></div>
+            <div class="alert alert-danger">Nenhum documento disponível</div>
+        {% endif %}
+        {% if entity is not null %}
+            {% for reg in entity %}
+                <div class="documento-disponivel m-t {{ reg.entregue ? 'entregue' : '' }}">
+                    <table>
+                        <tr>
+                            <td>Nome</td>
+                            <td>{% if reg.arrematante %}{% else %}{{ reg.manualNome }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>CPF/CNPJ</td>
+                            <td>{{ documento }}</td>
+                        </tr>
+                        <tr>
+                            <td>Lote</td>
+                            <td>{% if reg.lote %}{% else %}{{ reg.manualLote }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Descrição</td>
+                            <td>{% if reg.lote %}{% else %}{{ reg.manualDescricao }}{% endif %}</td>
+                        </tr>
+                        {% if reg.manualComitente %}
+                            <tr>
+                                <td>Comitente</td>
+                                <td>{{ reg.manualComitente }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if reg.manualPlaca %}
+                            <tr>
+                                <td>Placa</td>
+                                <td>{{ reg.manualPlaca }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Data do Leilão</td>
+                            <td>{% if reg.lote %}{% else %}{{ reg.manualDataLeilao|date('d/m/Y') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Situação</td>
+                            <td class="disponivel-alert">{{ reg.entregue ? '<i class="fa fa-check"></i> Entregue' : 'Disponível para retirada' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="clearfloat"></div>
+    </div>
+{% endblock %}

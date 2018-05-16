@@ -1,0 +1,33 @@
+.documento-chegou{
+    padding: 20px;
+    border: #CCCCCC 1px solid;
+    background-color: #FFFFFF;
+    margin: 40px auto;
+    max-width: 800px;
+}
+
+.documento-disponivel{
+    background-color: #546e7a;
+    color: #FFFFFF;
+    padding: 15px;
+}
+.documento-disponivel table{
+    width: 100%;
+    border: 0;
+}
+.documento-disponivel table tr td{
+    padding: 6px;
+}
+.documento-disponivel table tr td:first-child{
+    text-align: right;
+    font-weight: normal;
+}
+.documento-disponivel table tr td{
+    font-weight: bold;
+}
+.documento-disponivel .disponivel-alert{
+    color: #B3FF99;
+}
+.documento-disponivel.entregue{
+    opacity: 0.5;
+}

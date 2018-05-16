@@ -1,0 +1,249 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Lance
+ *
+ * @ORM\Table(name="lance")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\LanceRepository")
+ */
+class Lance
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime")
+     */
+    private $data;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=255)
+     */
+    private $ip;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="tipo", type="boolean")
+     */
+    private $tipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valor", type="decimal", precision=10, scale=2)
+     */
+    private $valor;
+
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Arrematante", inversedBy="lance")
+     */
+    private $arrematante;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LanceAutomatico", inversedBy="lance")
+     */
+    private $lanceAutomatico;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Lote", inversedBy="lance")
+     */
+    private $lote;
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set data
+     *
+     * @param \DateTime $data
+     *
+     * @return Lance
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return \DateTime
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param string $ip
+     *
+     * @return Lance
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param boolean $tipo
+     *
+     * @return Lance
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return bool
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set valor
+     *
+     * @param string $valor
+     *
+     * @return Lance
+     */
+    public function setValor($valor)
+    {
+        $this->valor = $valor;
+
+        return $this;
+    }
+
+    /**
+     * Get valor
+     *
+     * @return string
+     */
+    public function getValor()
+    {
+        return $this->valor;
+    }
+
+    /**
+     * Set arrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante
+     *
+     * @return Lance
+     */
+    public function setArrematante(\Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante = null)
+    {
+        $this->arrematante = $arrematante;
+
+        return $this;
+    }
+
+    /**
+     * Get arrematante
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Arrematante
+     */
+    public function getArrematante()
+    {
+        return $this->arrematante;
+    }
+
+    /**
+     * Set lanceAutomatico
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lanceAutomatico
+     *
+     * @return Lance
+     */
+    public function setLanceAutomatico(\Uloc\Bundle\AppBundle\Entity\LanceAutomatico $lanceAutomatico = null)
+    {
+        $this->lanceAutomatico = $lanceAutomatico;
+
+        return $this;
+    }
+
+    /**
+     * Get lanceAutomatico
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\LanceAutomatico
+     */
+    public function getLanceAutomatico()
+    {
+        return $this->lanceAutomatico;
+    }
+
+    /**
+     * Set lote
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lote $lote
+     *
+     * @return Lance
+     */
+    public function setLote(\Uloc\Bundle\AppBundle\Entity\Lote $lote = null)
+    {
+        $this->lote = $lote;
+
+        return $this;
+    }
+
+    /**
+     * Get lote
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Lote
+     */
+    public function getLote()
+    {
+        return $this->lote;
+    }
+}

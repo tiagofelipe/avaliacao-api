@@ -1,0 +1,86 @@
+{% extends ':conta:base.html.twig' %}
+
+{% block title %}
+    <title>Histórico de Lances | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+      $(document).ready(function () {
+
+      });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="tab1">
+        <h3>Seus lances em lotes</h3>
+        <table class="table table-hover m-t">
+            <caption>Lances que você efetuou em lotes de leilões.</caption>
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Leilão</th>
+                <th>Lance</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in historico %}
+                <tr class="{{ item.lote.statusEncerrado ? 'encerrado' : '' }}">
+                    <td>{{ item.data|date('d/m/Y H:i') }}</td>
+                    <td><a target="_blank"
+                           href="{{ path('lote', {id: item.lote.id, slug: item.lote.slug}) }}">{{ item.lote.descricao }}
+                            <small>{{ item.lote.numero ? 'Lote '~item.lote.numero : '' }}</small>
+                        </a></td>
+                    <td>{{ item.lote.statusMessage }}</td>
+                </tr>
+            {% endfor %}
+            {% if historico|length < 1 %}
+                <tr>
+                    <td colspan="3">Você ainda não participou de nenhum leilão</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        <table class="table table-hover m-t">
+            <caption>Configuração de lances automáticos.</caption>
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Leilão</th>
+                <th>Lance</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in historico %}
+                <tr class="{{ item.lote.statusEncerrado ? 'encerrado' : '' }}">
+                    <td>{{ item.data|date('d/m/Y H:i') }}</td>
+                    <td><a target="_blank"
+                           href="{{ path('lote', {id: item.lote.id, slug: item.lote.slug}) }}">{{ item.lote.descricao }}
+                            <small>{{ item.lote.numero ? 'Lote '~item.lote.numero : '' }}</small>
+                        </a></td>
+                    <td>{{ item.lote.statusMessage }}</td>
+                    <td><a href="#">Alterar</a> <a href="#">Excluir</a></td>
+                </tr>
+            {% endfor %}
+            {% if historico|length < 1 %}
+                <tr>
+                    <td colspan="4">Você ainda não configurou nenhum lance automático</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

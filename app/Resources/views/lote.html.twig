@@ -1,0 +1,288 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>{{ lote.titulo }} | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="{% if lote.valorInicial > 0 %}R$ {{ lote.valorInicial|number_format(2,',','.') }}. {% endif %}{% if lote.descricao is not empty %}{{ lote.descricao|capitalize|slice(0,200) }}...{% endif %}"/>
+    <meta property="og:title" content="{{ lote.titulo }}"/>
+    <meta property="og:description"
+          content="{% if lote.valorInicial > 0 %}R$ {{ lote.valorInicial|number_format(2,',','.') }}{% endif %}"/>
+    <meta property="og:url" content="{{ url(app.request.get('_route'), {id: lote.id, slug: lote.slug}) }}"/>
+    <meta property="og:image"
+          content="{{ absolute_url(asset('public/leiloes/'~lote.leilao.id~'/lotes/'~lote.id~'/'~lote.fotos.first.id~'-min.'~lote.fotos.first.fileExtension)) }}"/>
+    {#<meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">#}
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ae8c75fae8843f7"></script>
+    <script>
+      gtag('event', 'page_view', {
+        'send_to': 'AW-867848012',
+        'ecomm_pagetype': 'product',
+        'ecomm_prodid': '{{ lote.id }}',
+        'ecomm_totalvalue': '{{ lote.valorInicial }}'{% if is_granted('ROLE_USER') %},
+        'user_id': '{{ app.user.id }}'
+          {% endif %}
+      });
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Product",
+      "name": "{{ lote.titulo }}",
+      "image": [
+        {% for k,foto in lote.fotos %}
+        "{{ absolute_url(asset('public/leiloes/'~lote.leilao.id~'/lotes/'~lote.id~'/'~foto.id~'.'~foto.fileExtension)) }}"{{ k==lote.fotos|length-1 ? '' : ',' }}
+        {% endfor %}
+       ],
+      "description": "{{ lote.descricao }}",
+      "mpn": "{{ lote.id }}",
+      "brand": "{{ lote.marca ? lote.marca.nome : 'Outros' }}",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "BRL",
+        "price": "{{ lote.valorInicial }}",
+        "priceValidUntil": "{{ lote.leilao.dataAbertura | date('Y-m-d') }}",
+        "itemCondition": "http://schema.org/UsedCondition",
+        "availability": "http://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "{{ lote.comitente ? lote.comitente.pessoa.nome : 'Rogério Menezes' }}"
+        }
+      }
+    }
+
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/leilao.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/lote.css') }}">
+    <!-- Core CSS file -->
+    <link rel="stylesheet" href="{{ asset('vendors/photoswipe/photoswipe.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('vendors/photoswipe/default-skin/default-skin.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+      // var leilao = {#{{ leilaoJson|raw }}#};
+      var leilaoService = {
+        lance: "{{ path('uapi_lote_lance', {id: leilao.id, lote: lote.id}) }}",
+        ultimosLances: "{{ path('api_lote_lances_get', {id: lote.id}) }}",
+        pushLance: "{{ path('api_lance_get', {id: '__ID__'}) }}"
+      };
+      var AudioNotificationFiles = {
+        lance: "{{ absolute_url(asset('audios/lance.mp3')) }}",
+        meuLance: "{{ absolute_url(asset('audios/meulance.mp3')) }}",
+        err: "{{ absolute_url(asset('audios/error.mp3')) }}",
+        vendido: "{{ asset('audios/vendido.mp3') }}"
+      };
+      var __THISPAGE__ = "{{ path('lote', {id: lote.id, slug: lote.slug}) }}";
+      var pregao = {{ pregaoJson|raw }};
+      var leilao = {{ leilaoJson|raw }};
+      var lote = {{ loteJson|raw }};
+      var lances = {{ lancesJson|raw }};
+      var __LEILAO__ = {{ leilao.id }};
+      {% if is_granted('ROLE_USER') %}
+      var __USERID__ = {{ app.user.id }};
+      var __ARREMATANTEID__ = {{ app.user.pessoa.arrematante.id }};
+      {% else %}
+      var __USERID__ = null;
+      var __ARREMATANTEID__ = null
+      {% endif %}
+      var __STATSLOTE_URL__ = "{{ path('uapi_stats_lote_click', {lote: lote.id}) }}";
+      //var __FAVORITO_URL__ = "{{ path('uapi_history_favoritos_add_lote', {id: '__ID__'}) }}";
+      var __FAVORITO_ID__ = {{ lote.id }};
+      var __FAVORITO_ITEM__ = {
+        id: {{ lote.id }},
+        titulo: "{{ lote.titulo }}",
+        descricao: "{{ lote.descricao }}",
+        url: "{{ url('lote', {id: lote.id, slug: lote.slug}) }}",
+        leilaoData: "{{ lote.leilao.dataAbertura|date('Y-m-d H:i:s') }}",
+        image: "{{ absolute_url(asset('public/leiloes/'~lote.leilao.id~'/lotes/'~lote.id~'/'~lote.fotos.first.id~'-min.'~lote.fotos.first.fileExtension)) }}"
+      };
+      {% if permitidoLances %}
+      var permitidoLances = true
+      {% else %}
+      var permitidoLances = false
+      {% endif %}
+    </script>
+    {{ parent() }}
+    {% if app.environment == 'dev' %}
+        <!-- Core JS file -->
+        <script type="text/javascript" src="{{ asset('vendors/photoswipe/photoswipe.min.js') }}"></script>
+        <!-- UI JS file -->
+        <script type="text/javascript" src="{{ asset('vendors/photoswipe/photoswipe-ui-default.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendor/autobahn.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendor/gos_web_socket_client.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendor/moment.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/pregao/moment.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendor/vue.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendor/v-money.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/pregao/mixins.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/pregao/directives.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/stats.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/pregao/base.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/pages/lote.js') }}"></script>
+    {% else %}
+        <script type="text/javascript" src="{{ asset('js/pages/lote.min.js') }}"></script>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include 'photoswipe/theme.html.twig' %}
+    <div class="page-info center-1200 content-1200">
+        <div class="row">
+            <div class="leilao-titulo col-md-6">Você está visualizando um lote do leilão <a
+                        href="{{ path('leilao', {id: lote.leilao.id}) }}"><strong>{{ lote.leilao.titulo }}</strong></a>
+                que acontecerá <strong>{{ tipos.tipo_leilao[lote.leilao.tipo].nome }}</strong></div>
+            <div class="col-md-6 text-right lote-actions2">
+                {% for doc in lote.leilao.documentos %}
+                    <a target="_blank"
+                       href="{{ asset('public/leiloes/'~lote.leilao.id~'/documentos/'~doc.id~'.'~doc.fileExtension) }}"><i
+                                class="fa fa-file-text-o"></i> {{ doc.nome }}</a>
+                {% endfor %}
+                <!--<a class="" href=""><i class="fa fa-file-text-o"></i> Condições</a>-->
+                {#<a href="{{ path('como-funciona') }}"><i class="fa fa-question"></i> Como participar?</a>
+                <a href="">Compartilhar</a>#}
+                <div class="addthis_inline_share_toolbox"></div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="clearfloat"></div>
+        <div class="center-1200 content-1200">
+            <div class="cont-leilao">
+                {% if lote.status == 10 %}
+                    <div class="alert alert-warning text-center"><strong>Este lote foi retirado</strong></div>
+                {% endif %}
+                <div class="item-leilao">
+                    <div class="left-leilao">
+                        <div class="def-padding">
+                            <div class="cont-img" id="lote-image-container">
+                                <a href="#">
+                                    <img src="{{ asset('public/leiloes/'~lote.leilao.id~'/lotes/'~lote.id~'/'~lote.fotos.first.id~'-min.'~lote.fotos.first.fileExtension) }}"
+                                         alt="Default Image" id="lote-image" data-index="0"
+                                         data-size="{{ lote.fotos.first.resolucao }}"
+                                         class="img-responsive"/>
+                                </a>
+                            </div>
+                            <ul class="lote-thumbs">
+                                {% for foto in lote.fotos %}
+                                    <li class="{{ loop.index == 1 ? 'selected' : '' }}{{ loop.index > 5 ? 'hide' : '' }}">
+                                        <a data-index="{{ loop.index }}" data-size="{{ foto.resolucao }}"
+                                           href="{{ absolute_url(asset('public/leiloes/'~lote.leilao.id~'/lotes/'~lote.id~'/'~foto.id~'.'~foto.fileExtension)) }}">
+                                            {% if lote.fotos|length > 5 and loop.index == 5 %}
+                                                <span class="more">+{{ lote.fotos|length - 5 }}</span>
+                                            {% endif %}
+                                            <img src="{{ asset('public/leiloes/'~lote.leilao.id~'/lotes/'~lote.id~'/'~foto.id~'-min.'~foto.fileExtension) }}"
+                                                 alt="{{ foto.nome }}"
+                                                 class="img-responsive lote-img">
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="clearfloat"></div>
+                        </div>
+                    </div>
+                    <div class="right-leilao">
+                        <div class="def-padding">
+                            {# TODO: Remover Favorito #}
+                            <a href="#adicionar-favorito"
+                               title="Clique para adicionar este lote na sua lista de favoritos"
+                               class="item-favorite-btn tip" data-id="{{ lote.id }}">
+                                <i class="fa fa-heart-o hide-hover"></i>
+                                <i class="fa fa-heart show-hover"></i>
+                            </a>
+                            {% if lote.numero %}
+                                <div class="item-condicoes m-b-md">
+                                    <!--Novo/Sucata (Condição) - -->Lote: <strong>{{ lote.numero }}</strong>
+                                </div>
+                            {% endif %}
+                            <h1 class="item-title">
+                                {{ lote.titulo }}
+                            </h1>
+                            <div class="item-date">
+                                <a href="{{ path('leilao', {id: lote.leilao.id}) }}"><i
+                                            class="fa fa-calendar item-ico"></i>
+                                    {% if date(lote.leilao.dataAbertura) < date() %}
+                                        Leilão realizado
+                                    {% else %}
+                                        O leilão acontecerá
+                                    {% endif %}
+                                    <strong>{{ lote.leilao.dataAbertura| localizeddate('full', 'none', 'pt-BR' ) }}
+                                        às {{ lote.leilao.dataAbertura| date('H:i') }}</strong>
+                                </a>
+                            </div>
+                            <div class="item-accessories">
+                                {% if lote.descricao is not empty %}
+                                    <div class="subitem-title">Descrição</div>
+                                    {{ lote.descricao|capitalize }}
+                                {% endif %}
+
+                                {% if lote.observacao is not empty %}
+                                    <div class="subitem-title">Observações</div>
+                                    {{ lote.observacao|capitalize }}
+                                {% endif %}
+
+                                {% if lote.valorInicial > 0 and lote.leilao.status != 99 %}
+                                    <div>
+                                        <div class="subitem-title">Valor inicial</div>
+                                        R$ {{ lote.valorInicial|number_format(2,',','.') }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="item-business">
+                                <div class="business-name">
+                                    <!--<i class="fa fa-briefcase item-ico"></i>
+                                    {{ lote.comitente.pessoa.nome }}-->
+                                    <div class="lote-comitente-logo"><img
+                                                src="{{ asset('public/comitentes/'~lote.comitente.imagem) }}"
+                                                width="140"></div>
+                                </div>
+                                <div class="business-condition">{# lote.comitente.condicoesVeiculo #}</div>
+                                <!-- TODO: CondiçõesBens / Veiculos. Reajustar compatibilidade -->
+                            </div>
+                            {#<div class="item-accessories">
+                                <div class="subitem-title">Prazo de entrega de documentos</div>
+                                {{ lote.comitente.prazoEntregaDocumentos }}
+                            </div>#}
+                            <div class="item-visit">
+                                <div><i class="fa fa-map-marker"></i> Visitação: {{ lote.leilao.infoVisitacao }}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfloat"></div>
+            </div><!-- Fim Center -->
+
+            {% if permitidoLances %}
+                <a name="lances"></a>
+                {% include 'inc.lote-lances.html.twig' %}
+            {% endif %}
+        </div>
+        <div class="clearfloat"></div>
+    </div>
+    <section id="destaques" class="center-1200 destaques section">
+        <div class="mais-destaques">Veja todos os destaques recentes</div>
+        <div class="lista-destaques carousel-container">
+            <div role="button" aria-hidden="false" class="carousel-prev disabled" data-type="prev" unselectable="on"
+                 aria-disabled="false"></div>
+            <div class="carousel-content">
+                <div class="carousel-limit">
+                    {% for lote in lotes|sort %}
+                        {% include 'utils/lista-lotes.html.twig' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div role="button" aria-hidden="false" class="carousel-next" data-type="next" unselectable="on"
+                 aria-disabled="false"></div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,160 @@
+<div class="prevent-vue-load hide">
+    <div id="lote-lance" class="lote-aba-lances" :class="{hasPregao: hasPregao}">
+        <div class="pregao-active">
+            <div class="pregao-alert">
+                <p>Este lote está em pregão, acesse o sistema para acompanhar o leilão e participar efetuando
+                    lances.</p>
+                <div><a href="{{ path('pregao_index', {id: leilao.id}) }}"
+                        class="btn btn-lg btn-success text-uppercase no-border-radius">Acessar Leilão Online</a></div>
+            </div>
+        </div>
+        <div class="wrapper-md aba-content">
+            <div class="row row-lance">
+                <div class="aba1 col-md-3 {% if not is_granted('ROLE_USER') %}naologado{% endif %}"
+                     :class="{hasConfirm: hasConfirm}">
+                    <div class="aba-content">
+                        <p class="aba-title">Tem interesse? Participe e dê lances</p>
+                        <div class="btns-lance">
+                            <button class="btn-lance btn-lance-incremento" @click="lanceIncrementoConfirm">
+                                <span class="hidden-xs">EFETUAR LANCE </span>+R$ {{ lote.valorIncremento |number_format(2, ',', '.') }}
+                            </button>
+                            <button class="btn-lance btn-lance-manual" @click="lanceManual"><span
+                                        class="hidden-xs">EFETUAR </span>LANCE MANUAL
+                            </button>
+                            <button class="btn-lance btn-lance-automatico" @click="configurarLanceAutomatico">
+                                <span class="hidden-xs">CONFIGURAR LANCE AUTOMÁTICO</span>
+                                <span class="hidden-md hidden-sm hidden-lg"><i class="fa fa-cog"></i> AUTOMÁTICO</span>
+                            </button>
+                        </div>
+                        <div class="clearfloat"></div>
+                        <div class="lote-notification-sound">
+                            <label for="audioNotification">
+                                <input type="checkbox" id="audioNotification" v-model="audioNotification">
+                                <span>Sons de notificação</span>
+                            </label>
+                        </div>
+                        <div class="lance-automatico-config">
+                            <!--Tiago, você configurou lances automáticos para o leilão deste lote, com valor máximo
+                            de
+                            <strong>R$
+                                18.000,00</strong>.
+                            <span>Clique em <u>configurar lance automático</u> para alterar suas configurações.</span>-->
+                        </div>
+                    </div>
+                    <div class="aba-naologado">
+                        <p>É necessário estar logado para participar do leilão e efetuar lances</p>
+                        <a class="btn btn-block btn-info m-t" href="{{ path('security_login_form') }}">Login</a>
+                        <a class="btn btn-block btn-default" href="{{ path('cadastro') }}">Cadastro</a>
+                    </div>
+                    <div class="confirm" :class="{hide: !hasConfirm}">
+                        <!-- INCREMENTO -->
+                        <div class="lanceIncremento" :class="{hide: !confirmLanceIncremento}">
+                            <p class="d-block m-b-md">Tem certeza que deseja efetuar um lance de <strong>R$
+                                    ${valorLance|moeda}</strong> ?</p>
+                            <p>
+                                <a name="lanceIncrementoBtn" ref="lanceIncrementoBtn" tabindex="1"
+                                   class="btn btn-success no-border-radius text-uppercase btn-block m-b-md btn-lg"
+                                   @click="lanceIncremento" @keyup.prevent.enter="lanceIncremento">Sim, efetuar
+                                    lance</a>
+                                <a class="btn btn-danger btn-lg no-border-radius btn-block text-uppercase m-b-md"
+                                   tabindex="2" @click="cancelConfirm">Cancelar</a>
+                            </p>
+                        </div>
+                        <!-- LANCE MANUAL -->
+                        <div class="lanceManual" :class="{hide: !confirmLanceManual}">
+                            <p class="d-block m-b-md">Digite abaixo o valor que você quer lançar</p>
+                            <p>
+                                <input ref="valorLanceFormatado" @keyup.enter="lanceManualConfirmar"
+                                       tabindex="1" type="text" v-model.lazy="valorLanceFormatado"
+                                       v-money="money">
+                            </p>
+                            <div class="btns-lanceManual">
+                                <a name="lanceIncrementoManualBtn" ref="lanceIncrementoManualBtn" tabindex="2"
+                                   class="btn btn-success no-border-radius text-uppercase m-b-md btn-lg"
+                                   @click="lanceManualConfirmar"
+                                   @keyup.prevent.enter="lanceManualConfirmar">Confirmar</a>
+                                <a class="btn btn-danger btn-lg no-border-radius text-uppercase m-b-md"
+                                   tabindex="3" @click="cancelConfirm">Cancelar</a>
+                            </div>
+
+                            <div class="lote-confirm-lance-manual">
+                                <label for="confirmLanceManual">
+                                    <input id="confirmLanceManual" type="checkbox"
+                                           v-model="confirmLanceManualCheck">
+                                    <span>Tem certeza que deseja efetuar um novo lance de ${valorLanceFormatado}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aba2 col-md-4">
+                    <p class="aba-title-empty">.</p>
+                    <table class="table-lote-lance-status">
+                        <tbody>
+                        <tr>
+                            <td>Lance inicial:</td>
+                            {# TODO: implement socket event to update this #}
+                            <td>R$ {{ lote.valorInicial |number_format(2, ',', '.') }}</td>
+                        </tr>
+                        <tr>
+                            {# TODO: implement socket event to update this #}
+                            <td>Incremento:</td>
+                            <td>R$ {{ lote.valorIncremento |number_format(2, ',', '.') }}</td>
+                        </tr>
+                        <tr>
+                            <td>Maior lance:</td>
+                            <td class="big input-ultimo-lance" :class="{novoLance: hasNovoLance}">${ maiorLance
+                                }
+                            </td>
+                        </tr>
+
+                        <tr v-for="(lance, k) in lances" v-if="k==0">
+                            <td></td>
+                            <td>
+                                <div :class="{meuLanceVencedor: lance.arrematante.id === __ARREMATANTEID__}">
+                                    <strong>${ lance.arrematante.apelido }</strong><br>
+                                    ${ lance.arrematante.pessoa.essencial.cidade }
+                                    - ${ lance.arrematante.pessoa.essencial.uf }<br>
+                                    ${ moment(lance.data.date).format('L') + ' - ' +
+                                    moment(lance.data.date).format('LTS') }
+                                    <br>
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="aba3 col-md-5">
+                    <p class="aba-title">Últimos lances</p>
+                    <table class="table-lote-lance-historico">
+                        <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(lance, k) in lances"
+                            :class="{meuLance: lance.arrematante.id === __ARREMATANTEID__}">
+                            <td>${ lance.arrematante.apelido } <span
+                                        v-if="lance.arrematante.id === __ARREMATANTEID__"
+                                        class="label-meu-lance">você</span></td>
+                            <td>${ moment(lance.data.date).format('L') + ' ' +
+                                moment(lance.data.date).format('LTS') }
+                            </td>
+                            <td>R$ ${ lance.valor | moeda }</td>
+                        </tr>
+                        <tr v-if="lances.length == 0">
+                            <td colspan="3" style="text-align: left; font-weight: normal">Nenhum lance
+                                registrado para este lote.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

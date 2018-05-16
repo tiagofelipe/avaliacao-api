@@ -1,0 +1,158 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Veiculo
+ *
+ * @ORM\Table(name="veiculo")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\VeiculoRepository")
+ */
+class Veiculo extends Lote
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="acessorios", type="string", length=255)
+     */
+    private $acessorios;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fipeAvaliacao", type="decimal", precision=10, scale=2)
+     */
+    private $fipeAvaliacao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fipeMinimo", type="decimal", precision=10, scale=2)
+     */
+    private $fipeMinimo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tabelaFipe", type="decimal", precision=10, scale=2)
+     */
+    private $tabelaFipe;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set acessorios
+     *
+     * @param string $acessorios
+     *
+     * @return Veiculo
+     */
+    public function setAcessorios($acessorios)
+    {
+        $this->acessorios = $acessorios;
+
+        return $this;
+    }
+
+    /**
+     * Get acessorios
+     *
+     * @return string
+     */
+    public function getAcessorios()
+    {
+        return $this->acessorios;
+    }
+
+    /**
+     * Set fipeAvaliacao
+     *
+     * @param string $fipeAvaliacao
+     *
+     * @return Veiculo
+     */
+    public function setFipeAvaliacao($fipeAvaliacao)
+    {
+        $this->fipeAvaliacao = $fipeAvaliacao;
+
+        return $this;
+    }
+
+    /**
+     * Get fipeAvaliacao
+     *
+     * @return string
+     */
+    public function getFipeAvaliacao()
+    {
+        return $this->fipeAvaliacao;
+    }
+
+    /**
+     * Set fipeMinimo
+     *
+     * @param string $fipeMinimo
+     *
+     * @return Veiculo
+     */
+    public function setFipeMinimo($fipeMinimo)
+    {
+        $this->fipeMinimo = $fipeMinimo;
+
+        return $this;
+    }
+
+    /**
+     * Get fipeMinimo
+     *
+     * @return string
+     */
+    public function getFipeMinimo()
+    {
+        return $this->fipeMinimo;
+    }
+
+    /**
+     * Set tabelaFipe
+     *
+     * @param string $tabelaFipe
+     *
+     * @return Veiculo
+     */
+    public function setTabelaFipe($tabelaFipe)
+    {
+        $this->tabelaFipe = $tabelaFipe;
+
+        return $this;
+    }
+
+    /**
+     * Get tabelaFipe
+     *
+     * @return string
+     */
+    public function getTabelaFipe()
+    {
+        return $this->tabelaFipe;
+    }
+}

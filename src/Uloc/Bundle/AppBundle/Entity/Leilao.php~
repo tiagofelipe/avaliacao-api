@@ -1,0 +1,866 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Leilao
+ *
+ * @ORM\Table(name="leilao")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\LeilaoRepository")
+ */
+class Leilao
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="autoFechamento", type="boolean")
+     */
+    private $autoFechamento;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="cobraComissao", type="boolean")
+     */
+    private $cobraComissao;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="cobraTaxasAdicionais", type="boolean")
+     */
+    private $cobraTaxasAdicionais;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigoInterno", type="string", length=255, unique=true)
+     */
+    private $codigoInterno;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comissao", type="decimal", precision=10, scale=2)
+     */
+    private $comissao;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dataAbertura", type="datetime")
+     */
+    private $dataAbertura;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dataFechamento", type="datetime")
+     */
+    private $dataFechamento;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idInterno", type="integer", unique=true)
+     */
+    private $idInterno;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="infoRetirada", type="string", length=255, nullable=true)
+     */
+    private $infoRetirada;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="infoVisitacao", type="string", length=255, nullable=true)
+     */
+    private $infoVisitacao;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="instancia", type="smallint")
+     */
+    private $instancia;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="leilaoJudicial", type="boolean")
+     */
+    private $leilaoJudicial;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="loteado", type="smallint")
+     */
+    private $loteado;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="mostrarHome", type="boolean")
+     */
+    private $mostrarHome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacao", type="text", nullable=true)
+     */
+    private $observacao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="resumo", type="string", length=255, nullable=true)
+     */
+    private $resumo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="status", type="smallint")
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="taxaIcms", type="decimal", precision=10, scale=2)
+     */
+    private $taxaIcms = 0.0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="taxaIss", type="decimal", precision=10, scale=2)
+     */
+    private $taxaIss = 0.0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="timerPregao", type="integer", nullable=true)
+     */
+    private $timerPregao;
+
+    /**
+     * ONLINE, PRESENCIAL OU 'ONLINE E PRESENCIAL'
+     * @var int
+     *
+     * @ORM\Column(name="tipo", type="smallint")
+     */
+    private $tipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     */
+    private $titulo;
+
+    /**
+     * @var CategoriaLeilao
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\CategoriaLeilao")
+     * @ORM\JoinColumn(name="categoria_codigo", referencedColumnName="codigo", nullable=false)
+     */
+    private $categoria;
+
+    /**
+     * @var LeilaoDocumentos
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\LeilaoDocumentos", mappedBy="leilao")
+     * @ORM\JoinColumn(name="leilao_documentos_id", referencedColumnName="id",nullable=false)
+     */
+    private $documentos;
+
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Leiloeiro", inversedBy="leilao")
+     */
+    private $leiloeiro;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Habilitacoes",mappedBy="leilao")
+     */
+    private $habilitacao;
+
+
+    public function __construct()
+    {
+        $this->documentos = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set autoFechamento
+     *
+     * @param boolean $autoFechamento
+     *
+     * @return Leilao
+     */
+    public function setAutoFechamento($autoFechamento)
+    {
+        $this->autoFechamento = $autoFechamento;
+
+        return $this;
+    }
+
+    /**
+     * Get autoFechamento
+     *
+     * @return bool
+     */
+    public function getAutoFechamento()
+    {
+        return $this->autoFechamento;
+    }
+
+    /**
+     * Set cobraComissao
+     *
+     * @param boolean $cobraComissao
+     *
+     * @return Leilao
+     */
+    public function setCobraComissao($cobraComissao)
+    {
+        $this->cobraComissao = $cobraComissao;
+
+        return $this;
+    }
+
+    /**
+     * Get cobraComissao
+     *
+     * @return bool
+     */
+    public function getCobraComissao()
+    {
+        return $this->cobraComissao;
+    }
+
+    /**
+     * Set cobraTaxasAdicionais
+     *
+     * @param boolean $cobraTaxasAdicionais
+     *
+     * @return Leilao
+     */
+    public function setCobraTaxasAdicionais($cobraTaxasAdicionais)
+    {
+        $this->cobraTaxasAdicionais = $cobraTaxasAdicionais;
+
+        return $this;
+    }
+
+    /**
+     * Get cobraTaxasAdicionais
+     *
+     * @return bool
+     */
+    public function getCobraTaxasAdicionais()
+    {
+        return $this->cobraTaxasAdicionais;
+    }
+
+    /**
+     * Set codigoInterno
+     *
+     * @param string $codigoInterno
+     *
+     * @return Leilao
+     */
+    public function setCodigoInterno($codigoInterno)
+    {
+        $this->codigoInterno = $codigoInterno;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoInterno
+     *
+     * @return string
+     */
+    public function getCodigoInterno()
+    {
+        return $this->codigoInterno;
+    }
+
+    /**
+     * Set comissao
+     *
+     * @param string $comissao
+     *
+     * @return Leilao
+     */
+    public function setComissao($comissao)
+    {
+        $this->comissao = $comissao;
+
+        return $this;
+    }
+
+    /**
+     * Get comissao
+     *
+     * @return string
+     */
+    public function getComissao()
+    {
+        return $this->comissao;
+    }
+
+    /**
+     * Set dataAbertura
+     *
+     * @param \DateTime $dataAbertura
+     *
+     * @return Leilao
+     */
+    public function setDataAbertura($dataAbertura)
+    {
+        $this->dataAbertura = $dataAbertura;
+
+        return $this;
+    }
+
+    /**
+     * Get dataAbertura
+     *
+     * @return \DateTime
+     */
+    public function getDataAbertura()
+    {
+        return $this->dataAbertura;
+    }
+
+    /**
+     * Set dataFechamento
+     *
+     * @param \DateTime $dataFechamento
+     *
+     * @return Leilao
+     */
+    public function setDataFechamento($dataFechamento)
+    {
+        $this->dataFechamento = $dataFechamento;
+
+        return $this;
+    }
+
+    /**
+     * Get dataFechamento
+     *
+     * @return \DateTime
+     */
+    public function getDataFechamento()
+    {
+        return $this->dataFechamento;
+    }
+
+    /**
+     * Set idInterno
+     *
+     * @param integer $idInterno
+     *
+     * @return Leilao
+     */
+    public function setIdInterno($idInterno)
+    {
+        $this->idInterno = $idInterno;
+
+        return $this;
+    }
+
+    /**
+     * Get idInterno
+     *
+     * @return int
+     */
+    public function getIdInterno()
+    {
+        return $this->idInterno;
+    }
+
+    /**
+     * Set infoRetirada
+     *
+     * @param string $infoRetirada
+     *
+     * @return Leilao
+     */
+    public function setInfoRetirada($infoRetirada)
+    {
+        $this->infoRetirada = $infoRetirada;
+
+        return $this;
+    }
+
+    /**
+     * Get infoRetirada
+     *
+     * @return string
+     */
+    public function getInfoRetirada()
+    {
+        return $this->infoRetirada;
+    }
+
+    /**
+     * Set infoVisitacao
+     *
+     * @param string $infoVisitacao
+     *
+     * @return Leilao
+     */
+    public function setInfoVisitacao($infoVisitacao)
+    {
+        $this->infoVisitacao = $infoVisitacao;
+
+        return $this;
+    }
+
+    /**
+     * Get infoVisitacao
+     *
+     * @return string
+     */
+    public function getInfoVisitacao()
+    {
+        return $this->infoVisitacao;
+    }
+
+    /**
+     * Set instancia
+     *
+     * @param integer $instancia
+     *
+     * @return Leilao
+     */
+    public function setInstancia($instancia)
+    {
+        $this->instancia = $instancia;
+
+        return $this;
+    }
+
+    /**
+     * Get instancia
+     *
+     * @return int
+     */
+    public function getInstancia()
+    {
+        return $this->instancia;
+    }
+
+    /**
+     * Set leilaoJudicial
+     *
+     * @param boolean $leilaoJudicial
+     *
+     * @return Leilao
+     */
+    public function setLeilaoJudicial($leilaoJudicial)
+    {
+        $this->leilaoJudicial = $leilaoJudicial;
+
+        return $this;
+    }
+
+    /**
+     * Get leilaoJudicial
+     *
+     * @return bool
+     */
+    public function getLeilaoJudicial()
+    {
+        return $this->leilaoJudicial;
+    }
+
+    /**
+     * Set loteado
+     *
+     * @param integer $loteado
+     *
+     * @return Leilao
+     */
+    public function setLoteado($loteado)
+    {
+        $this->loteado = $loteado;
+
+        return $this;
+    }
+
+    /**
+     * Get loteado
+     *
+     * @return int
+     */
+    public function getLoteado()
+    {
+        return $this->loteado;
+    }
+
+    /**
+     * Set mostrarHome
+     *
+     * @param boolean $mostrarHome
+     *
+     * @return Leilao
+     */
+    public function setMostrarHome($mostrarHome)
+    {
+        $this->mostrarHome = $mostrarHome;
+
+        return $this;
+    }
+
+    /**
+     * Get mostrarHome
+     *
+     * @return bool
+     */
+    public function getMostrarHome()
+    {
+        return $this->mostrarHome;
+    }
+
+    /**
+     * Set observacao
+     *
+     * @param string $observacao
+     *
+     * @return Leilao
+     */
+    public function setObservacao($observacao)
+    {
+        $this->observacao = $observacao;
+
+        return $this;
+    }
+
+    /**
+     * Get observacao
+     *
+     * @return string
+     */
+    public function getObservacao()
+    {
+        return $this->observacao;
+    }
+
+    /**
+     * Set resumo
+     *
+     * @param string $resumo
+     *
+     * @return Leilao
+     */
+    public function setResumo($resumo)
+    {
+        $this->resumo = $resumo;
+
+        return $this;
+    }
+
+    /**
+     * Get resumo
+     *
+     * @return string
+     */
+    public function getResumo()
+    {
+        return $this->resumo;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Leilao
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set taxaIcms
+     *
+     * @param string $taxaIcms
+     *
+     * @return Leilao
+     */
+    public function setTaxaIcms($taxaIcms)
+    {
+        $this->taxaIcms = $taxaIcms;
+
+        return $this;
+    }
+
+    /**
+     * Get taxaIcms
+     *
+     * @return string
+     */
+    public function getTaxaIcms()
+    {
+        return $this->taxaIcms;
+    }
+
+    /**
+     * Set taxaIss
+     *
+     * @param string $taxaIss
+     *
+     * @return Leilao
+     */
+    public function setTaxaIss($taxaIss)
+    {
+        $this->taxaIss = $taxaIss;
+
+        return $this;
+    }
+
+    /**
+     * Get taxaIss
+     *
+     * @return string
+     */
+    public function getTaxaIss()
+    {
+        return $this->taxaIss;
+    }
+
+    /**
+     * Set timerPregao
+     *
+     * @param integer $timerPregao
+     *
+     * @return Leilao
+     */
+    public function setTimerPregao($timerPregao)
+    {
+        $this->timerPregao = $timerPregao;
+
+        return $this;
+    }
+
+    /**
+     * Get timerPregao
+     *
+     * @return int
+     */
+    public function getTimerPregao()
+    {
+        return $this->timerPregao;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param integer $tipo
+     *
+     * @return Leilao
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return int
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set titulo
+     *
+     * @param string $titulo
+     *
+     * @return Leilao
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+
+    /**
+     * @return CategoriaLeilao
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * @param CategoriaLeilao $categoria
+     */
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+    }
+
+    /**
+     * @return LeilaoDocumentos
+     */
+    public function getDocumentos()
+    {
+        return $this->documentos;
+    }
+
+    /**
+     * @param LeilaoDocumentos $documento
+     */
+    public function addDocumentos(LeilaoDocumentos $documento)
+    {
+        $this->documentos[] = $documento;
+    }
+
+    /**
+     * Add documento
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LeilaoDocumentos $documento
+     *
+     * @return Leilao
+     */
+    public function addDocumento(\Uloc\Bundle\AppBundle\Entity\LeilaoDocumentos $documento)
+    {
+        $this->documentos[] = $documento;
+
+        return $this;
+    }
+
+    /**
+     * Remove documento
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\LeilaoDocumentos $documento
+     */
+    public function removeDocumento(\Uloc\Bundle\AppBundle\Entity\LeilaoDocumentos $documento)
+    {
+        $this->documentos->removeElement($documento);
+    }
+
+    /**
+     * Set leiloeiro
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Leiloeiro $leiloeiro
+     *
+     * @return Leilao
+     */
+    public function setLeiloeiro(\Uloc\Bundle\AppBundle\Entity\Leiloeiro $leiloeiro = null)
+    {
+        $this->leiloeiro = $leiloeiro;
+
+        return $this;
+    }
+
+    /**
+     * Get leiloeiro
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Leiloeiro
+     */
+    public function getLeiloeiro()
+    {
+        return $this->leiloeiro;
+    }
+
+    /**
+     * Add habilitacao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao
+     *
+     * @return Leilao
+     */
+    public function addHabilitacao(\Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao)
+    {
+        $this->habilitacao[] = $habilitacao;
+
+        return $this;
+    }
+
+    /**
+     * Remove habilitacao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao
+     */
+    public function removeHabilitacao(\Uloc\Bundle\AppBundle\Entity\Habilitacoes $habilitacao)
+    {
+        $this->habilitacao->removeElement($habilitacao);
+    }
+
+    /**
+     * Get habilitacao
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHabilitacao()
+    {
+        return $this->habilitacao;
+    }
+}

@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Meu Cadastro | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('js/vendor/dropzone/dropzone.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/conta.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/pages/conta.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="center-1200">
+        <div class="row info-conta m-b-md">
+            <div class="col-xs-6">
+                {{ app.user.pessoa.nome }}<br>
+                PIN: <strong>{{ "%05s"|format(app.user.pessoa.id) }}</strong>
+            </div>
+            <div class="col-xs-6 text-right">
+                {% set status = app.user.pessoa.arrematante.status %}
+                <div class="user-status status-{{ status }}">
+                    {% if status == 0 %}
+                        <i class="fa fa-exclamation-triangle"></i>
+                    {% elseif status == 1 %}
+                        <i class="fa fa-check"></i>
+                    {% elseif status == 99 %}
+                        <i class="fa fa-ban"></i>
+                    {% else %}
+                        <i class="fa fa-times"></i>
+                    {% endif %}
+                    <span>CADASTRO {{ app.user.pessoa.arrematante.statusMessage(status) }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-bar">
+            <button type="button" class="btn btn-default btn-nav-mobile hide " data-toggle="collapse" aria-expanded="false">
+                <span class="sr-only">Menu de Navegação</span>
+                <span><i class="fa fa-bars"></i> Menu</span>
+            </button>
+            <div class="clearfloat"></div>
+            <ul class="nav nav-tabs">
+                <li role="presentation" {{ page=='home' ? 'class="active"' : '' }}><a href="{{ path('user_home') }}">Home</a>
+                </li>
+                <li role="presentation" {{ page=='favoritos' ? 'class="active"' : '' }} class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="false">
+                        Favoritos <span class="caret"></span> </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('user_favoritos_leiloes') }}">Leilões</a></li>
+                        <li><a href="{{ path('user_favoritos_lotes') }}">Lotes</a></li>
+                    </ul>
+                </li>
+                <li role="presentation" {{ page=='cadastro' ? 'class="active"' : '' }}><a
+                            href="{{ path('user_cadastro') }}">Dados cadastrais</a></li>
+                <li role="presentation" {{ page=='historico' ? 'class="active"' : '' }} class="dropdown"><a href="#"
+                                                                                                            class="dropdown-toggle"
+                                                                                                            data-toggle="dropdown"
+                                                                                                            role="button"
+                                                                                                            aria-haspopup="true"
+                                                                                                            aria-expanded="false">
+                        Histórico <span class="caret"></span> </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('user_historico_leiloes') }}">Leilões</a></li>
+                        <li><a href="{{ path('user_historico_lances') }}">Lances</a></li>
+                        <li><a href="{{ path('user_historico_lotes') }}">Lotes visitados</a></li>
+                        {#<li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>#}
+                    </ul>
+                </li>
+                {#<li role="presentation" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                                            role="button" aria-haspopup="true" aria-expanded="false">
+                        Configurações <span class="caret"></span> </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Leilões</a></li>
+                        <li><a href="#">Lances</a></li>
+                        <li><a href="#">Lotes visitados</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>#}
+                <li role="presentation"><a href="{{ path('contato') }}">Dúvidas? Fale conosco</a></li>
+            </ul>
+        </div>
+        <div class="panel-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        {#<div class="aplicativo-img">
+            <a href="{{ path('aplicativo') }}"><img src="{{ asset('images/login/banner-aplicativo.jpg') }}"
+                                                    class="img-responsive"></a>
+        </div>#}
+    </div>
+{% endblock %}

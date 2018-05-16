@@ -1,0 +1,38 @@
+.page-leiloes{
+    margin-bottom: 50px;
+}
+.agenda .agenda-content {
+    background: none;
+    padding: 0;
+}
+.agenda {
+    margin-top: 0 !important;
+}
+.agenda .leiloes{
+    margin: 0 -8px !important;
+    position: relative;
+}
+.agenda .leilao-header {
+    background-color: #2C2E21;
+}
+.leilao-content .data, .leilao-content .previsao {
+    color: #FFFFFF;
+}
+.agenda .leilao-header:before {
+    background: url(../images/icons/calendar-white.png);
+}
+
+.item-favorite-btn{
+    position: relative;
+    font-size: 22px;
+}
+.item-favorite-btn .show-hover{
+    display: none;
+}
+.item-favorite-btn:hover .hide-hover, .item-favorite-btn.active .hide-hover{
+    display: none;
+}
+.item-favorite-btn:hover .show-hover, .item-favorite-btn.active .show-hover{
+    display: inline-block;
+    color: crimson;
+}

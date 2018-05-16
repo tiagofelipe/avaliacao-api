@@ -1,0 +1,143 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * TipoInteresseArrematante
+ *
+ * @ORM\Table(name="tipo_interesse_arrematante")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\TipoInteresseArrematanteRepository")
+ */
+class TipoInteresseArrematante
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo", type="string", length=255)
+     */
+    private $codigo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=255)
+     */
+    private $nome;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Arrematante", mappedBy="tipoInteresseArrematante")
+     */
+    private $arrematante;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     *
+     * @return TipoInteresseArrematante
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return TipoInteresseArrematante
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->arrematante = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add arrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante
+     *
+     * @return TipoInteresseArrematante
+     */
+    public function addArrematante(\Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante)
+    {
+        $this->arrematante[] = $arrematante;
+
+        return $this;
+    }
+
+    /**
+     * Remove arrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante
+     */
+    public function removeArrematante(\Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante)
+    {
+        $this->arrematante->removeElement($arrematante);
+    }
+
+    /**
+     * Get arrematante
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArrematante()
+    {
+        return $this->arrematante;
+    }
+}

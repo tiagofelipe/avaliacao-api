@@ -1,0 +1,22 @@
+{% extends ':Emails:theme1.html.twig' %}
+
+{% block body %}
+    <div style="line-height:1.5;font-family:arial, helvetica, sans-serif;color:#4e4e4e;text-align:justify;font-size:16px;min-height:16px;vertical-align:top;padding:10px 30px">
+
+
+        <div class="content-part line-height-15 justify"
+             style="line-height:1.5;font-family:arial, helvetica, sans-serif;color:#4e4e4e;text-align:justify;font-size:16px;min-height:16px;vertical-align:top;padding:10px 30px">
+            <p style="font-size: 10px">Se não etiver visualizando as imagens deste e-mail, procure a opção
+                “exibir imagens” no seu leitor de e-mail atual, ou então <a href="#">clique aqui para
+                    visualizar
+                    este e-mail diretamente no navegador.</a></p>
+            <p>Você solicitou recuperação de senha. Clique no link abaixo para acessar a página de recuperação .</p>
+            <a href="{{ app.request.getSchemeAndHttpHost() }}{{ link }}" target="_blank">Clique aqui</a>
+            <p>
+
+            </p>
+            <div style="text-align: left"></div>
+        </div>
+
+    </div>
+{% endblock %}

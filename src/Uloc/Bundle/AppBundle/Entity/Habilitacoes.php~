@@ -1,0 +1,161 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Habilitacoes
+ *
+ * @ORM\Table(name="habilitacoes")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\HabilitacoesRepository")
+ */
+class Habilitacoes
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dataHabilitacao", type="datetime")
+     */
+    private $dataHabilitacao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ipAcesso", type="string", length=255)
+     */
+    private $ipAcesso;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Arrematante", inversedBy="habilitacao")
+     * @ORM\JoinColumn(name="arrematanteId", referencedColumnName="id")
+     */
+
+    private $arrematante;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Leilao", inversedBy="habilitacao")
+     */
+    private $leilao;
+
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dataHabilitacao
+     *
+     * @param \DateTime $dataHabilitacao
+     *
+     * @return Habilitacoes
+     */
+    public function setDataHabilitacao($dataHabilitacao)
+    {
+        $this->dataHabilitacao = $dataHabilitacao;
+
+        return $this;
+    }
+
+    /**
+     * Get dataHabilitacao
+     *
+     * @return \DateTime
+     */
+    public function getDataHabilitacao()
+    {
+        return $this->dataHabilitacao;
+    }
+
+    /**
+     * Set ipAcesso
+     *
+     * @param string $ipAcesso
+     *
+     * @return Habilitacoes
+     */
+    public function setIpAcesso($ipAcesso)
+    {
+        $this->ipAcesso = $ipAcesso;
+
+        return $this;
+    }
+
+    /**
+     * Get ipAcesso
+     *
+     * @return string
+     */
+    public function getIpAcesso()
+    {
+        return $this->ipAcesso;
+    }
+
+    /**
+     * Set arrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante
+     *
+     * @return Habilitacoes
+     */
+    public function setArrematante(\Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante = null)
+    {
+        $this->arrematante = $arrematante;
+
+        return $this;
+    }
+
+    /**
+     * Get arrematante
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Arrematante
+     */
+    public function getArrematante()
+    {
+        return $this->arrematante;
+    }
+
+    /**
+     * Set leilao
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Leilao $leilao
+     *
+     * @return Habilitacoes
+     */
+    public function setLeilao(\Uloc\Bundle\AppBundle\Entity\Leilao $leilao = null)
+    {
+        $this->leilao = $leilao;
+
+        return $this;
+    }
+
+    /**
+     * Get leilao
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Leilao
+     */
+    public function getLeilao()
+    {
+        return $this->leilao;
+    }
+}

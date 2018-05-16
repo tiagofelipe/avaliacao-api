@@ -1,0 +1,173 @@
+<?php
+/**
+ * Este arquivo é parte do código fonte Uloc
+ *
+ * (c) Tiago Felipe <tiago@tiagofelipe.com>
+ *
+ * Para informações completas dos direitos autorais, por favor veja o arquivo LICENSE
+ * distribuído junto com o código fonte.
+ */
+
+namespace Uloc\Bundle\AppBundle\Entity\Pessoa;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Classe responsável por armazenar a origem do cadastro de uma Pessoa
+ *
+ * @ORM\Table(name="pessoa_origem_cadastro")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Pessoa\PessoaOrigemCadastroRepository")
+ */
+class OrigemCadastro
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="text", nullable=true)
+     */
+    private $descricao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=255)
+     */
+    private $nome;
+
+    /**
+     * @var \stdClass
+     *
+     * @ORM\Column(name="extra", type="object", nullable=true)
+     */
+    private $extra;
+
+    /**
+     * Um OrigemCadastro tem Muitos Pessoas
+     * @ORM\OneToMany(targetEntity="Pessoa", mappedBy="origemCadastro")
+     */
+    private $pessoas;
+
+    /**
+     * @return mixed
+     */
+    public function getPessoas()
+    {
+        return $this->pessoas;
+    }
+
+    /**
+     * @param Pessoa $pessoa
+     */
+    public function addPessoa(Pessoa $pessoa)
+    {
+        $this->pessoas[] = $pessoa;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set descricao
+     *
+     * @param string $descricao
+     *
+     * @return OrigemCadastro
+     */
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    /**
+     * Get descricao
+     *
+     * @return string
+     */
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return OrigemCadastro
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * Set extra
+     *
+     * @param \stdClass $extra
+     *
+     * @return OrigemCadastro
+     */
+    public function setExtra($extra)
+    {
+        $this->extra = $extra;
+
+        return $this;
+    }
+
+    /**
+     * Get extra
+     *
+     * @return \stdClass
+     */
+    public function getExtra()
+    {
+        return $this->extra;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pessoas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Remove pessoa
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Pessoa\Pessoa $pessoa
+     */
+    public function removePessoa(\Uloc\Bundle\AppBundle\Entity\Pessoa\Pessoa $pessoa)
+    {
+        $this->pessoas->removeElement($pessoa);
+    }
+}

@@ -1,0 +1,261 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html {
+    -webkit-tap-highlight-color: #353435;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #FFFFFF;
+    background-color: #353435 !important; /* eceff1 */
+    -webkit-font-smoothing: antialiased;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.btn-dark {
+    background-color: #414042;
+    color: #ffffff;
+}
+
+:hover.btn-dark, :active.btn-dark, :link.btn-dark, :visited.btn-dark {
+    color: #f2f2f2 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.clearfloat {
+    clear: both;
+    height: 0;
+    font-size: 1px;
+    line-height: 0;
+}
+
+.center-1200 {
+    max-width: 1200px;
+    margin: auto;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.m-l-sm {
+    margin-left: 5px;
+}
+
+.m-l-md {
+    margin-left: 10px;
+}
+
+.m-b-md {
+    margin-bottom: 15px;
+}
+
+.m-r-sm {
+    margin-right: 5px;
+}
+
+.m-r-md {
+    margin-right: 15px;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+/* Conteúdo */
+html, body, .leilao-aviso-container, .leilao-container, .iterate, .h-100 {
+    height: 100%;
+    margin: 0;
+    background: #353435;
+}
+
+.leilao-aviso-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.leilao-aviso {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+}
+
+.leilao-aviso .leilao-aviso-content {
+    text-align: center;
+}
+
+#app-container {
+    /*transition: 0.2s -webkit-filter linear;*/
+}
+
+.fullLoadingContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1099;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333333 !important;
+}
+
+.fullLoadingContainer .fullLoadingContent {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px;
+    z-index: 1100;
+    -webkit-box-shadow: 10px 10px 28px -11px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 28px -11px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 28px -11px rgba(0, 0, 0, 0.75);
+    opacity: 0.8;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+table.table-lote-lance-status{
+    width: 100%;
+    border: none;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    margin: 10px auto;
+    padding: 0;
+}
+table.table-lote-lance-status tr th, table.table-lote-lance-status tr td{
+    border-color: #333;
+    margin-bottom: 2px;
+    padding: 6px;
+}
+table.table-lote-lance-status tr td:last-child{
+    background-color: #666666;
+}
+table.table-lote-lance-status tr td.input-ultimo-lance{
+    background-color: #666666;
+    -webkit-transition: background-color 0.5s ease-out;
+    -moz-transition: background-color .5s ease-out;
+    -o-transition: background-color .5s ease-out;
+    transition: background-color .5s ease-out;
+}
+table.table-lote-lance-status tr td.input-ultimo-lance.novoLance{
+    background-color: #01cb3a !important;
+    -webkit-transition: background-color 0s ease-out;
+    -moz-transition: background-color .0s ease-out;
+    -o-transition: background-color .0s ease-out;
+    transition: background-color .0s ease-out;
+}
+table.table-lote-lance-status tr:last-child td:last-child{
+    background: none;
+    border-spacing: 0px;
+    position: relative;
+}
+table.table-lote-lance-status tr:last-child td:last-child > div{
+    margin-top: -2px;
+}
+table.table-lote-lance-status tr td.big{
+    font-size: 18px;
+    font-weight: bold;
+}
+table.table-lote-lance-historico tr.meuLance td{
+    background-color: #6e6e6e !important;
+}
+table.table-lote-lance-historico{
+    width: 100%;
+    border-collapse: separate;
+    border: none;
+    padding: 0;
+    background-color: #666666;
+}
+.meuLanceVencedor{
+    background-color: #40CF6B;
+    margin: 0;
+    padding: 10px;
+}
+.label-meu-lance{
+    display: inline-block;
+    padding: 0 4px;
+    font-size: 9px;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #333333;
+    margin-left: 4px;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+/*table.table-lote-lance-historico thead, table.table-lote-lance-historico tbody tr {
+    display: table;
+    width: 100% ;
+    table-layout:fixed;
+}*/
+table.table-lote-lance-historico tr th, table.table-lote-lance-historico tr td{
+    margin-bottom: 10px;
+    padding: 10px;
+}
+table.table-lote-lance-historico tr th{
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: #474747 1px solid !important;
+    background: #1e5799; /* Old browsers */
+    background: -moz-linear-gradient(top, #1e5799 0%, #2989d8 0%, #626262 0%, #4f4f4f 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #1e5799 0%,#2989d8 0%,#626262 0%,#4f4f4f 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #1e5799 0%,#2989d8 0%,#626262 0%,#4f4f4f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#4f4f4f',GradientType=0 ); /* IE6-9 */
+}
+table.table-lote-lance-historico tr td{
+    border-bottom: #474747 1px solid !important;
+    border-top: #767676 1px solid !important;
+    font-size: 12px;
+    cursor: default;
+}
+table.table-lote-lance-historico tr td:last-child, table.table-lote-lance-historico tr th:last-child{
+    text-align: right;
+}
+table.table-lote-lance-historico tr:first-child td:first-child{
+    font-weight: bold;
+}
+
+.lance-danger {
+    color: #f24427 !important;
+}
+
+.melhorLance{
+    font-size: 12px;
+}

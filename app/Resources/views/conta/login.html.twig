@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Acessar Conta | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Conecte-se e participe dos nossos leilões online e presencial. Dê lances."/>
+    <meta property="og:title" content="Login"/>
+    <meta property="og:description"
+          content="Conecte-se e participe dos nossos leilões online e presencial. Dê lances."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-sobre.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/pages/login.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1 class="view-seo">Login</h1>
+    <div class="page-login">
+        <div class="app-auth">
+            <div class="container-login">
+
+                <div class="login-tab">
+                    <ul class="options">
+                        <li class="selected"><a href="javascript:void(0)" data-class="simple">Login</a></li>
+                        <li><a href="{{ path('cadastro') }}" data-class="dev">Cadastro</a></li>
+                    </ul>
+                    <div class="clearfloat"></div>
+                    <div class="hdiv"></div>
+                    <div class="pcontent">
+                        {% if error %}
+                            <div class="login-errors">
+                                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            </div>
+                        {% endif %}
+
+                        <div id="login1">
+                            {{ form_start(form, {attr: {'class': 'form-login'}}) }}
+                            <label for="username">Username:</label>
+                            {{ form_widget(form._username, {attr: {'autofocus': true, 'class': 'input-login username', 'placeholder': 'Apelido, email ou CPF/CNPJ'}}) }}
+                            <div class="clearfloat"></div>
+                            <label for="password">Password:</label>
+                            {{ form_widget(form._password, {attr: {'class': 'input-login password', 'placeholder': 'Senha'}}) }}
+                            <div class="clearfloat"></div>
+                            <div class="s-i-l">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on"
+                                       class="lembrar" checked/>
+                                <label for="remember_me">Continuar conectado</label>
+                            </div>
+
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}">
+                            <button type="submit" class="btn-login">Entrar</button>
+                            <div class="recover-pw"><a href="{{ app.request.getSchemeAndHttpHost() }}/recupera-senha">Esqueci minha senha</a></div>
+                            {{ form_end(form) }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {#<a href="{{ path('aplicativo') }}"><img src="{{ asset('images/login/banner-aplicativo.jpg') }}"
+                                                   class="img-responsive"></a>#}
+{% endblock %}

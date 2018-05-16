@@ -1,0 +1,54 @@
+<div class="lote-item">
+    {% if lote.leilaoId is defined %}
+        {% set thumb = lote.leilaoId~'/lotes/'~lote.id~'/'~lote.fotoDestaque.thumb %}
+    {% else %}
+        {% set thumb = lote.leilao.id~'/lotes/'~lote.id~'/'~lote.fotoDestaque.thumb %}
+    {% endif %}
+    <div class="item lote-item-status{{ lote.status }}">
+        <a href="{{ path('lote', {id: lote.id, slug: lote.slug}) }}" class="img-destaque">
+            <div class="img pos-relative">
+                <img src="{{ asset('public/leiloes/'~thumb) }}" alt="#" height="120"/>
+                {% if lote.condicao == 7 %}<span>sucata</span>{% endif %}
+            </div>
+            {% if lote.numero %}
+                <div class="lote-num">
+                    <span>LOTE</span>
+                    <strong>{{ lote.numero }}</strong>
+                </div>
+            {% endif %}
+        </a>
+        <div class="info">
+            <div>
+                <!--<div>{# lote.tipo.nome #}</div>-->
+                <a href="{{ path('lote', {id: lote.id, slug: lote.slug}) }}"><h3>
+                        {% if lote.titulo|length > 90 %}
+                            {{ lote.titulo|slice(0,90) }}...
+                        {% else %}
+                            {{ lote.titulo }}
+                        {% endif %}
+                    </h3></a>
+                <p>{{ lote.descricao|capitalize }}</p>
+                <p><a class="favorito" href="#"
+                      onclick="alert('Aguarde, estamos configurando nosso módulo de favoritos. Esta opção estará disponível em breve.')"><i
+                                class="fa fa-star-o no-active"></i> <i class="fa fa-star active"></i> Adicionar como
+                        favorito </a></p>
+            </div>
+            <div class="panel-lance">
+                {% if lote.valorInicial > 0 or lote.ultimoLanceValor > 0 %}
+                    {% if lote.ultimoLanceValor %}
+                        <p class="lance-atual">R$ {{ lote.ultimoLanceValor | number_format(2, ',', '.') }}</p>
+                        <p class="lance-atual-usuario">Por: {{ lote.ultimoLanceApelido | upper }}</p>
+                    {% else %}
+                        <p class="lance-atual">R$ {{ lote.valorInicial | number_format(2, ',', '.') }}</p>
+                        <p class="lance-atual-usuario">Lance inicial</p>
+                    {% endif %}
+                    {% if lote.status < 4 %}
+                        <p class="lance-action"><a target="_blank"
+                                                   href="{{ path('lote', {id: lote.id, slug: lote.slug}) }}#lances"
+                                                   class="btn btn-success btn-sm btn-block">Efetuar lance</a></p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

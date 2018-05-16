@@ -1,0 +1,55 @@
+{% extends ':conta:base.html.twig' %}
+
+{% block title %}
+    <title>Histórico de Lotes Visitados | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+      $(document).ready(function () {
+
+      });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="tab1">
+        <h4>Lotes que você visualizou</h4>
+        <table class="table table-hover m-t">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Lote</th>
+                <th>Situação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in historico %}
+                <tr class="{{ item.lote.statusEncerrado ? 'encerrado' : '' }}">
+                    <td>{{ item.data|date('d/m/Y H:i') }}</td>
+                    <td><a target="_blank"
+                           href="{{ path('lote', {id: item.lote.id, slug: item.lote.slug}) }}">{{ item.lote.titulo }}
+                            <small>{{ item.lote.numero ? 'Lote '~item.lote.numero : '' }}</small>
+                        </a></td>
+                    <td>{{ item.lote.statusMessage }}</td>
+                </tr>
+            {% endfor %}
+            {% if historico|length < 1 %}
+                <tr>
+                    <td colspan="3">Você ainda não visitou nenhum lote</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

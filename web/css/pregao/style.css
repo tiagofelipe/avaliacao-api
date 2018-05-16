@@ -1,0 +1,779 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html {
+    -webkit-tap-highlight-color: #353435;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #FFFFFF;
+    background-color: #353435 !important; /* eceff1 */
+    -webkit-font-smoothing: antialiased;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.btn-dark {
+    background-color: #414042;
+    color: #ffffff;
+}
+
+:hover.btn-dark, :active.btn-dark, :link.btn-dark, :visited.btn-dark {
+    color: #f2f2f2 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.clearfloat {
+    clear: both;
+    height: 0;
+    font-size: 1px;
+    line-height: 0;
+}
+
+.center-1200 {
+    max-width: 1200px;
+    margin: auto;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.m-l-sm {
+    margin-left: 5px;
+}
+
+.m-l-md {
+    margin-left: 10px;
+}
+
+.m-b-md {
+    margin-bottom: 15px;
+}
+
+.m-r-sm {
+    margin-right: 5px;
+}
+
+.m-r-md {
+    margin-right: 15px;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+/* Conteúdo */
+html, body, .leilao-aviso-container, .leilao-container, .iterate, .h-100 {
+    height: 100%;
+    margin: 0;
+    background: #353435;
+}
+
+.leilao-aviso-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.leilao-aviso {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+}
+
+.leilao-aviso .leilao-aviso-content {
+    text-align: center;
+}
+
+#app-container {
+    /*transition: 0.2s -webkit-filter linear;*/
+}
+
+.fullLoadingContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1099;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333333 !important;
+}
+
+.fullLoadingContainer .fullLoadingContent {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px;
+    z-index: 1100;
+    -webkit-box-shadow: 10px 10px 28px -11px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 28px -11px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 28px -11px rgba(0, 0, 0, 0.75);
+    opacity: 0.8;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+.d-block {
+    display: block;
+}
+
+.leilao-aviso .logo {
+    margin-bottom: 80px;
+}
+
+.leilao-aviso .l-titulo {
+    font-size: 30px;
+    /*font-weight: bold;*/
+    text-transform: uppercase;
+}
+
+.leilao-aviso .l-info {
+    font-size: 30px;
+    color: #7FFF00;
+}
+
+.leilao-aviso .btn-back a {
+    margin-top: 20px;
+    display: inline-block;
+    background-color: #666666;
+    padding: 10px 20px;
+    color: #FFF !important;
+}
+
+.leilao-container {
+
+}
+
+.leilao-container .iterate {
+    padding: 22px;
+}
+
+.leilao-container .iterate .col1 {
+    float: left;
+    width: 70%;
+}
+
+.leilao-container .iterate .col2 {
+    float: left;
+    padding-left: 27px;
+    width: 30%;
+}
+
+.lote-i-label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.lote-info-text {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.lote-info-text > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lote-num-container {
+    float: left;
+    min-width: 100px;
+}
+
+.lote-desc-container {
+    float: left;
+    margin-left: 1%;
+    flex: 1;
+}
+
+.lote-input {
+    flex: 1;
+    background-color: #666666;
+    padding: 8px;
+}
+
+.lote-input.lote-num {
+    font-size: 32px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lote-input.lote-desc {
+    font-size: 22px;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.lote-img {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.lote-img img {
+    width: 100%;
+}
+
+.lote-img .loading {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    height: 20px;
+    text-align: center;
+    z-index: -1;
+}
+
+.col-flex-column {
+    height: 100%;
+    padding-bottom: 68px; /* Footer Height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+html.pregoeiro-telao, body.pregoeiro-telao, .pregoeiro-telao .leilao-aviso-container, .pregoeiro-telao .leilao-container, .pregoeiro-telao .iterate, .pregoeiro-telao .h-100, .pregoeiro-telao, .pregoeiro-telao .leilao-container{
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+.pregoeiro-telao .leilao-container .iterate{
+    padding: 2px !important;
+}
+.pregoeiro-telao .lote-input.lote-desc {
+    font-size: 30px;
+    overflow: auto;
+}
+.pregoeiro-telao .lote-input{
+    background-color: #FFFFFF;
+    color: #000000;
+    font-weight: bold;
+}
+.pregoeiro-telao .lance-status > div > span{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
+}
+.pregoeiro-telao .lance-status > div div {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-size: 28px;
+    text-align: center;
+}
+.pregoeiro-telao .status-lote{
+    white-space: nowrap;
+    overflow: hidden;
+}
+.pregoeiro-telao .status-lote span{
+    display: inline-block;
+    /*background-color: #000000;*/
+}
+.pregoeiro-telao .lances table tr td {
+    padding: 12px;
+    border-bottom: #474747;
+}
+.pregoeiro-telao .lances{
+    background-color: #FFFFFF;
+    color: #000000 !important;
+}
+.pregoeiro-telao .lances table tr.meuLance td {
+    background-color: #FFFFFF !important;
+}
+.pregoeiro-telao .leilao-container .logo{
+    padding-bottom: 20px;
+}
+.pregoeiro-telao .lance-status > div{
+    margin-bottom: 4px;
+}
+.pregoeiro-telao .right-hdiv{
+    display: none;
+}
+.pregoeiro-telao .lances-title{
+    text-transform: uppercase;
+    padding-top: 10px;
+}
+.pregoeiro-telao .lote-num-container {
+    text-align: center;
+}
+.pregoeiro-telao .ultimo-lance.online div{
+    background-color: #FEEF00 !important;
+}
+.col-flex-column.pregoeiro {
+    padding-bottom: 0; /* Footer Height */
+}
+.lance-buttons.pregoeiro{
+    display: none !important;
+}
+.footer.pregoeiro{
+    display: none !important;
+}
+.lance-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.lance-buttons button{
+    flex: 1;
+    width: 100%;
+    margin-left: 5px;
+    background-color: #9DC44D;
+    color: #333333;
+    font-weight: bold;
+}
+.lance-buttons button:first-child{
+    margin-left: 0;
+}
+.lance-buttons button.lance-incremento{
+    background-color: #40CF6B;
+}
+.confirm p{
+    text-align: center;
+    font-weight: bold;
+}
+.confirm a{
+    outline: none !important;
+}
+.confirm p{
+    font-size: 16px;
+}
+
+
+.btn-efetuar-lance {
+    display: block;
+    height: 70px;
+    background-color: #5cb85c;
+    color: #FFFFFF;
+    font-size: 32px;
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+}
+
+button.btn-efetuar-lance:hover {
+    filter: brightness(110%)
+}
+
+button.btn-efetuar-lance:active {
+    -webkit-box-shadow: inset 3px 3px 43px -19px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset 3px 3px 43px -19px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 3px 3px 43px -19px rgba(0, 0, 0, 0.75);
+}
+.row-lance{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lote-notification-sound{
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.lote-notification-sound input{
+    vertical-align: middle;
+    margin: 0;
+}
+.lote-notification-sound label{
+    display: block;
+    float: left;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+.lote-notification-sound span {
+    vertical-align: middle;
+}
+
+.lote-confirm-lance-manual{
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.lote-confirm-lance-manual input{
+    vertical-align: middle;
+    margin: 0;
+}
+.lote-confirm-lance-manual label{
+    display: block;
+    float: left;
+    padding-right: 10px;
+}
+.lote-confirm-lance-manual span {
+    vertical-align: middle;
+}
+.btns-lanceManual{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btns-lanceManual .btn{
+    border-radius: 0;
+    font-size: 14px;
+    width: 100%;
+}
+.lanceManual input[type="text"]{
+    display: block;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+    width: 100%;
+    background-color: #666666;
+    border: none;
+    text-align: center;
+    padding: 8px;
+    outline: none;
+    font-size: 18px;
+}
+
+.meuLanceVencedor{
+    background-color: #40CF6B !important;
+    padding: 10px;
+}
+.lances table tr.meuLance td{
+    background-color: #6e6e6e !important;
+}
+.label-meu-lance{
+    display: inline-block;
+    padding: 0 4px;
+    font-size: 9px;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #333333;
+    margin-left: 4px;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.lance-danger {
+    color: #f24427 !important;
+}
+
+.leilao-container .logo {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+
+.lance-status {
+    display: flex;
+    flex-direction: column;
+    cursor: default !important;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+.lance-status > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.lance-status > div > span {
+    max-width: 40%;
+    flex: 1;
+    align-items: center;
+    display: flex;
+}
+
+.lance-status > div div {
+    flex: 1;
+    background-color: #666666;
+    padding: 10px 22px;
+    font-weight: bold;
+}
+
+.lance-status .ultimo-lance div {
+    background: none;
+    /* padding-top: 0; */
+}
+
+.lance-status .ultimo-lance div span {
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.lances {
+    background-color: #666666;
+    flex: 1;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.right-hdiv {
+    border-top: #000000 1px solid;
+    border-bottom: #494849 1px solid;
+    height: 2px;
+}
+
+.lances-title {
+    padding: 20px 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.lances table {
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    border-collapse: separate;
+    border-bottom: #767676 1px solid;
+}
+
+.lances table tr td {
+    padding: 12px;
+    border-bottom: #474747 1px solid;
+    border-top: #767676 1px solid;
+    font-size: 12px;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.lances table tr td:first-child strong {
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.lances table tr td:last-child {
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+}
+.lances table.nenhumLance tr td{
+    text-align: left !important;
+    border: none;
+}
+.lances table.nenhumLance{
+    border: none;
+}
+
+.input-ultimo-lance{
+    background-color: #666666;
+    -webkit-transition: background-color 0.5s ease-out;
+    -moz-transition: background-color .5s ease-out;
+    -o-transition: background-color .5s ease-out;
+    transition: background-color .5s ease-out;
+}
+.input-ultimo-lance.novoLance{
+    background-color: #01cb3a !important;
+    -webkit-transition: background-color 0s ease-out;
+    -moz-transition: background-color .0s ease-out;
+    -o-transition: background-color .0s ease-out;
+    transition: background-color .0s ease-out;
+}
+.no-border-radius {
+    border-radius: 0 !important;
+}
+
+.btn-online {
+    background-color: #0D8C06;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFFFFF !important;
+    padding: 5px 8px;
+}
+
+.confirm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+}
+
+.status-lote{
+}
+.status-lote span{
+    text-transform: uppercase;
+}
+
+.footer {
+    height: 68px;
+    background-color: #000000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 22px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footer .f-title {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footer .f-title div.title {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.footer .f-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    flex-wrap: nowrap;
+}
+
+.footer .f-menu > a.fmenu-btn {
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #FFFFFF;
+    padding: 0 25px;
+
+}
+
+.footer .f-menu > a:hover.fmenu-btn {
+    background-color: #303030;
+}
+
+.footer .f-menu > a.fmenu-btn span {
+    display: inline-block;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.footer .f-menu .fmenu-btn {
+
+}
+
+.isFullLoading {
+    filter: blur(20px);
+}
+
+@media screen and (max-width: 1024px) {
+    .leilao-container .iterate .col1 {
+        float: none;
+        width: 100%;
+    }
+    .col-flex-column {
+        height: auto !important;
+        padding-bottom: 0 !important;
+        display: block;
+    }
+    .leilao-container .iterate .col2 {
+        float: none;
+        padding-left: 0;
+        width: 100%;
+    }
+    .lance-buttons {
+        display: block;
+        position: fixed;
+        bottom: 38px;
+        left: 0;
+        right: 0;
+    }
+    .lance-buttons button{
+        float: left;
+        width: 50%;
+        margin-left: 0 !important;
+        font-size: 100%;
+        height: 42px;
+    }
+    .lances{
+        margin-bottom: 140px;
+    }
+    .f-title{
+        display: none !important;
+    }
+    .footer {
+        height: 38px;
+        background-color: #000000;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 22px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .lote-input.lote-num, .lote-input.lote-desc {
+        font-size: 100%;
+    }
+    .logo{
+        display: none !important;
+    }
+    .lance-status > div{
+        font-size: 14px;
+    }
+    .lance-status > div div{
+        padding: 5px 11px;
+    }
+    .lote-img{
+        margin-bottom: 10px;
+    }
+    .lances table tr td:first-child strong, .lances table tr td:last-child{
+        font-size: 14px;
+    }
+}

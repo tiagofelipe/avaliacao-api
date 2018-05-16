@@ -1,0 +1,4 @@
+services:
+    jwt_token_authenticator: '@Uloc\Bundle\AppBundle\Security\JwtTokenAuthenticator'
+    api.response_factory: '@Uloc\Bundle\AppBundle\Api\ResponseFactory'
+    api_exception_subscriber: '@Uloc\Bundle\AppBundle\EventListener\ApiExceptionSubscriber'

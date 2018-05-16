@@ -1,0 +1,137 @@
+@charset "utf-8";
+
+.lote-aba-lances{
+    position: relative;
+}
+.lote-aba-lances .pregao-active{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1099;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+.lote-aba-lances .pregao-alert{
+    text-align: center;
+}
+.lote-aba-lances.hasPregao .pregao-active{
+    display: flex;
+}
+.lote-aba-lances .pregao-alert p{
+    display: block;
+    padding-bottom: 16px;
+}
+.lote-aba-lances .aba-naologado, .lote-aba-lances .confirm{
+    display: none;
+    position: absolute;
+    top: -20px;
+    left: -5px;
+    right: -5px;
+    bottom: -20px;
+    background: rgba(0,0,0,0.8);
+}
+.lote-aba-lances .naologado .aba-content, .lote-aba-lances .hasConfirm .aba-content{
+    filter: blur(5px);
+}
+.lote-aba-lances .naologado .aba-naologado, .lote-aba-lances .confirm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 999;
+}
+.lote-aba-lances .confirm.hide{
+    display: none !important;
+}
+.lote-aba-lances .naologado .aba-naologado p, .lote-aba-lances .confirm p{
+    text-align: center;
+    font-weight: bold;
+}
+.lote-aba-lances .naologado .aba-naologado p, .lote-aba-lances .confirm a{
+    outline: none !important;
+}
+.lote-aba-lances .confirm p{
+    font-size: 16px;
+}
+
+.row-lance{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lote-notification-sound{
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.lote-notification-sound input{
+    vertical-align: middle;
+    margin: 0;
+}
+.lote-notification-sound label{
+    display: block;
+    float: left;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+.lote-notification-sound span {
+    vertical-align: middle;
+}
+
+.lote-confirm-lance-manual{
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.lote-confirm-lance-manual input{
+    vertical-align: middle;
+    margin: 0;
+}
+.lote-confirm-lance-manual label{
+    display: block;
+    float: left;
+    padding-right: 10px;
+}
+.lote-confirm-lance-manual span {
+    vertical-align: middle;
+}
+.btns-lanceManual{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btns-lanceManual .btn{
+    border-radius: 0;
+    font-size: 14px;
+    width: 100%;
+}
+.lanceManual input[type="text"]{
+    display: block;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+    width: 100%;
+    background-color: #666666;
+    border: none;
+    text-align: center;
+    padding: 8px;
+    outline: none;
+    font-size: 18px;
+}
+.lanceManual{
+    flex: 1;
+    width: 100%;
+}
+
+@media screen and (max-width: 992px){
+    .lote-aba-lances .aba-title-empty{
+        margin-bottom: 0;
+    }
+    .row-lance{
+        display: block;
+    }
+}

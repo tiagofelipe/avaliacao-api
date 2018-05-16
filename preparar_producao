@@ -1,0 +1,59 @@
+echo "Compactando arquivos JS blobal..."
+uglifyjs web/js/vendor/jquery-ui.min.js \
+	web/js/vendor/bootstrap.min.js \
+	web/js/vendor/jquery.localscroll-1.2.7-min.js \
+	web/js/vendor/jquery.scrollTo-1.4.2-min.js \
+	web/js/vendor/jquery.tipTip.minified.js \
+	web/js/vendor/scrollReveal.min.js \
+	web/js/vendor/jquery.mask.min.js \
+	web/js/vendor/vue.min.js \
+	web/js/script.js \
+	web/js/historyBar.js \
+	-o web/js/app.min.js -c drop_console=true
+\
+	echo "Compactando arquivos JS lote..."
+    uglifyjs web/vendors/photoswipe/photoswipe.min.js \
+    	web/vendors/photoswipe/photoswipe-ui-default.min.js \
+    	web/js/vendor/autobahn.min.js \
+    	web/js/vendor/gos_web_socket_client.js \
+    	web/js/vendor/moment.min.js \
+    	web/js/pregao/moment.js \
+    	web/js/vendor/vue.min.js \
+    	web/js/vendor/v-money.js \
+    	web/js/pregao/mixins.js \
+    	web/js/pregao/directives.js \
+    	web/js/stats.js \
+    	web/js/pregao/base.js \
+    	web/js/pages/lote.js \
+    	-o web/js/pages/lote.min.js -c drop_console=true
+\
+	echo "Compactando arquivos JS pregao..."
+    uglifyjs web/js/vendor/autobahn.min.js \
+    	web/js/vendor/gos_web_socket_client.js \
+    	web/js/vendor/moment.min.js \
+    	web/js/vendor/lodash.min.js \
+    	web/js/vendor/php-js/number_format.js \
+    	web/js/pregao/moment.js \
+    	web/js/vendor/vue.min.js \
+    	web/js/vendor/v-money.js \
+    	web/js/pregao/mixins.js \
+    	web/js/pregao/directives.js \
+    	web/js/pregao/base.js \
+    	web/js/pregao/script.js \
+    	-o web/js/pregao/app.pregao.min.js -c drop_console=true
+\
+echo "Arquivos JS compactados com sucesso!"
+\
+echo "Compactando arquivos CSS..."
+uglifycss web/css/jquery-ui.css \
+	web/css/bootstrap.min.css \
+	web/css/tipTip.css \
+	web/css/style.css \
+	web/css/font-awesome.min.css \
+	> web/css/app.min.css
+\
+echo "Compactando arquivos CSS Pregao..."
+uglifycss web/css/pregao/style.css \
+    > web/css/pregao/app.pregao.min.css
+echo "Arquivos CSS compactados com sucesso!"
+echo "Procedimento concluido."

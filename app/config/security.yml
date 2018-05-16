@@ -1,0 +1,57 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        Uloc\Bundle\AppBundle\Entity\Usuario: bcrypt
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        database_users:
+            entity: { class: Uloc\Bundle\AppBundle\Entity\Usuario }
+
+    firewalls:
+        api:
+            pattern: ^/api/
+            anonymous: true
+            stateless: true
+            guard:
+                authenticators:
+                    - Uloc\Bundle\AppBundle\Security\JwtTokenAuthenticator
+                    - Uloc\Bundle\AppBundle\Security\TokenAuthenticator
+                entry_point: Uloc\Bundle\AppBundle\Security\JwtTokenAuthenticator
+        main:
+            pattern: ^/
+            anonymous: true
+            guard:
+                authenticators:
+                    - Uloc\Bundle\AppBundle\Security\UsuarioFormAuthenticator
+            logout:
+                # The route name the user can go to in order to logout
+                path: security_logout
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+        - { path: ^/_wdt|_profiler, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # allow anonymous API - if auth is needed, it's handled in the controller
+        - { path: ^/api/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/sync, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: ROLE_USER }
+        # - { path: ^/uapi, roles: ROLE_USER } because login form redirect
+        # - { path: ^/uapi/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/contato, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/conta, roles: ROLE_USER }
+        - { path: ^/leiloes/, roles: ROLE_ARREMATANTE }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    role_hierarchy:
+        ROLE_ROOT: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH, ROLE_INTRANET]
+        ROLE_ARREMATANTE: [ROLE_USER]

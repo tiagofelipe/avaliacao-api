@@ -1,0 +1,24 @@
+<a class="card1" href="{{ path('lote', {id: lote.id, slug: lote.slug}) }}">
+    {% if lote.leilaoId is defined %}
+        {% set thumb = lote.leilaoId~'/lotes/'~lote.id~'/'~lote.fotoDestaque.thumb %}
+    {% else %}
+        {% set thumb = lote.leilao.id~'/lotes/'~lote.id~'/'~lote.fotoDestaque.thumb %}
+    {% endif %}
+    <div class="p-item lote-item-status{{ lote.status  }}">
+        <div class="cont-img-destaque">
+            <span>{{ "%03s"|format(lote.numero) }}</span>
+            <img src="{{ asset('public/leiloes/'~thumb) }}" alt="#" height="170" />
+        </div>
+        <div class="cont-info-destaque">
+            <h3>
+                {% if lote.titulo|length > 90 %}
+                    {{ lote.titulo|slice(0,90) }}...
+                {% else %}
+                    {{ lote.titulo }}
+                {% endif %}
+            </h3>
+            <p>{{ lote.descricao|capitalize }}</p>
+            {% if lote.valorInicial > 0 %}<p>R$ {{ lote.valorInicial | number_format(2, ',', '.') }}</p>{% endif %}
+        </div>
+    </div>
+</a>

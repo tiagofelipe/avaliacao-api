@@ -1,0 +1,51 @@
+<header class="header">
+    <nav class="row1">
+        <div class="center-1200">
+            <a href="#showMenu" class="menu-mobile menu-mobile-btn"><i class="fa fa-bars" aria-hidden="true"></i></a>
+            <a href="{{ path('home') }}" class="logo-mobile"></a>
+            <ul class="menu">
+                <li><a href="{{ path('home') }}">Home</a></li>
+                <li><a href="{{ path('leiloes') }}">Leilões</a></li>
+                <li><a href="{{ path('sobre-nos') }}">Sobre nós</a></li>
+                {#<li><a href="{{ path('blog') }}">Blog</a></li>#}
+                <li><a href="{{ path('regulamento') }}">Regulamento</a></li>
+                <li><a href="{{ path('como-funciona') }}">Como funciona</a></li>
+                {#<li><a href=""><i class="fa fa-comment" aria-hidden="true"></i>Chat</a></li>#}
+                <li class="no-div"><a href="{{ path('contato') }}">Contato</a></li>
+                <li class="right documento-chegou-top"><a href="{{ path('documento') }}">Meu documento chegou?</a></li>
+            </ul>
+        </div><!-- Fim Center -->
+    </nav>
+    <div class="row2">
+        <div class="row2-content center-1200">
+            <div class="flex-item flex-logo"><a href="{{ path('home') }}" class="logo">Rogério Menezes</a></div>
+            <div class="home-search flex-item">
+                <form action="" class="input-group">
+                    <input class="form-control" type="text" tabindex="1" placeholder="O que você está buscando?"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                </form>
+            </div>
+            <div class="header-user-actions flex-item">
+                {% if is_granted('ROLE_USER') %}
+                    <div class="user-logged">
+                        <strong>Olá, {{ app.user.pessoa.primeiroNome }}!</strong>
+                        {% set status = app.user.pessoa.arrematante.status %}
+                        {% if status == 0 %}
+                            <a href="{{ path('user_home') }}" class="pendente"><i
+                                        class="fa fa-exclamation-triangle"></i>
+                                Cadastro Pendente</a>
+                        {% else %}
+                            <a href="{{ path('user_home') }}">Minha conta</a>
+                        {% endif %}
+                        <a href="{{ path('security_logout') }}">Sair</a>
+                    </div>
+                {% else %}
+                    <a href="{{ path('cadastro') }}" class="btn btn-header-cadastro">Cadastre-se</a>
+                    <a href="{{ path('security_login_form') }}" class="btn btn-header-login">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

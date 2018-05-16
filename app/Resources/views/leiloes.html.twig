@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Agenda de Leilões | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Leilões online e presencial de veículos, bens e materiais. A melhor infraestrutura de leilões do país."/>
+    <meta property="og:title" content="Agenda de Leilões"/>
+    <meta property="og:description"
+          content="Confira nossos próximos leilões. Carros, Motos, Caminhões, Bens e Materiais."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-agenda.png') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/leiloes.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/pages/leiloes.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="page-leiloes">
+        <div class="center-1200 content-1200">
+            <ol class="breadcrumb nobg">
+                <li><a href="{{ path('home') }}">Home</a></li>
+                <li class="active"><h1 class="h1-normal">Agenda de Leilões</h1></li>
+            </ol>
+        </div>
+        <h2 class="view-seo">Confira nossos próximos leilões. Carros, Motos, Caminhões, Bens e Materiais.</h2>
+        {% if leiloes|length > 0 %}
+            <div class="agenda">
+                <div class="agenda-content">
+                    <div class="center-1200 content-1200">
+                        <ul class="leiloes">
+
+                            {% for leilao in leiloes %}
+                                {% set diff = leilao.dataAbertura.diff(date( "now"|date('Y-m-d')~' '~leilao.dataAbertura|date('H:i:s'))).days %}
+                                <li>
+                                    <div class="leilao-content">
+                                        <div class="leilao-header">
+                                            <span class="data">{{ leilao.dataAbertura|date('d/m/Y') }}</span>
+                                            {% set dias = diff > 1 ? ' dias' : ' dia' %}
+                                            <span class="previsao">{{ diff > 0 ? 'Daqui '~diff~dias : 'Hoje' }}.
+                                                {{ leilao.dataAbertura| localizeddate('none', 'none', 'pt-BR', null, "EEE" )|capitalize }}
+                                                - {{ leilao.dataAbertura|date('H\\hi') }}</span>
+                                        </div>
+                                        <div class="leilao-info">
+                                            {% if leilao.tipo == 0 %}
+                                                <span class="tipo tipo-0">Online</span>
+                                            {% elseif leilao.tipo == 1 %}
+                                                <span class="tipo tipo-1">Presencial</span>
+                                            {% else %}
+                                                <span class="tipo tipo-2"><span>Online</span> / Presencial</span>
+                                            {% endif %}
+                                            <span class="titulo">{{ leilao.titulo }}</span>
+                                        </div>
+                                        <div class="leilao-comitentes">
+                                            {% if leilao.fotoDestaque %}
+                                                <div class="text-center">
+                                                    <img alt="{{ leilao.titulo }}" style="margin: auto"
+                                                         src="{{ asset('public/leiloes/'~leilao.id~'/'~leilao.fotoDestaque) }}">
+                                                </div>
+                                            {% elseif leilao.comitentes|length > 0 %}
+                                                <div id="comitente-anim{{ loop.index }}"
+                                                     class="leilao-comitente-images">
+                                                    {% for comitente in leilao.comitentes %}
+                                                        <img class="{{ loop.index==1 ? 'show' : '' }}"
+                                                             src="{{ asset('public/comitentes/'~comitente~'.png') }}"
+                                                             alt="#">
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+                                        <a href="{{ path('leilao', {id: leilao.id}) }}"
+                                           class="btn-leilao btn-status-{{ leilao.status }}">{{ tipos.status_leilao[leilao.status].nome }}</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div><!-- Fim Center -->
+                </div>
+            </div><!-- Fim Agenda -->
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+.page-regulamento h1{
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: #CCCCCC 1px solid;
+}
+.page-regulamento .fundo{
+    background-color: #ffffff;
+    padding: 20px;
+}
+.page-regulamento .box{
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.page-regulamento .btn{
+    font-weight: bold;
+    margin-top: 12px;
+}
+.page-regulamento .texto{
+    font-weight: bold;
+}

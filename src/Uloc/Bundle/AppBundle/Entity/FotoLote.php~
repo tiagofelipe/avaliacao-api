@@ -1,0 +1,96 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * FotoLote
+ *
+ * @ORM\Table(name="foto_lote")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\FotoLoteRepository")
+ */
+class FotoLote
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=255)
+     */
+    private $nome;
+
+    /**
+     * @var Lote
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Lote", inversedBy="fotos")
+     * @ORM\JoinColumn(name="lote_id", referencedColumnName="id")
+     */
+    private $lote;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return FotoLote
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * Set lote
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lote $lote
+     *
+     * @return FotoLote
+     */
+    public function setLote(\Uloc\Bundle\AppBundle\Entity\Lote $lote = null)
+    {
+        $this->lote = $lote;
+
+        return $this;
+    }
+
+    /**
+     * Get lote
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Lote
+     */
+    public function getLote()
+    {
+        return $this->lote;
+    }
+}

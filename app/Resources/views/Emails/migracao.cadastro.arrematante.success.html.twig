@@ -1,0 +1,42 @@
+{% extends ':Emails:theme1.html.twig' %}
+
+{% block body %}
+    <img src="https://static.wtis.com.br/c/rogeriomenezes/boasvindas.jpg?20180114094500">
+    <div style="line-height:1.5;font-family:arial, helvetica, sans-serif;color:#4e4e4e;text-align:justify;font-size:16px;min-height:16px;vertical-align:top;padding:10px 30px">
+        <br>
+        <strong>{{ (pessoa.nome|split(' '))|first }}</strong>, damos-lhe as nossas mais cordiais boas-vindas, ficamos
+        felizes em ter
+        você participando dos nossos leilões.<br><br>
+
+        <span style="color: darkcyan">Seu cadastro foi transferido com sucesso para o novo site</span>, e você já pode começar a participar dos leilões.<br><br>
+
+        <strong>Tivemos que alterar sua senha, então, aproveitamos para deixar aqui suas informações cadastrais, para você não esquecer :)</strong>
+        <br><br>
+
+        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+               style="border-collapse: collapse;border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;border-bottom:#E1E1E1 2px solid;">
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Responsável</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">
+                    <strong>{{ pessoa.nome }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Apelido/Login</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">
+                    <strong>{{ pessoa.arrematante.apelido }}</strong></td>
+            </tr>
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Email</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;"><strong>{{ email }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;">Senha</td>
+                <td style="border:#E1E1E1 1px solid;padding:6px;background-color:#FAFAFA;"><strong>{{ senha }}</strong>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Contatos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Assunto</th>
+                <th>Mensagem</th>
+                <th>Isrespondido</th>
+                <th>Data</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contato in contatos %}
+            <tr>
+                <td><a href="{{ path('contato_show', { 'id': contato.id }) }}">{{ contato.id }}</a></td>
+                <td>{{ contato.nome }}</td>
+                <td>{{ contato.email }}</td>
+                <td>{{ contato.telefone }}</td>
+                <td>{{ contato.assunto }}</td>
+                <td>{{ contato.mensagem }}</td>
+                <td>{% if contato.isRespondido %}Yes{% else %}No{% endif %}</td>
+                <td>{% if contato.data %}{{ contato.data|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('contato_show', { 'id': contato.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('contato_edit', { 'id': contato.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('contato_new') }}">Create a new contato</a>
+        </li>
+    </ul>
+{% endblock %}

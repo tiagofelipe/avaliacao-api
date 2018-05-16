@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Cadastro | Rogério Menezes</title>
+{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta name="description"
+          content="Cadastre-se e participe dos nossos leilões online e presencial."/>
+    <meta property="og:title" content="Cadastre-se e dê lances"/>
+    <meta property="og:description"
+          content="Cadastre-se e participe dos nossos leilões online e presencial."/>
+    <meta property="og:url" content="{{ url(app.request.get('_route')) }}"/>
+    <meta property="og:image"
+          content="{{ app.request.uriForPath('/images/og-facebook/og-sobre.jpg') | replace({'/app_dev.php': ''}) }}"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:phone_number" content="(21) 3812-4300">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cadastro.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      var urlVerificaApelido = "{{ url('api_test_apelido', {apelido: '__APELIDO__'}) }}"
+      var urlVerificaDadosIniciais = "{{ url('api_test_cadastro') }}"
+
+    </script>
+    <script src="{{ asset('js/helpers/validators.js') }}"></script>
+    <script src="{{ asset('js/pages/cadastro.js') }}"></script>
+{% endblock %}
+
+{% set etapa1Class = '' %}
+{% set etapa2Class = 'hide' %}
+{% set etapa3Class = 'hide' %}
+{% set estadoCivilCasadoClass = 'hide' %}
+{% set fpfClass = '' %}
+{% set fpjClass = '' %}
+
+{% if errors > 0 %}
+    {% set etapa1Class = 'hide' %}
+    {% set etapa2Class = 'hide' %}
+    {% set etapa3Class = '' %}
+
+    {#$('.etapa1, .etapa2').addClass('hide');
+    $('.etapa3').removeClass('hide');#}
+    {% if pessoa.tipo == 1 %}
+        {% set fpfClass = 'isActive' %}
+        {% set fpjClass = '' %}
+        {# $('.form-pessoa-fisica').addClass('isActive');
+         $('.form-pessoa-juridica').removeClass('isActive');#}
+        {% if pessoa.pfEstadoCivil == 2 %}
+            {#$('.estado-civil-casado').removeClass('hide')#}
+            {% set estadoCivilCasadoClass = '' %}
+        {% else %}
+            {% set estadoCivilCasadoClass = 'hide' %}
+        {% endif %}
+    {% else %}
+        {% set fpfClass = '' %}
+        {% set fpjClass = 'isActive' %}
+        {#$('.form-pessoa-juridica').addClass('isActive');
+        $('.form-pessoa-fisica').removeClass('isActive');#}
+    {% endif %}
+{% endif %}
+
+{% block body %}
+    <div class="cadastro">
+
+        <div class="etapa1 animated {{ etapa1Class }}">
+            <h1>Cadastro</h1>
+            <p>Para participar dos nossos leilões é necessário estar
+                devidamente cadastrado e habilitado.</p>
+            <p>Declaro, para todos os fins, que as informações por mim cadastradas neste site são a expressão da
+                verdade, e que me responsabilizo civil e criminalmente pelas mesmas e autorizo expressamente o
+                Leiloeiro Oficial proceder à verificação dos dados cadastrados nos Órgãos Públicos e de Proteção
+                ao Crédito.</p>
+            <div class="alert alert-warning termos-warning"><input id="termos" type="checkbox"> <strong>Estou ciente e
+                    de acordo com as condições
+                    para participar.</strong>
+                <div class="condicoes-alert text-danger">É necessário aceitar as condições antes de prosseguir com o
+                    cadastro
+                </div>
+            </div>
+            <div class="buttons row">
+                <div class="col-sm-6">
+                    <a href="#PessoaFisica" class="btn btn-block btn-primary btn-lg text-uppercase btn-selecao-pessoa"
+                       data-pessoa="fisica">Pessoa Física</a>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#PessoaJuridica" class="btn btn-block btn-dark btn-lg text-uppercase btn-selecao-pessoa"
+                       data-pessoa="juridica">Pessoa Jurídica</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="etapa2 animated {{ etapa2Class }}">
+            <h3>Preencha as informações básicas para continuar</h3>
+            <form name="verificar">
+                <div class="form-group">
+                    <label for="documento" class="documento-title">Documento</label>
+                    <input type="text" class="form-control" id="documento" placeholder="" required>
+                    <small class="form-error-doc-in-use hide text-danger">Este documento já está sendo utilizado por
+                        outra pessoa
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="nome" class="nome-title">Seu nome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Digite seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                           placeholder="Digite um email" required>
+                    <small class="form-error-email-in-use hide text-danger">Este email já está sendo utilizado por outra
+                        pessoa
+                    </small>
+                    <small id="emailHelp" class="form-text text-muted">Necessário que seja um e-mail válido e que você
+                        tenha acesso.
+                    </small>
+                </div>
+                <div class="form-group pos-relative">
+                    <label for="apelido">Apelido</label>
+                    <div class="pos-relative">
+                        <input type="text" class="form-control" id="apelido" minlength="3"
+                               aria-describedby="apelidoHelp" placeholder="Digite um apelido" maxlength="20" required>
+                        <a href="#sugerirApelido" class="apelido-sugestao">Sugira para mim</a>
+                        <span class="sugestao-load hide"><i class="fa fa-spin fa-spinner"></i></span>
+                    </div>
+                    <small class="form-error-apelido-in-use hide text-danger">Este apelido já está sendo utilizado por
+                        outra pessoa
+                    </small>
+                    <small id="apelidoHelp" class="form-text text-muted">Será utilizado quando você participar de
+                        leilões online, seu apelido será sua identificação.
+                        <div class="text-danger">Somente é permitido letras e números, sem acentuação ou caracteres
+                            especiais.
+                        </div>
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-primary">Verificar e continuar cadastro</button>
+                <span id="etapa2-verificar" class="m-l-sm hide"><i class="fa fa-spin fa-spinner"></i> <small
+                            class="text-left">Aguarde enquanto verificamos as informações</small></span>
+            </form>
+        </div>
+
+        <div class="etapa3 animated {{ etapa3Class }}">
+            {% include "cadastro-completo.html.twig" %}
+        </div>
+
+    </div>
+
+{% endblock %}

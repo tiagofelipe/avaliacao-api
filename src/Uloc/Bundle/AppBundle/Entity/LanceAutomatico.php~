@@ -1,0 +1,230 @@
+<?php
+
+namespace Uloc\Bundle\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LanceAutomatico
+ *
+ * @ORM\Table(name="lance_automatico")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\LanceAutomaticoRepository")
+ */
+class LanceAutomatico
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime")
+     */
+    private $data;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=255)
+     */
+    private $ip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valorLimite", type="decimal", precision=10, scale=2)
+     */
+    private $valorLimite = 0.0;
+
+    /**
+     * @var Lote
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Lote", inversedBy="lancesAutomaticos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lote;
+
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Arrematante", inversedBy="lanceAutomatico")
+     */
+    private $arrematante;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Lance",mappedBy="lanceAutomatico")
+     */
+    private $lance;
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set data
+     *
+     * @param \DateTime $data
+     *
+     * @return LanceAutomatico
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return \DateTime
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param string $ip
+     *
+     * @return LanceAutomatico
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Set valorLimite
+     *
+     * @param string $valorLimite
+     *
+     * @return LanceAutomatico
+     */
+    public function setValorLimite($valorLimite)
+    {
+        $this->valorLimite = $valorLimite;
+
+        return $this;
+    }
+
+    /**
+     * Get valorLimite
+     *
+     * @return string
+     */
+    public function getValorLimite()
+    {
+        return $this->valorLimite;
+    }
+
+    /**
+     * @return LanceAutomatico
+     */
+    public function getLote()
+    {
+        return $this->lote;
+    }
+
+    /**
+     * @param LanceAutomatico $lote
+     */
+    public function setLote($lote)
+    {
+        $this->lote = $lote;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->lance = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set arrematante
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante
+     *
+     * @return LanceAutomatico
+     */
+    public function setArrematante(\Uloc\Bundle\AppBundle\Entity\Arrematante $arrematante = null)
+    {
+        $this->arrematante = $arrematante;
+
+        return $this;
+    }
+
+    /**
+     * Get arrematante
+     *
+     * @return \Uloc\Bundle\AppBundle\Entity\Arrematante
+     */
+    public function getArrematante()
+    {
+        return $this->arrematante;
+    }
+
+    /**
+     * Add lance
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lance $lance
+     *
+     * @return LanceAutomatico
+     */
+    public function addLance(\Uloc\Bundle\AppBundle\Entity\Lance $lance)
+    {
+        $this->lance[] = $lance;
+
+        return $this;
+    }
+
+    /**
+     * Remove lance
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Lance $lance
+     */
+    public function removeLance(\Uloc\Bundle\AppBundle\Entity\Lance $lance)
+    {
+        $this->lance->removeElement($lance);
+    }
+
+    /**
+     * Get lance
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLance()
+    {
+        return $this->lance;
+    }
+}

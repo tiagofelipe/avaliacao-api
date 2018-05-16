@@ -1,0 +1,137 @@
+<div class="alert alert-warning">
+    <strong>A Liberação Definitiva de seu cadastro para participação nos leilões somente será
+        efetivada após as
+        seguintes
+        ações:</strong>
+    <br><br>
+
+    <strong>1) Faça o upload dos seus documentos:</strong>
+    <br>
+    <div class="fileLineContainer row">
+        {# for documento in app.user.pessoa.arrematante.documentos #}
+        {% for documento in documentosRequeridos %}
+            <div class="col-sm-6 col-md-4 fileLine">
+                <div class="lineTitle">
+                    <strong>{{ documento.nome }}</strong>
+                </div>
+                <form action="{{ path('user_arrematante_upload_documentos') }}"
+                      class="dropzone needsclick"
+                      id="documento{{ documento.id }}">
+                    <input type="hidden" name="arrematante[documento]" value="{{ documento.id }}"/>
+                    {#<input name="documento[{{ documento.id }}]" type="file" multiple>#}
+                    <!-- accept="image/x-png,image/gif,image/jpeg,application/pdf" -->
+                    <div class="dz-message needsclick">
+                        <strong>{{ documento.nome }}</strong><br/>
+                        <span class="note needsclick">Arraste e solte os arquivos aqui ou clique para selecioná-los. É permitido somente imagens ou pdf, com no máximo <strong>5mb</strong>.</span>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                  //Add existing files into dropzone
+                  var existingFiles = [];
+
+                  {% for doc in app.user.pessoa.arrematante.documentosByTipo(documento) %}
+                  existingFiles.push({
+                    name: "{{ doc.nome }}",
+                    size: "{{ doc.arquivoTamanho }}",
+                    _id: "{{ doc.id }}",
+                    _status: "{{ doc.status }}",
+                    _statusMessage: "{{ doc.statusMessage }}",
+                    _fullName: "{{ doc.nome }}",
+                    _url: "{{ url('user_arrematante_download_documento', {id: doc.id, arquivo: doc.arquivo}) }}",
+                    _removeUrl: "{{ url('user_arrematante_remove_documento', {id: doc.id, arquivo: doc.arquivo}) }}"
+                  });
+                  {% endfor %}
+
+                  var documento{{ documento.id }} = new Dropzone("#documento{{ documento.id }}", {
+                    paramName: "arrematante[arquivo]",
+                    maxFilesize: 5, // MB
+                    //acceptedFiles: "image/*,application/pdf", //TODO: Proteger endpoint limitando mime types
+                    init: function () {
+                      this.on("addedfile", function (file) {
+
+                        /* TODO: Implement correct add file. Actualy the user add via js but not include file extra data like _id, _url, _removeUrl etc.. */
+
+                        if (typeof file._url !== 'undefined') {
+                          if (['png', 'jpg', 'jpeg', 'png', 'gif'].indexOf(fileExtension(file._url)) === -1) {
+                            console.log('aqui')
+                            this.emit("thumbnail", file, "{{ absolute_url('images/icons/ico-pdf.gif') }}");
+                          } else {
+                            this.emit("thumbnail", file, file._url + '?thumb=120');
+                            //this.createThumbnailFromUrl(file, file._url);
+                          }
+                        } else {
+
+                        }
+
+
+                        // Create the remove button
+                        var rootElement = Dropzone.createElement("<div class=\"documento-item-container\"></div>");
+                        if (parseInt(file._status) !== 2) {
+                          var removeButton = Dropzone.createElement('<a class="remove-item" href="javascript:void(0)">Remover</a>');
+                          rootElement.appendChild(removeButton);
+
+                          // Capture the Dropzone instance as closure.
+                          var _this = this;
+
+                          // Listen to the click event
+                          removeButton.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            if (window.confirm("Tem certeza que deseja remover este documento do cadastro?")) {
+
+                              // Remove the file preview.
+                              _this.removeFile(file);
+
+                              $.ajax(file._removeUrl);
+                            }
+                          });
+                        }
+                        if (typeof file._status === 'undefined') {
+                          file._status = 1;
+                          file._statusMessage = 'Em análise';
+                        }
+                        var statusButton = Dropzone.createElement('<div class="status status-' + file._status + '"><span>' + file._statusMessage + '</span></div>');
+
+                        rootElement.appendChild(statusButton);
+
+                        // Add the button to the file preview element.
+                        file.previewElement.appendChild(rootElement);
+                      });
+                    }
+
+                  });
+
+                  // Adiciona arquivos existentes
+                  for (i = 0; i < existingFiles.length; i++) {
+                    documento{{ documento.id }}.emit("addedfile", existingFiles[i]);
+                    /*_url = existingFiles[i]._url;
+                    if (!file.type.match(/image.*!/)) {
+                      documento{{ documento.id }}.emit("thumbnail", existingFiles[i], existingFiles[i]._url);
+                                        } else{
+                                          documento{{ documento.id }}.emit("thumbnail", existingFiles[i], "{{ absolute_url('images/icons/ico-pdf.gif') }}");
+                                        }*/
+                    //documento{{ documento.id }}.createThumbnailFromUrl(existingFiles[i], 'https://extra.globo.com/incoming/22289488-467-baf/w640h360-PROP/xcaneta-do-ney-1.jpg.pagespeed.ic.69EIH_5tXw.jpg');
+                    documento{{ documento.id }}.emit("complete", existingFiles[i]);
+                  }
+                </script>
+            </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <strong>2) Faça o download do <a
+                href="{{ app.request.getSchemeAndHttpHost() }}/public/docs/contrato.pdf"
+                target="_blank">Contrato de Adesão ao Site do Leiloeiro Rogério Menezes
+            Nunes</a></strong>, que
+    deverá estar rubricado e com firma reconhecida por autenticidade, e o documento deverá ser
+    enviado para o endereço: Av. Brasil, 51.467 - Campo Grande - RJ - CEP: 23065-480 - via correio,
+    aos cuidados do Departamento de leilão.
+
+    <br><br><span
+            style="color: crimson">A liberação definitiva de seu cadastro se dará SOMENTE 24 HORAS APÓS RECEBIMENTO DESTE CONTRATO.</span>
+    Se você deseja participar de um leilão que está muito próximo, onde não há tempo hábil para
+    enviar os documentos via
+    correios, por favor, <a href="{{ url('contato') }}">entre em contato conosco</a> para avaliar
+    sua situação.
+</div>

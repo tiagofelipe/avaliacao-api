@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>Agenda de Leilões | Rogério Menezes</title>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sobre.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/pages/sobre.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="center-1200">Blog desativado</div> <div style="height: 400px"></div>
+    {#<section>
+        <div class="clearfloat"></div>
+        <div class="sub-pag">
+            <div class="cont-blog">
+                <div class="center-1200">
+                    <div class="left-blog">
+                        <ul class="lista-blog">
+                            <li>
+                                <div class="blog-unico">
+                                    <div class="cont-img">
+                                        <a href="">
+                                            <img src="{{ asset('images/leiloes/produto1.png') }}" alt="#"
+                                                 class="img-responsive"/>
+                                        </a>
+                                    </div>
+                                    <div class="cont-text-blog">
+                                        <h2>
+                                            <a href="">Novo Chevrolet Camaro chega por R$ 297 mil</a>
+                                        </h2>
+                                        <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e
+                                            de impressos, e vem sendo utilizado desde o século XVI, quando um impressor
+                                            desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro
+                                            de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como
+                                            também ao salto para a editoração eletrônica,</p>
+                                        <a href="" class="btn-leia">Leia Mais</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="blog-unico">
+                                    <div class="cont-img">
+                                        <a href="">
+                                            <img src="{{ asset('images/leiloes/produto1.png') }}" alt="#"
+                                                 class="img-responsive"/>
+                                        </a>
+                                    </div>
+                                    <div class="cont-text-blog">
+                                        <h2>
+                                            <a href="#">Novo Chevrolet Camaro chega por R$ 297 mil</a>
+                                        </h2>
+                                        <p>Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e
+                                            de impressos, e vem sendo utilizado desde o século XVI, quando um impressor
+                                            desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro
+                                            de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como
+                                            também ao salto para a editoração eletrônica,</p>
+                                        <a href="" class="btn-leia">Leia Mais</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="right-blog">
+                        <h2>Leilões em Destaque</h2>
+                        <div class="slide-leiloes">
+                            <div>
+                                <a href="">
+                                    <img src="{{ asset('images/leiloes/produto1.png') }}" alt="#"
+                                         class="img-responsive"/>
+                                </a>
+                                <h3><a href="">Nissan Sentra</a></h3>
+                                <p>Ar, direção, vidro elétrico, automático.</p>
+                                <a href="" class="btn-slide-leiloes">Ver Mais</a>
+                            </div>
+                            <div>
+                                <a href="">
+                                    <img src="{{ asset('images/leiloes/produto2.png') }}" alt="#"
+                                         class="img-responsive"/>
+                                </a>
+                                <h3><a href="">Nissan Sentra</a></h3>
+                                <p>Ar, direção, vidro elétrico, automático.</p>
+                                <a href="" class="btn-slide-leiloes">Ver Mais</a>
+                            </div>
+                            <div>
+                                <a href="">
+                                    <img src="{{ asset('images/leiloes/produto3.png') }}" alt="#"
+                                         class="img-responsive"/>
+                                </a>
+                                <h3><a href="">Nissan Sentra</a></h3>
+                                <p>Ar, direção, vidro elétrico, automático.</p>
+                                <a href="" class="btn-slide-leiloes">Ver Mais</a>
+                            </div>
+                            <div>
+                                <a href="">
+                                    <img src="{{ asset('images/leiloes/produto4.png') }}" alt="#"
+                                         class="img-responsive"/>
+                                </a>
+                                <h3><a href="">Nissan Sentra</a></h3>
+                                <p>Ar, direção, vidro elétrico, automático.</p>
+                                <a href="" class="btn-slide-leiloes">Ver Mais</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfloat"></div>
+    </section>#}
+{% endblock %}
