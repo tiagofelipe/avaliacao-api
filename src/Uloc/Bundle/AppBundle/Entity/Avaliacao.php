@@ -3,6 +3,7 @@
 namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Avaliacao
@@ -38,6 +39,14 @@ class Avaliacao
     /**
      * @var int
      *
+     * @Assert\Range(
+     *     min=1,
+     *     max=5,
+     *     minMessage="A nota mínima é 1",
+     *     maxMessage="A nota máxima é 5",
+     *     invalidMessage="A nota deve ser um número inteiro"
+     * )
+     * @Assert\NotNull(message="Necessário informar a nota")
      * @ORM\Column(name="nota", type="smallint")
      */
     private $nota;
@@ -53,6 +62,7 @@ class Avaliacao
      * @var CriterioEstabelecimento
      *
      * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento", inversedBy="avaliacaos")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $criterioEstabelecimento;
 
@@ -60,8 +70,23 @@ class Avaliacao
      * @var Estabelecimento
      *
      * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Estabelecimento", inversedBy="avaliacaos")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $estabelecimento;
+
+    /**
+     * @var Funcionario
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Funcionario", inversedBy="avaliacoes")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $funcionario;
+
+
+    public function __construct()
+    {
+        $this->dataCriacao = new \DateTime();
+    }
 
     /**
      * Get id.
@@ -200,6 +225,25 @@ class Avaliacao
     public function setEstabelecimento($estabelecimento)
     {
         $this->estabelecimento = $estabelecimento;
+
+        return $this;
+    }
+
+    /**
+     * @return Funcionario
+     */
+    public function getFuncionario()
+    {
+        return $this->funcionario;
+    }
+
+    /**
+     * @param Funcionario $funcionario
+     * @return Avaliacao
+     */
+    public function setFuncionario($funcionario)
+    {
+        $this->funcionario = $funcionario;
 
         return $this;
     }

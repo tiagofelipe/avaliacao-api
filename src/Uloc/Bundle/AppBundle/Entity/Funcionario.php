@@ -2,6 +2,7 @@
 
 namespace Uloc\Bundle\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +50,17 @@ class Funcionario
      */
     private $estabelecimento;
 
+    /**
+     * @var Avaliacao[]
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Avaliacao", mappedBy="funcionario")
+     */
+    private $avaliacoes;
+
+    public function __construct()
+    {
+        $this->avaliacoes = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -149,5 +161,21 @@ class Funcionario
         $this->estabelecimento = $estabelecimento;
 
         return $this;
+    }
+
+    /**
+     * @return Avaliacao[]
+     */
+    public function getAvaliacoes()
+    {
+        return $this->avaliacoes;
+    }
+
+    /**
+     * @param Avaliacao $avaliacao
+     */
+    public function addAvaliacoes(Avaliacao $avaliacao)
+    {
+        $this->avaliacoes = $avaliacao;
     }
 }
