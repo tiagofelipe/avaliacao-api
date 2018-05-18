@@ -2,6 +2,7 @@
 
 namespace Uloc\Bundle\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -52,152 +53,33 @@ class Estabelecimento
 
 
     /**
-     * @var int
+     * @var CriterioEstabelecimento
      *
-     * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="estabelecimentos" )
-     * @ORM\JoinColumn(name="criterio_estabelecimento_id", referencedColumnName="id" )
+     * @ORM\OneToMany(targetEntity="CriterioEstabelecimento", mappedBy="estabelecimentos" )
+     *
      */
-    private $criterioEstabelecimento;
+    private $criterioEstabelecimentos;
 
     /**
-     * @var int
+     * @var Avaliacao
+     *
      * @ORM\OneToMany(targetEntity="Avaliacao", mappedBy="estabelecimento")
      */
     private $avaliacaos;
 
     /**
-     * @var int
+     * @var Funcionario[]
      * @ORM\OneToMany(targetEntity="Funcionario", mappedBy="estabelecimento")
      */
     private $funcionarios;
 
     /**
-     * Get id.
+     * @var Usuario[]
      *
-     * @return int
+     * @ORM\ManyToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Usuario", mappedBy="estabelecimentos")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $proprietarios;
 
-    /**
-     * Set cnpj.
-     *
-     * @param string $cnpj
-     *
-     * @return Estabelecimento
-     */
-    public function setCnpj($cnpj)
-    {
-        $this->cnpj = $cnpj;
 
-        return $this;
-    }
 
-    /**
-     * Get cnpj.
-     *
-     * @return string
-     */
-    public function getCnpj()
-    {
-        return $this->cnpj;
-    }
-
-    /**
-     * Set nomeFantasia.
-     *
-     * @param string $nomeFantasia
-     *
-     * @return Estabelecimento
-     */
-    public function setNomeFantasia($nomeFantasia)
-    {
-        $this->nomeFantasia = $nomeFantasia;
-
-        return $this;
-    }
-
-    /**
-     * Get nomeFantasia.
-     *
-     * @return string
-     */
-    public function getNomeFantasia()
-    {
-        return $this->nomeFantasia;
-    }
-
-    /**
-     * Set razaoSocial.
-     *
-     * @param string $razaoSocial
-     *
-     * @return Estabelecimento
-     */
-    public function setRazaoSocial($razaoSocial)
-    {
-        $this->razaoSocial = $razaoSocial;
-
-        return $this;
-    }
-
-    /**
-     * Get razaoSocial.
-     *
-     * @return string
-     */
-    public function getRazaoSocial()
-    {
-        return $this->razaoSocial;
-    }
-
-    /**
-     * Set tipo.
-     *
-     * @param int|null $tipo
-     *
-     * @return Estabelecimento
-     */
-    public function setTipo($tipo = null)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo.
-     *
-     * @return int|null
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
-
-    /**
-     * Set criterioEstabelecimento.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null $criterioEstabelecimento
-     *
-     * @return Estabelecimento
-     */
-    public function setCriterioEstabelecimento(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $criterioEstabelecimento = null)
-    {
-        $this->criterioEstabelecimento = $criterioEstabelecimento;
-
-        return $this;
-    }
-
-    /**
-     * Get criterioEstabelecimento.
-     *
-     * @return \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null
-     */
-    public function getCriterioEstabelecimento()
-    {
-        return $this->criterioEstabelecimento;
-    }
 }

@@ -3,6 +3,7 @@
 namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * Criterio
@@ -38,13 +39,33 @@ class Criterio
     /**
      * @var CriterioEstabelecimento
      *
-     * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="criterios" )
-     * @ORM\JoinColumn(name="estabelecimento_criterio_id", referencedColumnName="id" )
+     * @ORM\OneToMany(targetEntity="CriterioEstabelecimento", mappedBy="criterio" )
+     *
      */
-    private $estabelecimentoCriterio;
+    private $estabelecimentoCriterios;
 
 
     
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'nome',
+                'ativo',
+
+            ]);
+        $representation->build();
+
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->estabelecimentoCriterios = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -105,26 +126,38 @@ class Criterio
     }
 
     /**
-     * Set estabelecimentoCriterio.
+     * Add estabelecimentoCriterio.
      *
-     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null $estabelecimentoCriterio
+     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterio
      *
      * @return Criterio
      */
-    public function setEstabelecimentoCriterio(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterio = null)
+    public function addEstabelecimentoCriterio(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterio)
     {
-        $this->estabelecimentoCriterio = $estabelecimentoCriterio;
+        $this->estabelecimentoCriterios[] = $estabelecimentoCriterio;
 
         return $this;
     }
 
     /**
-     * Get estabelecimentoCriterio.
+     * Remove estabelecimentoCriterio.
      *
-     * @return \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null
+     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterio
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function getEstabelecimentoCriterio()
+    public function removeEstabelecimentoCriterio(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterio)
     {
-        return $this->estabelecimentoCriterio;
+        return $this->estabelecimentoCriterios->removeElement($estabelecimentoCriterio);
+    }
+
+    /**
+     * Get estabelecimentoCriterios.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEstabelecimentoCriterios()
+    {
+        return $this->estabelecimentoCriterios;
     }
 }

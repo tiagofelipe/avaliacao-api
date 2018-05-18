@@ -16,25 +16,25 @@ class CriterioEstabelecimento
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var Criterio[]
+     * @var Criterio
      *
-     * @ORM\OneToMany(targetEntity="Criterio", mappedBy="estabelecimentoCriterio")
+     * @ORM\ManyToOne(targetEntity="Criterio", inversedBy="estabelecimentoCriterios")
      */
-    private $criterios;
+    private $criterio;
 
 
 
     /**
-     * @var Estabelecimento[]
-     * @ORM\OneToMany(targetEntity="Estabelecimento", mappedBy="criterioEstabelecimento")
+     * @var Estabelecimento
+     * @ORM\ManyToOne(targetEntity="Estabelecimento", inversedBy="criterioEstabelecimentos")
      */
-    private  $estabelecimentos;
+    private  $estabelecimento;
 
 
     /**
@@ -44,13 +44,12 @@ class CriterioEstabelecimento
     private $avaliacaos;
 
     
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->criterios = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->estabelecimentos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->avaliacaos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -65,75 +64,51 @@ class CriterioEstabelecimento
     }
 
     /**
-     * Add criterio.
+     * Set criterio.
      *
-     * @param \Uloc\Bundle\AppBundle\Entity\Criterio $criterio
+     * @param \Uloc\Bundle\AppBundle\Entity\Criterio|null $criterio
      *
      * @return CriterioEstabelecimento
      */
-    public function addCriterio(\Uloc\Bundle\AppBundle\Entity\Criterio $criterio)
+    public function setCriterio(\Uloc\Bundle\AppBundle\Entity\Criterio $criterio = null)
     {
-        $this->criterios[] = $criterio;
+        $this->criterio = $criterio;
 
         return $this;
     }
 
     /**
-     * Remove criterio.
+     * Get criterio.
      *
-     * @param \Uloc\Bundle\AppBundle\Entity\Criterio $criterio
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return \Uloc\Bundle\AppBundle\Entity\Criterio|null
      */
-    public function removeCriterio(\Uloc\Bundle\AppBundle\Entity\Criterio $criterio)
+    public function getCriterio()
     {
-        return $this->criterios->removeElement($criterio);
+        return $this->criterio;
     }
 
     /**
-     * Get criterios.
+     * Set estabelecimento.
      *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCriterios()
-    {
-        return $this->criterios;
-    }
-
-    /**
-     * Add estabelecimento.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Estabelecimento $estabelecimento
+     * @param \Uloc\Bundle\AppBundle\Entity\Estabelecimento|null $estabelecimento
      *
      * @return CriterioEstabelecimento
      */
-    public function addEstabelecimento(\Uloc\Bundle\AppBundle\Entity\Estabelecimento $estabelecimento)
+    public function setEstabelecimento(\Uloc\Bundle\AppBundle\Entity\Estabelecimento $estabelecimento = null)
     {
-        $this->estabelecimentos[] = $estabelecimento;
+        $this->estabelecimento = $estabelecimento;
 
         return $this;
     }
 
     /**
-     * Remove estabelecimento.
+     * Get estabelecimento.
      *
-     * @param \Uloc\Bundle\AppBundle\Entity\Estabelecimento $estabelecimento
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return \Uloc\Bundle\AppBundle\Entity\Estabelecimento|null
      */
-    public function removeEstabelecimento(\Uloc\Bundle\AppBundle\Entity\Estabelecimento $estabelecimento)
+    public function getEstabelecimento()
     {
-        return $this->estabelecimentos->removeElement($estabelecimento);
-    }
-
-    /**
-     * Get estabelecimentos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEstabelecimentos()
-    {
-        return $this->estabelecimentos;
+        return $this->estabelecimento;
     }
 
     /**

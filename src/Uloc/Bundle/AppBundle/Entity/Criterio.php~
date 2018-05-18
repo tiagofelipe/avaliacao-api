@@ -3,6 +3,7 @@
 namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * Criterio
@@ -38,11 +39,24 @@ class Criterio
     /**
      * @var CriterioEstabelecimento
      *
-     * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="criterios" )
-     * @ORM\JoinColumn(name="estabelecimento_criterio_id", referencedColumnName="id" )
+     * @ORM\OneToMany(targetEntity="CriterioEstabelecimento", mappedBy="criterio" )
+     *
      */
-    private $estabelecimentoCriterio;
+    private $estabelecimentoCriterios;
 
 
     
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'nome',
+                'ativo',
+
+            ]);
+        $representation->build();
+
+    }
 }

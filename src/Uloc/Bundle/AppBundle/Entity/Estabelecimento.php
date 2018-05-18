@@ -55,10 +55,10 @@ class Estabelecimento
     /**
      * @var CriterioEstabelecimento
      *
-     * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="estabelecimentos" )
-     * @ORM\JoinColumn(name="criterio_estabelecimento_id", referencedColumnName="id" )
+     * @ORM\OneToMany(targetEntity="CriterioEstabelecimento", mappedBy="estabelecimento" )
+     *
      */
-    private $criterioEstabelecimento;
+    private $criterioEstabelecimentos;
 
     /**
      * @var Avaliacao
@@ -81,16 +81,17 @@ class Estabelecimento
     private $proprietarios;
 
 
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->avaliacaos = new ArrayCollection();
-        $this->funcionarios = new ArrayCollection();
-        $this->proprietarios = new ArrayCollection();
+        $this->criterioEstabelecimentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->avaliacaos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->funcionarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->proprietarios = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id.
@@ -199,29 +200,40 @@ class Estabelecimento
     }
 
     /**
-     * Set criterioEstabelecimento.
+     * Add criterioEstabelecimento.
      *
-     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null $criterioEstabelecimento
+     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $criterioEstabelecimento
      *
      * @return Estabelecimento
      */
-    public function setCriterioEstabelecimento(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $criterioEstabelecimento = null)
+    public function addCriterioEstabelecimento(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $criterioEstabelecimento)
     {
-        $this->criterioEstabelecimento = $criterioEstabelecimento;
+        $this->criterioEstabelecimentos[] = $criterioEstabelecimento;
 
         return $this;
     }
 
     /**
-     * Get criterioEstabelecimento.
+     * Remove criterioEstabelecimento.
      *
-     * @return CriterioEstabelecimento
+     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $criterioEstabelecimento
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function getCriterioEstabelecimento()
+    public function removeCriterioEstabelecimento(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $criterioEstabelecimento)
     {
-        return $this->criterioEstabelecimento;
+        return $this->criterioEstabelecimentos->removeElement($criterioEstabelecimento);
     }
 
+    /**
+     * Get criterioEstabelecimentos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCriterioEstabelecimentos()
+    {
+        return $this->criterioEstabelecimentos;
+    }
 
     /**
      * Add avaliacao.
@@ -296,18 +308,38 @@ class Estabelecimento
     }
 
     /**
-     * @return Usuario[]
+     * Add proprietario.
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Usuario $proprietario
+     *
+     * @return Estabelecimento
+     */
+    public function addProprietario(\Uloc\Bundle\AppBundle\Entity\Usuario $proprietario)
+    {
+        $this->proprietarios[] = $proprietario;
+
+        return $this;
+    }
+
+    /**
+     * Remove proprietario.
+     *
+     * @param \Uloc\Bundle\AppBundle\Entity\Usuario $proprietario
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProprietario(\Uloc\Bundle\AppBundle\Entity\Usuario $proprietario)
+    {
+        return $this->proprietarios->removeElement($proprietario);
+    }
+
+    /**
+     * Get proprietarios.
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProprietarios()
     {
         return $this->proprietarios;
-    }
-
-    /**
-     * @param Usuario $proprietario
-     */
-    public function addProprietario(Usuario $proprietario)
-    {
-        $this->proprietarios[] = $proprietario;
     }
 }

@@ -16,25 +16,25 @@ class CriterioEstabelecimento
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var Criterio[]
+     * @var Criterio
      *
-     * @ORM\OneToMany(targetEntity="Criterio", mappedBy="estabelecimentoCriterio")
+     * @ORM\ManyToOne(targetEntity="Criterio", inversedBy="estabelecimentoCriterio")
      */
-    private $criterios;
+    private $criterio;
 
 
 
     /**
-     * @var Estabelecimento[]
-     * @ORM\OneToMany(targetEntity="Estabelecimento", mappedBy="criterioEstabelecimento")
+     * @var Estabelecimento
+     * @ORM\ManyToOne(targetEntity="Estabelecimento", inversedBy="criterioEstabelecimento")
      */
-    private  $estabelecimentos;
+    private  $estabelecimento;
 
 
     /**
@@ -44,4 +44,5 @@ class CriterioEstabelecimento
     private $avaliacaos;
 
     
+
 }
