@@ -100,6 +100,30 @@ class Usuario implements UserInterface
     private $image;
 
     /**
+     * @var Estabelecimento[]
+     *
+     * @ORM\ManyToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Estabelecimento", inversedBy="proprietarios")
+     */
+    private $estabelecimentos;
+
+    /**
+     * @var Avaliacao[]
+     *
+     * // TODO: VERIFICAR A NECESSIDADE O ORPHANREMOVAL
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Avaliacao", mappedBy="usuario", orphanRemoval=true)
+     */
+    private $avaliacoes;
+
+
+    public function __construct()
+    {
+        $this->notificacoes = new ArrayCollection();
+        $this->grupos = new ArrayCollection();
+        $this->estabelecimentos = new ArrayCollection();
+        $this->avaliacoes = new ArrayCollection();
+    }
+
+    /**
      * @return mixed
      */
     public function getAcl()
@@ -130,12 +154,6 @@ class Usuario implements UserInterface
     {
         $pessoa->addUsuario($this);
         $this->pessoa = $pessoa;
-    }
-
-    public function __construct()
-    {
-        $this->notificacoes = new ArrayCollection();
-        $this->grupos = new ArrayCollection();
     }
 
     /**
@@ -302,6 +320,39 @@ class Usuario implements UserInterface
             return $this->getPessoa()->getNome();
         }
         return $this->username;
+    }
+
+
+    /**
+     * @return ArrayCollection|Estabelecimento|Estabelecimento[]
+     */
+    public function getEstabelecimentos()
+    {
+        return $this->estabelecimentos;
+    }
+
+    /**
+     * @param Estabelecimento $estabelecimento
+     */
+    public function addEstabelecimento(Estabelecimento $estabelecimento)
+    {
+        $this->estabelecimentos[] = $estabelecimento;
+    }
+
+    /**
+     * @return Avaliacao[]
+     */
+    public function getAvaliacoes()
+    {
+        return $this->avaliacoes;
+    }
+
+    /**
+     * @param Avaliacao $avaliacao
+     */
+    public function setAvaliacaos(Avaliacao $avaliacao)
+    {
+        $this->avaliacoes[] = $avaliacao;
     }
 
     public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)

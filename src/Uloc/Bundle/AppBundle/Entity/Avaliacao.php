@@ -31,7 +31,7 @@ class Avaliacao
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dataCriacao", type="datetime")
+     * @ORM\Column(name="data_criacao", type="datetime")
      */
     private $dataCriacao;
 
@@ -42,6 +42,26 @@ class Avaliacao
      */
     private $nota;
 
+    /**
+     * @var Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Usuario", inversedBy="avaliacoes")
+     */
+    private $usuario;
+
+    /**
+     * @var CriterioEstabelecimento
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento", inversedBy="avaliacaos")
+     */
+    private $criterioEstabelecimento;
+
+    /**
+     * @var Estabelecimento
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Estabelecimento", inversedBy="avaliacaos")
+     */
+    private $estabelecimento;
 
     /**
      * Get id.
@@ -123,5 +143,64 @@ class Avaliacao
     public function getNota()
     {
         return $this->nota;
+    }
+
+    /**
+     * @return Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @param Usuario $usuario
+     * @return Avaliacao
+     */
+    public function setUsuario(Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * @return CriterioEstabelecimento
+     */
+    public function getCriterioEstabelecimento()
+    {
+        return $this->criterioEstabelecimento;
+    }
+
+    /**
+     * @param CriterioEstabelecimento $criterioEstabelecimento
+     *
+     * @return Avaliacao
+     */
+    public function setCriterioEstabelecimento($criterioEstabelecimento)
+    {
+        $this->criterioEstabelecimento = $criterioEstabelecimento;
+
+        return $this;
+    }
+
+    /**
+     * @return Estabelecimento
+     */
+    public function getEstabelecimento()
+    {
+        return $this->estabelecimento;
+    }
+
+    /**
+     * @param Estabelecimento $estabelecimento
+     *
+     * @return Avaliacao
+     */
+    public function setEstabelecimento($estabelecimento)
+    {
+        $this->estabelecimento = $estabelecimento;
+
+        return $this;
     }
 }

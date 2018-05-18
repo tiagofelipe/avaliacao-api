@@ -42,6 +42,13 @@ class Funcionario
      */
     private $cargo;
 
+    /**
+     * @var Estabelecimento
+     *
+     * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Estabelecimento", inversedBy="funcionarios")
+     */
+    private $estabelecimento;
+
 
     /**
      * Get id.
@@ -123,5 +130,24 @@ class Funcionario
     public function getCargo()
     {
         return $this->cargo;
+    }
+
+    /**
+     * @return Estabelecimento
+     */
+    public function getEstabelecimento()
+    {
+        return $this->estabelecimento;
+    }
+
+    /**
+     * @param Estabelecimento $estabelecimento
+     * @return Funcionario
+     */
+    public function setEstabelecimento(Estabelecimento $estabelecimento)
+    {
+        $this->estabelecimento = $estabelecimento;
+
+        return $this;
     }
 }

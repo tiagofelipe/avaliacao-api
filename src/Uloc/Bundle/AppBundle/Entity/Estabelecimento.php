@@ -2,6 +2,7 @@
 
 namespace Uloc\Bundle\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -52,7 +53,7 @@ class Estabelecimento
 
 
     /**
-     * @var int
+     * @var CriterioEstabelecimento
      *
      * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="estabelecimentos" )
      * @ORM\JoinColumn(name="criterio_estabelecimento_id", referencedColumnName="id" )
@@ -60,16 +61,24 @@ class Estabelecimento
     private $criterioEstabelecimento;
 
     /**
-     * @var int
+     * @var Avaliacao
+     *
      * @ORM\OneToMany(targetEntity="Avaliacao", mappedBy="estabelecimento")
      */
     private $avaliacaos;
 
     /**
-     * @var int
+     * @var Funcionario[]
      * @ORM\OneToMany(targetEntity="Funcionario", mappedBy="estabelecimento")
      */
     private $funcionarios;
+
+    /**
+     * @var Usuario[]
+     *
+     * @ORM\ManyToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Usuario", mappedBy="estabelecimentos")
+     */
+    private $proprietarios;
 
 
     /**
@@ -77,8 +86,9 @@ class Estabelecimento
      */
     public function __construct()
     {
-        $this->avaliacaos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->funcionarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->avaliacaos = new ArrayCollection();
+        $this->funcionarios = new ArrayCollection();
+        $this->proprietarios = new ArrayCollection();
     }
 
 
@@ -205,7 +215,7 @@ class Estabelecimento
     /**
      * Get criterioEstabelecimento.
      *
-     * @return \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null
+     * @return CriterioEstabelecimento
      */
     public function getCriterioEstabelecimento()
     {
@@ -283,5 +293,21 @@ class Estabelecimento
     public function getFuncionarios()
     {
         return $this->funcionarios;
+    }
+
+    /**
+     * @return Usuario[]
+     */
+    public function getProprietarios()
+    {
+        return $this->proprietarios;
+    }
+
+    /**
+     * @param Usuario $proprietario
+     */
+    public function addProprietario(Usuario $proprietario)
+    {
+        $this->proprietarios[] = $proprietario;
     }
 }
