@@ -103,6 +103,7 @@ class Usuario implements UserInterface
      * @var Estabelecimento[]
      *
      * @ORM\ManyToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Estabelecimento", inversedBy="proprietarios")
+     * @ORM\JoinTable(name="proprietario_estabelecimento")
      */
     private $estabelecimentos;
 
