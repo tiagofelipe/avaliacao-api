@@ -22,7 +22,7 @@ class CriterioEstabelecimento
     private $id;
 
     /**
-     * @var int
+     * @var Criterio[]
      *
      * @ORM\OneToMany(targetEntity="Criterio", mappedBy="estabelecimentoCriterio")
      */
@@ -31,18 +31,19 @@ class CriterioEstabelecimento
 
 
     /**
-     * @var int
+     * @var Estabelecimento[]
      * @ORM\OneToMany(targetEntity="Estabelecimento", mappedBy="criterioEstabelecimento")
      */
     private  $estabelecimentos;
 
 
     /**
-     * @var int
+     * @var Avaliacao[]
      * @ORM\OneToMany(targetEntity="Avaliacao", mappedBy="criterioEstabelecimento")
      */
     private $avaliacaos;
 
+    
     /**
      * Constructor
      */
@@ -50,8 +51,8 @@ class CriterioEstabelecimento
     {
         $this->criterios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->estabelecimentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->avaliacaos = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id.
@@ -62,7 +63,6 @@ class CriterioEstabelecimento
     {
         return $this->id;
     }
-
 
     /**
      * Add criterio.

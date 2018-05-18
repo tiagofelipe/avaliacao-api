@@ -36,7 +36,7 @@ class Criterio
     private $nome;
 
     /**
-     * @var int
+     * @var CriterioEstabelecimento
      *
      * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="criterios" )
      * @ORM\JoinColumn(name="estabelecimento_criterio_id", referencedColumnName="id" )
@@ -44,87 +44,5 @@ class Criterio
     private $estabelecimentoCriterio;
 
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set ativo.
-     *
-     * @param bool|null $ativo
-     *
-     * @return Criterio
-     */
-    public function setAtivo($ativo = null)
-    {
-        $this->ativo = $ativo;
-
-        return $this;
-    }
-
-    /**
-     * Get ativo.
-     *
-     * @return bool|null
-     */
-    public function getAtivo()
-    {
-        return $this->ativo;
-    }
-
-    /**
-     * Set nome.
-     *
-     * @param string $nome
-     *
-     * @return Criterio
-     */
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
-
-        return $this;
-    }
-
-    /**
-     * Get nome.
-     *
-     * @return string
-     */
-    public function getNome()
-    {
-        return $this->nome;
-    }
-
-
-
-    /**
-     * Set estabelecimentoCriterios.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null $estabelecimentoCriterios
-     *
-     * @return Criterio
-     */
-    public function setEstabelecimentoCriterios(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterios = null)
-    {
-        $this->estabelecimentoCriterios = $estabelecimentoCriterios;
-
-        return $this;
-    }
-
-    /**
-     * Get estabelecimentoCriterios.
-     *
-     * @return \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null
-     */
-    public function getEstabelecimentoCriterios()
-    {
-        return $this->estabelecimentoCriterios;
-    }
+    
 }

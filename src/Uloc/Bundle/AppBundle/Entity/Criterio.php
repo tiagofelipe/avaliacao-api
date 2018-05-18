@@ -36,13 +36,15 @@ class Criterio
     private $nome;
 
     /**
-     * @var int
+     * @var CriterioEstabelecimento
      *
      * @ORM\ManyToOne(targetEntity="CriterioEstabelecimento", inversedBy="criterios" )
      * @ORM\JoinColumn(name="estabelecimento_criterio_id", referencedColumnName="id" )
      */
     private $estabelecimentoCriterio;
 
+
+    
 
     /**
      * Get id.
@@ -100,32 +102,6 @@ class Criterio
     public function getNome()
     {
         return $this->nome;
-    }
-
-
-
-    /**
-     * Set estabelecimentoCriterios.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null $estabelecimentoCriterios
-     *
-     * @return Criterio
-     */
-    public function setEstabelecimentoCriterios(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterios = null)
-    {
-        $this->estabelecimentoCriterios = $estabelecimentoCriterios;
-
-        return $this;
-    }
-
-    /**
-     * Get estabelecimentoCriterios.
-     *
-     * @return \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null
-     */
-    public function getEstabelecimentoCriterios()
-    {
-        return $this->estabelecimentoCriterios;
     }
 
     /**
