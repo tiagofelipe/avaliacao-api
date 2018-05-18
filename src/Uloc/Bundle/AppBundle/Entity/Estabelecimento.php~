@@ -71,17 +71,6 @@ class Estabelecimento
      */
     private $funcionarios;
 
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->avaliacaos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->funcionarios = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-
     /**
      * Get id.
      *
@@ -210,78 +199,5 @@ class Estabelecimento
     public function getCriterioEstabelecimento()
     {
         return $this->criterioEstabelecimento;
-    }
-
-
-    /**
-     * Add avaliacao.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao
-     *
-     * @return Estabelecimento
-     */
-    public function addAvaliacao(\Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao)
-    {
-        $this->avaliacaos[] = $avaliacao;
-
-        return $this;
-    }
-
-    /**
-     * Remove avaliacao.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeAvaliacao(\Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao)
-    {
-        return $this->avaliacaos->removeElement($avaliacao);
-    }
-
-    /**
-     * Get avaliacaos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAvaliacaos()
-    {
-        return $this->avaliacaos;
-    }
-
-    /**
-     * Add funcionario.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Funcionario $funcionario
-     *
-     * @return Estabelecimento
-     */
-    public function addFuncionario(\Uloc\Bundle\AppBundle\Entity\Funcionario $funcionario)
-    {
-        $this->funcionarios[] = $funcionario;
-
-        return $this;
-    }
-
-    /**
-     * Remove funcionario.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Funcionario $funcionario
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeFuncionario(\Uloc\Bundle\AppBundle\Entity\Funcionario $funcionario)
-    {
-        return $this->funcionarios->removeElement($funcionario);
-    }
-
-    /**
-     * Get funcionarios.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFuncionarios()
-    {
-        return $this->funcionarios;
     }
 }

@@ -44,16 +44,6 @@ class CriterioEstabelecimento
     private $avaliacaos;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->criterios = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->estabelecimentos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-
-    /**
      * Get id.
      *
      * @return int
@@ -62,7 +52,14 @@ class CriterioEstabelecimento
     {
         return $this->id;
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->criterios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->estabelecimentos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Add criterio.
@@ -134,41 +131,5 @@ class CriterioEstabelecimento
     public function getEstabelecimentos()
     {
         return $this->estabelecimentos;
-    }
-
-    /**
-     * Add avaliacao.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao
-     *
-     * @return CriterioEstabelecimento
-     */
-    public function addAvaliacao(\Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao)
-    {
-        $this->avaliacaos[] = $avaliacao;
-
-        return $this;
-    }
-
-    /**
-     * Remove avaliacao.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeAvaliacao(\Uloc\Bundle\AppBundle\Entity\Avaliacao $avaliacao)
-    {
-        return $this->avaliacaos->removeElement($avaliacao);
-    }
-
-    /**
-     * Get avaliacaos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAvaliacaos()
-    {
-        return $this->avaliacaos;
     }
 }

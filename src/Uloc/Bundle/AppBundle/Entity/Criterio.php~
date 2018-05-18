@@ -127,28 +127,4 @@ class Criterio
     {
         return $this->estabelecimentoCriterios;
     }
-
-    /**
-     * Set estabelecimentoCriterio.
-     *
-     * @param \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null $estabelecimentoCriterio
-     *
-     * @return Criterio
-     */
-    public function setEstabelecimentoCriterio(\Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento $estabelecimentoCriterio = null)
-    {
-        $this->estabelecimentoCriterio = $estabelecimentoCriterio;
-
-        return $this;
-    }
-
-    /**
-     * Get estabelecimentoCriterio.
-     *
-     * @return \Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento|null
-     */
-    public function getEstabelecimentoCriterio()
-    {
-        return $this->estabelecimentoCriterio;
-    }
 }
