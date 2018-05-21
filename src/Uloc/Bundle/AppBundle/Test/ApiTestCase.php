@@ -310,51 +310,9 @@ class ApiTestCase extends KernelTestCase
     {
         //Purge FixturesData
         FixturesData::purge();
-        $em = $this->getEntityManager();
-        $fixtures = new FixturesData($em);
 
         $user = $this->createUser('tiago');
         FixturesData::addDefaultIds('user', $user->getUsername());
-
-        /* Endereço */
-        $pais1 = $fixtures->createPais('Brasil', 'BR');
-        $uf1 = $fixtures->createUf('Minas Gerais', 'MG');
-        $uf2 = $fixtures->createUf('Brasília', 'DF');
-        $municipio1 = $fixtures->createMunicipio("Montes Claros");
-        $municipio2 = $fixtures->createMunicipio("Brasília", $uf2->getId());
-        $bairro1 = $fixtures->createBairro("Edgar Pereira");
-        $bairro2 = $fixtures->createBairro("Aguas Claras", $municipio2->getId());
-
-        $pais2 = $fixtures->createPais('Estados Unidos', 'USA');
-
-        $tipoFinalidadeEndereco1 = $fixtures->createTipoFinalidadeEndereco('Residencial');
-        $tipoFinalidadeEndereco2 = $fixtures->createTipoFinalidadeEndereco('Comercial');
-
-        /* Pessoa */
-        $campoExtraPessoa1 = $fixtures->createCampoExtraPessoa('1', 'Cidadania');
-        $campoExtraPessoa2 = $fixtures->createCampoExtraPessoa('2', 'Profissão');
-        $tipoFinalidadeEmail1 = $fixtures->createTipoFinalidadeEmail('Pessoal');
-        $tipoFinalidadeEmail2 = $fixtures->createTipoFinalidadeEmail('Trabalho');
-        $tipoFinalidadeTelefone1 = $fixtures->createTipoFinalidadeTelefone('Pessoal');
-        $tipoFinalidadeTelefone2 = $fixtures->createTipoFinalidadeTelefone('Trabalho');
-
-        $origemCadastroPessoa = $fixtures->createOrigemCadastroPessoa('Interno');
-        $origemCadastroPessoa2 = $fixtures->createOrigemCadastroPessoa('Site');
-
-        //RM
-
-        /* CategoriaLeilao */
-        $fixtures->createCategoriaLeilao('Imóveis');
-        $fixtures->createCategoriaLeilao('Veículos');
-        $fixtures->createCategoriaLeilao('Materiais');
-        $fixtures->createCategoriaLeilao('Extra Judicial');
-        $fixtures->createCategoriaLeilao('Judicial');
-        $fixtures->createLeiloeiro('Rogério Menezes');
-        $fixtures->createLeilaoLocal('Pátio de Leilões Rogério Menezes');
-
-        /* Tipo Comitente */
-        $fixtures->createTipoComitente('Tipo 1');
-        $fixtures->createTipoComitente('Tipo 2');
 
         return $this;
     }
