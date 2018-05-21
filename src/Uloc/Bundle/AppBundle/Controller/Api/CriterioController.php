@@ -2,23 +2,29 @@
 
 namespace Uloc\Bundle\AppBundle\Controller\Api;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Uloc\Bundle\AppBundle\Controller\BaseController;
 use Uloc\Bundle\AppBundle\Entity\Criterio;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Uloc\Bundle\AppBundle\Form\CriterioType;
 
 /**
  * Criterio controller.
  *
- * @Route("criterio")
+ *
  */
-class CriterioController extends Controller
+class CriterioController extends BaseController
 {
     /**
      * Lists all criterio entities.
      *
-     * @Route("/", name="criterio_index")
+     * @Route("/api/public/criterio/", name="criterio_index")
      * @Method("GET")
+     *
      */
     public function indexAction()
     {
@@ -26,111 +32,104 @@ class CriterioController extends Controller
 
         $criterios = $em->getRepository('UlocAppBundle:Criterio')->findAll();
 
-        return $this->render('criterio/index.html.twig', array(
-            'criterios' => $criterios,
-        ));
+        if (!$criterios){
+            $this->throwApiProblemException('nenhum critério foi encontrado', JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        return $this->createApiResponse($criterios, JsonResponse::HTTP_OK);
     }
 
     /**
      * Creates a new criterio entity.
      *
-     * @Route("/new", name="criterio_new")
+     * @Route("/api/criterio/new", name="criterio_new")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('ROLE_INTRANET')")
      */
     public function newAction(Request $request)
     {
         $criterio = new Criterio();
-        $form = $this->createForm('Uloc\Bundle\AppBundle\Form\CriterioType', $criterio);
-        $form->handleRequest($request);
+        $form = $this->createForm(CriterioType::class, $criterio);
+        $this->processForm($request, $form);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($criterio);
-            $em->flush();
-
-            return $this->redirectToRoute('criterio_show', array('id' => $criterio->getId()));
+        if(!$form->isValid()){
+            throw $this->throwApiProblemValidationException($form);
         }
 
-        return $this->render('criterio/new.html.twig', array(
-            'criterio' => $criterio,
-            'form' => $form->createView(),
-        ));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($criterio);
+        $em->flush();
+
+        $response = $this->createApiResponse($criterio, JsonResponse::HTTP_CREATED);
+
+        return $response;
+
     }
 
     /**
      * Finds and displays a criterio entity.
      *
-     * @Route("/{id}", name="criterio_show")
+     * @Route("/api/public/criterio/{id}", name="criterio_show")
      * @Method("GET")
      */
-    public function showAction(Criterio $criterio)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($criterio);
+        $repository = $this->getDoctrine()->getManager()->getRepository('UlocAppBundle:Criterio');
+        $banner = $repository->find($id);
+        if(!$banner){
+            $this->throwApiProblemException('Banner não encontrado', JsonResponse::HTTP_NOT_FOUND);
+        }
 
-        return $this->render('criterio/show.html.twig', array(
-            'criterio' => $criterio,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $response = $this->createApiResponse($banner, JsonResponse::HTTP_OK);
+
+        return ($response);
     }
 
     /**
      * Displays a form to edit an existing criterio entity.
      *
-     * @Route("/{id}/edit", name="criterio_edit")
+     * @Route("/api/public/criterio/{id}/edit", name="criterio_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('ROLE_INTRANET')")
      */
-    public function editAction(Request $request, Criterio $criterio)
+    public function editAction(Request $request, $id)
     {
-        $deleteForm = $this->createDeleteForm($criterio);
-        $editForm = $this->createForm('Uloc\Bundle\AppBundle\Form\CriterioType', $criterio);
-        $editForm->handleRequest($request);
+            $criterio = $this->getDoctrine()->getRepository(Criterio::class)->find($id);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if(!$criterio){
+                $this->throwApiProblemException('Não encontramos o critério informado', JsonResponse::HTTP_NOT_FOUND);
+            }
 
-            return $this->redirectToRoute('criterio_edit', array('id' => $criterio->getId()));
-        }
+            $form = $this->createForm(CriterioType::class, $criterio);
+            $this->processForm($request, $form);
 
-        return $this->render('criterio/edit.html.twig', array(
-            'criterio' => $criterio,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $response = $this->createApiResponse($criterio, JsonResponse::HTTP_CREATED);
+
+            return $response;
     }
 
     /**
      * Deletes a criterio entity.
      *
-     * @Route("/{id}", name="criterio_delete")
+     * @Route("/api/criterio/{id}", name="criterio_delete")
      * @Method("DELETE")
+     * @Security("is_granted('ROLE_INTRANET')")
      */
-    public function deleteAction(Request $request, Criterio $criterio)
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($criterio);
-        $form->handleRequest($request);
+        $criterio = $this->getDoctrine()->getRepository(Criterio::class)->find($id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($criterio);
-            $em->flush();
+        if(!$criterio){
+            $this->throwApiProblemException('Não encontramos o critério informado', JsonResponse::HTTP_NOT_FOUND);
         }
 
-        return $this->redirectToRoute('criterio_index');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($criterio);
+        $em->flush();
+        return $this->createApiResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 
-    /**
-     * Creates a form to delete a criterio entity.
-     *
-     * @param Criterio $criterio The criterio entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Criterio $criterio)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('criterio_delete', array('id' => $criterio->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

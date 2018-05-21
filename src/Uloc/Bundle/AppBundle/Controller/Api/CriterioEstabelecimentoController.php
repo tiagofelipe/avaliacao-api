@@ -2,33 +2,39 @@
 
 namespace Uloc\Bundle\AppBundle\Controller\Api;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Uloc\Bundle\AppBundle\Controller\BaseController;
 use Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 
 /**
  * Criterioestabelecimento controller.
  *
  * @Route("criterioestabelecimento")
  */
-class CriterioEstabelecimentoController extends Controller
+class CriterioEstabelecimentoController extends BaseController
 {
     /**
-     * Lists all criterioEstabelecimento entities.
+     * Lists all criterioEstabelecimento entities. O ID É O ID DO ESTABELECIMENTO
      *
-     * @Route("/", name="criterioestabelecimento_index")
+     * @Route("/api/public/criterio/criterioestabelecimento/{id}", name="criterioestabelecimento_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $estabelecimento = $em->getRepository('UlocAppBundle:Estabelecimento');
+        $criterios = $em->getRepository('UlocAppBundle:CriterioEstabelecimento')->findByEstabelecimento($estabelecimento);
 
-        $criterioEstabelecimentos = $em->getRepository('UlocAppBundle:CriterioEstabelecimento')->findAll();
+        if (!$criterios){
+            $this->throwApiProblemException('nenhum criterio para esse estabelecimento foi encontrado', JsonResponse::HTTP_NOT_FOUND);
+        }
 
-        return $this->render('criterioestabelecimento/index.html.twig', array(
-            'criterioEstabelecimentos' => $criterioEstabelecimentos,
-        ));
+        return $this->createApiResponse($criterios, JsonResponse::HTTP_OK);
     }
 
     /**

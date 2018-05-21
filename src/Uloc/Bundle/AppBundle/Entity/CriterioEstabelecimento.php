@@ -3,6 +3,7 @@
 namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * CriterioEstabelecimento
@@ -145,5 +146,19 @@ class CriterioEstabelecimento
     public function getAvaliacaos()
     {
         return $this->avaliacaos;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'estabelecimentos'=>
+                    array('id','cnpj', 'nomeFantasia', 'razaoSocial','tipo'),
+                'avaliacaos as avaliacoes'=>
+                    array('id','comentario','dataCriacao','nota', 'usuario'=>
+                        array('nome','id'))
+            ]);
+        $representation->build();
     }
 }
