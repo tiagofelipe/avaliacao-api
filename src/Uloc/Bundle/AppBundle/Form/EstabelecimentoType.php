@@ -2,8 +2,10 @@
 
 namespace Uloc\Bundle\AppBundle\Form;
 
+use Doctrine\DBAL\Types\SmallIntType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento;
@@ -18,7 +20,7 @@ class EstabelecimentoType extends AbstractType
         $builder->add('cnpj')
             ->add('nomeFantasia')
             ->add('razaoSocial')
-            ->add('tipo');
+            ->add('tipo', IntegerType::class);
     }
     /**
      * {@inheritdoc}

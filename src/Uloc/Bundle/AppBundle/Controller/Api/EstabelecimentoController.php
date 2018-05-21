@@ -2,6 +2,8 @@
 
 namespace Uloc\Bundle\AppBundle\Controller\Api;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Uloc\Bundle\AppBundle\Controller\BaseController;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("estabelecimento")
  */
-class EstabelecimentoController extends Controller
+class EstabelecimentoController extends BaseController
 {
     /**
      * Lists all estabelecimento entities.
@@ -26,9 +28,10 @@ class EstabelecimentoController extends Controller
 
         $estabelecimentos = $em->getRepository('UlocAppBundle:Estabelecimento')->findAll();
 
-        return $this->render('estabelecimento/index.html.twig', array(
-            'estabelecimentos' => $estabelecimentos,
-        ));
+        if (!$estabelecimentos){
+            throw $this->throwApiProblemException('Não há ', JsonResponse::HTTP_NOT_FOUND);
+        }
+
     }
 
     /**

@@ -37,7 +37,7 @@ class Criterio
     private $nome;
 
     /**
-     * @var CriterioEstabelecimento
+     * @var CriterioEstabelecimento[]
      *
      * @ORM\OneToMany(targetEntity="CriterioEstabelecimento", mappedBy="criterio" )
      *
@@ -45,20 +45,6 @@ class Criterio
     private $estabelecimentoCriterios;
 
 
-    
-
-    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
-    {
-        $representation->setGroup('public')
-            ->addProperties([
-                'id',
-                'nome',
-                'ativo',
-
-            ]);
-        $representation->build();
-
-    }
     /**
      * Constructor
      */
@@ -159,5 +145,17 @@ class Criterio
     public function getEstabelecimentoCriterios()
     {
         return $this->estabelecimentoCriterios;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'nome',
+                'ativo',
+
+            ]);
+        $representation->build();
     }
 }

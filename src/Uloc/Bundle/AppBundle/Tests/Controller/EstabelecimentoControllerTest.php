@@ -3,9 +3,31 @@
 namespace Uloc\Bundle\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
+use Uloc\Bundle\AppBundle\Test\ApiTestCase;
 
-class EstabelecimentoControllerTest extends WebTestCase
+class EstabelecimentoControllerTest extends ApiTestCase
 {
+
+    protected function setUp($forcePurge = false, $basicData = true)
+    {
+        parent::setUp($forcePurge, $basicData);
+    }
+    public function  testGETEstabelecimentoIndex()
+    {
+
+        $estabelecimento= new Estabelecimento();
+        $estabelecimento->setCnpj('11111000110010');
+        $estabelecimento->setNomeFantasia('Fantasia de natal');
+        $estabelecimento->setRazaoSocial('Exiks');
+
+
+
+        $response = $this->client->get('/api/estabelecimento/', array(
+            'headers' => $this->getAuthorizedHeaders('tiago')
+        ));}
+
+
     /*
     public function testCompleteScenario()
     {
