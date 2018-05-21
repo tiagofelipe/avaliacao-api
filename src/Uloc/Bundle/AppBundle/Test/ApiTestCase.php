@@ -5,6 +5,7 @@ namespace Uloc\Bundle\AppBundle\Test;
 use Uloc\Bundle\AppBundle\Entity\App\Municipio;
 use Uloc\Bundle\AppBundle\Entity\App\Pais;
 use Uloc\Bundle\AppBundle\Entity\App\UnidadeFederativa;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
@@ -294,8 +295,7 @@ class ApiTestCase extends KernelTestCase
         $user = new Usuario();
         $user->setUsername($username);
         $user->setEmail($username . '@tiagofelipe.com');
-        $password = $this->getService('security.password_encoder')
-            ->encodePassword($user, $plainPassword);
+        $password = $this->getService('security.password_encoder')->encodePassword($user, $plainPassword);
         $user->setPassword($password);
         $user->setRoles(['ROLE_USER', 'ROLE_INTRANET']);
 
@@ -304,6 +304,21 @@ class ApiTestCase extends KernelTestCase
         $em->flush();
 
         return $user;
+    }
+
+    protected function createEstabelecimento($cnpj = '03.486.845/0001-27', $razaoSocial = 'Estabelecimento Cobaia LTDA', $nomeFantasia = 'Estabelecimento Cobaia'){
+
+        $estab = new Estabelecimento();
+
+        $estab->setRazaoSocial($razaoSocial);
+        $estab->setNomeFantasia($nomeFantasia);
+        $estab->setCnpj($cnpj);
+
+        $em = $this->getEntityManager();
+        $em->persist($estab);
+        $em->flush();
+
+        return $estab;
     }
 
     protected function createBasicData()

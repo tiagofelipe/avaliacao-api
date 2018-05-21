@@ -4,6 +4,7 @@ namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * Avaliacao
@@ -55,6 +56,7 @@ class Avaliacao
      * @var Usuario
      *
      * @ORM\ManyToOne(targetEntity="Uloc\Bundle\AppBundle\Entity\Usuario", inversedBy="avaliacoes")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $usuario;
 
@@ -246,5 +248,21 @@ class Avaliacao
         $this->funcionario = $funcionario;
 
         return $this;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'nota',
+                'comentario',
+                'data_criacao as data',
+                'usuario' => array(
+                    'id',
+                    'nome'
+                )
+            ]);
+        $representation->build();
     }
 }
