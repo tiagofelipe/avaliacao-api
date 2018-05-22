@@ -14,20 +14,20 @@ use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 /**
  * Criterioestabelecimento controller.
  *
- * @Route("criterioestabelecimento")
+ *
  */
 class CriterioEstabelecimentoController extends BaseController
 {
     /**
      * Lists all criterioEstabelecimento entities. O ID É O ID DO ESTABELECIMENTO
      *
-     * @Route("/api/public/criterio/criterioestabelecimento/{id}", name="criterioestabelecimento_index")
+     * @Route("/api/public/criterioestabelecimento/{id}/", name="criterioestabelecimento_index")
      * @Method("GET")
      */
     public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $estabelecimento = $em->getRepository('UlocAppBundle:Estabelecimento');
+        $estabelecimento = $em->getRepository('UlocAppBundle:Estabelecimento')->find($id);
         $criterios = $em->getRepository('UlocAppBundle:CriterioEstabelecimento')->findByEstabelecimento($estabelecimento);
 
         if (!$criterios){

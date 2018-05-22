@@ -3,9 +3,42 @@
 namespace Uloc\Bundle\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Uloc\Bundle\AppBundle\Entity\Criterio;
+use Uloc\Bundle\AppBundle\Entity\CriterioEstabelecimento;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
+use Uloc\Bundle\AppBundle\Test\ApiTestCase;
 
-class CriterioEstabelecimentoControllerTest extends WebTestCase
+class CriterioEstabelecimentoControllerTest extends ApiTestCase
 {
+
+    public function  testGETCriterioEstabelecimentoIndex()
+    {
+
+        $criterio= new Criterio();
+        $criterio->setNome('asasas');
+        $criterio->setAtivo(true);
+        $est = new Estabelecimento();
+        $est->setCnpj('11111111');
+        $est->setNomeFantasia('nome');
+        $est->setTipo(1);
+        $est->setRazaoSocial( 'a');
+        $critEst = new CriterioEstabelecimento();
+        $critEst->setCriterio($criterio);
+        $critEst->setEstabelecimento($est);
+        $em = $this->getEntityManager();
+        $em->persist($criterio);
+        $em->flush();
+        $em->persist($est);
+        $em->flush();
+        $em->persist($critEst);
+        $em->flush();
+
+        $response = $this->client->get('/api/public/criterioestabelecimento/'.$est->getId().'/', array(
+            'headers' => $this->getAuthorizedHeaders('tiago')
+        ));
+        $this->assertEquals(220, $response->getStatusCode());
+      //  $this->asserter()->assertResponsePropertyEquals($response, 'criterio[1].nome', 'CowboyCoder');
+    }
     /*
     public function testCompleteScenario()
     {

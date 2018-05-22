@@ -153,7 +153,7 @@ class CriterioEstabelecimento
         $representation->setGroup('public')
             ->addProperties([
                 'id',
-                'estabelecimentos'=>
+                'estabelecimento'=>
                     array('id','cnpj', 'nomeFantasia', 'razaoSocial','tipo'),
                 'avaliacaos as avaliacoes'=>
                     array('id','comentario','dataCriacao','nota', 'usuario'=>
