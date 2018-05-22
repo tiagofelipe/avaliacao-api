@@ -2,6 +2,7 @@
 
 namespace Uloc\Bundle\AppBundle\Controller\Api;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Uloc\Bundle\AppBundle\Api\ApiProblem;
 use Uloc\Bundle\AppBundle\Api\ApiProblemException;
 use Uloc\Bundle\AppBundle\Controller\BaseController;
@@ -10,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Uloc\Bundle\AppBundle\Entity\Pessoa\Pessoa;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
-use Uloc\Bundle\AppBundle\Form\UsuarioApiType;
+use Uloc\Bundle\AppBundle\Form\UsuarioType;
 use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadata;
 
 /**
@@ -77,7 +78,7 @@ class UserController extends BaseController
      */
     public function editAction(Request $request, Usuario $usuario)
     {
-        $form = $this->createForm(UsuarioApiType::class, $usuario);
+        $form = $this->createForm(UsuarioType::class, $usuario);
         $this->processForm($request, $form);
 
         if (!$form->isValid()) {
@@ -92,14 +93,13 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/api/usuarios/", name="api_usurio_new")
-     * @Route("/api/usuarios")
+     * @Route("/api/public/usuario/new", name="api_usuario_new")
      * @Method("POST")
      */
     public function newAction(Request $request)
     {
         $usuario = new Usuario();
-        $form = $this->createForm(UsuarioApiType::class, $usuario);
+        $form = $this->createForm(UsuarioType::class, $usuario);
         $this->processForm($request, $form);
 
         if (!$form->isValid()) {
@@ -108,19 +108,18 @@ class UserController extends BaseController
 
         $data = json_decode($request->getContent(), true);
         $plainPassword = @$data['password'];
-        $password = $this->get('security.password_encoder')
-            ->encodePassword($usuario, $plainPassword);
+        $password = $this->get('security.password_encoder')->encodePassword($usuario, $plainPassword);
         $usuario->setPassword($password);
 
         $roles = ['ROLE_USER', 'ROLE_INTRANET'];
-        if($request->get('role') === 'comitente'){
+        /* if($request->get('role') === 'comitente'){
             $roles[] = 'ROLE_COMITENTE';
-        }
+        } */
         $usuario->setRoles($roles);
 
         $em = $this->getDoctrine()->getManager();
 
-        $pessoaID = intval(@$data['pessoa']['id']);
+        /* $pessoaID = intval(@$data['pessoa']['id']);
         if ($pessoaID > 0) {
             $pessoa = $em->getRepository(Pessoa::class)->find($pessoaID);
             if(!$pessoa){
@@ -128,12 +127,13 @@ class UserController extends BaseController
             }
             $usuario->setPessoa($pessoa);
             $pessoa->addUsuario($usuario);
-        }
+        } */
 
         $em->persist($usuario);
         $em->flush();
 
-        return $this->showAction($usuario, $request);
+        // return $this->showAction($usuario, $request);
+        return $this->createApiResponse($usuario, JsonResponse::HTTP_CREATED);
     }
 
     /**

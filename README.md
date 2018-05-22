@@ -1,4 +1,4 @@
-Website Rogério Menezes
+Software de Avaliação
 ============================
 
 This code provides an application with all service layers for web communication in softwares of Grupo Ressonar.
