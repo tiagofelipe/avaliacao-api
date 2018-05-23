@@ -3,6 +3,7 @@
 namespace Uloc\Bundle\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,12 @@ class UsuarioType extends AbstractType
             ->add('username')
             ->add('password', PasswordType::class)
             ->add('email', EmailType::class)
+            ->add('enderecos', CollectionType::class, array(
+                'entry_type' => EnderecoFisicoType::class,
+                'invalid_message' => 'Endereços defined is invalid',
+                'by_reference' => false,
+                'allow_add' => true
+            ))
             // ->add('pessoa', )
             ;
     }
@@ -25,7 +32,8 @@ class UsuarioType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Usuario::class,
-            'csrf_protection' => false
+            'csrf_protection' => false,
+            'allow_extra_fields' => true
         ));
     }
 

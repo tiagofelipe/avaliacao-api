@@ -13,6 +13,7 @@ namespace Uloc\Bundle\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
 use Uloc\Bundle\AppBundle\Entity\Notificacao\Notificacao;
 use Uloc\Bundle\AppBundle\Entity\Pessoa\Pessoa;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -115,6 +116,13 @@ class Usuario implements UserInterface
      */
     private $avaliacoes;
 
+    /**
+     * @var EnderecoFisico[]
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico", mappedBy="usuario")
+     */
+    private $enderecos;
+
 
     public function __construct()
     {
@@ -122,6 +130,7 @@ class Usuario implements UserInterface
         $this->grupos = new ArrayCollection();
         $this->estabelecimentos = new ArrayCollection();
         $this->avaliacoes = new ArrayCollection();
+        $this->enderecos = new ArrayCollection();
     }
 
     /**
@@ -354,6 +363,23 @@ class Usuario implements UserInterface
     public function setAvaliacaos(Avaliacao $avaliacao)
     {
         $this->avaliacoes[] = $avaliacao;
+    }
+
+
+    /**
+     * @return EnderecoFisico[]
+     */
+    public function getEnderecos()
+    {
+        return $this->enderecos;
+    }
+
+    /**
+     * @param EnderecoFisico $endereco
+     */
+    public function addEndereco(EnderecoFisico $endereco)
+    {
+        $this->enderecos[] = $endereco;
     }
 
     public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)

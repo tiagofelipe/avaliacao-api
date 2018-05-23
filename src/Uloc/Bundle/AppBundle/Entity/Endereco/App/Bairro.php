@@ -8,7 +8,7 @@
  * distribuído junto com o código fonte.
  */
 
-namespace Uloc\Bundle\AppBundle\Entity\App;
+namespace Uloc\Bundle\AppBundle\Entity\Endereco\App;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bairro
  *
- * @ORM\Table(name="bairro")
+ * @ORM\Table(name="app_bairro")
  * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\App\BairroRepository")
  */
 class Bairro

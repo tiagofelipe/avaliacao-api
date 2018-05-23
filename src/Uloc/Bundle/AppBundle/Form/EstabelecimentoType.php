@@ -5,6 +5,7 @@ namespace Uloc\Bundle\AppBundle\Form;
 use Doctrine\DBAL\Types\SmallIntType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,13 @@ class EstabelecimentoType extends AbstractType
         $builder->add('cnpj')
             ->add('nomeFantasia')
             ->add('razaoSocial')
-            ->add('tipo', IntegerType::class);
+            ->add('tipo', IntegerType::class)
+            ->add('enderecos', CollectionType::class, array(
+                'entry_type' => EnderecoFisicoType::class,
+                'invalid_message' => 'Endereços defined is invalid',
+                'by_reference' => false,
+                'allow_add' => true
+            ));
     }
     /**
      * {@inheritdoc}
