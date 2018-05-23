@@ -157,7 +157,8 @@ class CriterioEstabelecimento
                     array('id','cnpj', 'nomeFantasia', 'razaoSocial','tipo'),
                 'avaliacaos as avaliacoes'=>
                     array('id','comentario','dataCriacao','nota', 'usuario'=>
-                        array('nome','id'))
+                        array('nome','id')),
+                'criterio'=>array('id', 'nome', 'ativo')
             ]);
         $representation->build();
     }

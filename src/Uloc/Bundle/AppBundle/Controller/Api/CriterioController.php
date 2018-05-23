@@ -75,12 +75,12 @@ class CriterioController extends BaseController
     public function showAction($id)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('UlocAppBundle:Criterio');
-        $banner = $repository->find($id);
-        if(!$banner){
-            $this->throwApiProblemException('Banner não encontrado', JsonResponse::HTTP_NOT_FOUND);
+        $criterio = $repository->find($id);
+        if(!$criterio){
+            $this->throwApiProblemException('Criterio não encontrado', JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $response = $this->createApiResponse($banner, JsonResponse::HTTP_OK);
+        $response = $this->createApiResponse($criterio, JsonResponse::HTTP_OK);
 
         return ($response);
     }

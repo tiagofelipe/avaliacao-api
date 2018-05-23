@@ -13,6 +13,33 @@ class EstabelecimentoControllerTest extends ApiTestCase
     {
         parent::setUp($forcePurge, $basicData);
     }
+
+    public function testUpload () {
+
+        $banner = new Estabelecimento();
+        $banner->setRazaoSocial('teste');
+        $banner->setNomeFantasia('teste');
+        $banner->setTipo(1);
+        $banner->setCnpj('123');
+        $em = $this->getEntityManager();
+        $em->persist($banner);
+        $em->flush();
+
+        $response = $this->client->post('/api/estabelecimento/'.$banner->getId().'/upload', array(
+            'headers' => $this->getAuthorizedHeaders('tiago'),
+            'multipart' => array(
+                array(
+                    'name' => 'file',
+                    'contents' => fopen('C:/Users/casa/Pictures/isaac-newton.png', 'r')
+                )
+            )
+        ));
+
+        $this->assertEquals(201, $response->getStatusCode());
+        $this->asserter()->assertResponsePropertyContains($response, 'nomeFantasia', 'teste');
+        $this->debugResponse($response);
+    }
+
     public function  testGETEstabelecimentoIndex()
     {
 

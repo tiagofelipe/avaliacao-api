@@ -27,17 +27,16 @@ class CriterioEstabelecimentoControllerTest extends ApiTestCase
         $critEst->setEstabelecimento($est);
         $em = $this->getEntityManager();
         $em->persist($criterio);
-        $em->flush();
         $em->persist($est);
-        $em->flush();
         $em->persist($critEst);
         $em->flush();
 
         $response = $this->client->get('/api/public/criterioestabelecimento/'.$est->getId().'/', array(
             'headers' => $this->getAuthorizedHeaders('tiago')
         ));
-        $this->assertEquals(220, $response->getStatusCode());
-      //  $this->asserter()->assertResponsePropertyEquals($response, 'criterio[1].nome', 'CowboyCoder');
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->asserter()->assertResponsePropertyEquals($response, 'id', 10);
+        $this->asserter()->assertResponsePropertyEquals($response, 'criterio.nome', 'asasas');
     }
     /*
     public function testCompleteScenario()

@@ -41,6 +41,13 @@ class Estabelecimento
     /**
      * @var string
      *
+     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
+     */
+    private $logo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="razao_social", type="string", length=255)
      */
     private $razaoSocial;
@@ -150,6 +157,30 @@ class Estabelecimento
     public function getNomeFantasia()
     {
         return $this->nomeFantasia;
+    }
+
+    /**
+     * Set logo.
+     *
+     * @param string $logo
+     *
+     * @return Estabelecimento
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo.
+     *
+     * @return string
+     */
+    public function getlogo()
+    {
+        return $this->logo;
     }
 
     /**
