@@ -178,7 +178,7 @@ class Estabelecimento
      *
      * @return string
      */
-    public function getlogo()
+    public function getLogo()
     {
         return $this->logo;
     }

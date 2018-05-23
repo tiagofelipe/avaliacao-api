@@ -14,7 +14,27 @@ class EstabelecimentoControllerTest extends ApiTestCase
         parent::setUp($forcePurge, $basicData);
     }
 
-    public function testUpload () {
+    public function testPOST()
+    {
+
+        $data = array(
+            'cnpj' => '121212',
+            'nomeFantasia' => 'nome de teste',
+            'razaoSocial' => 'razao de teste',
+            'tipo' => 1,
+        );
+
+        $response = $this->client->post('/api/estabelecimento/new', array(
+            'body' => \json_encode($data),
+            'headers' => $this->getAuthorizedHeaders('tiago')
+        ));
+
+        $this->assertEquals(201, $response->getStatusCode());
+
+    }
+
+    public function testUpload()
+    {
 
         $banner = new Estabelecimento();
         $banner->setRazaoSocial('teste');
@@ -25,7 +45,7 @@ class EstabelecimentoControllerTest extends ApiTestCase
         $em->persist($banner);
         $em->flush();
 
-        $response = $this->client->post('/api/estabelecimento/'.$banner->getId().'/upload', array(
+        $response = $this->client->post('/api/estabelecimento/' . $banner->getId() . '/upload', array(
             'headers' => $this->getAuthorizedHeaders('tiago'),
             'multipart' => array(
                 array(
@@ -40,65 +60,20 @@ class EstabelecimentoControllerTest extends ApiTestCase
         $this->debugResponse($response);
     }
 
-    public function  testGETEstabelecimentoIndex()
+    public function testGETEstabelecimentoIndex()
     {
 
-        $estabelecimento= new Estabelecimento();
+        $estabelecimento = new Estabelecimento();
         $estabelecimento->setCnpj('11111000110010');
         $estabelecimento->setNomeFantasia('Fantasia de natal');
         $estabelecimento->setRazaoSocial('Exiks');
 
 
-
-        $response = $this->client->get('/api/estabelecimento/', array(
+        $response = $this->client->get('/api/public/estabelecimento/', array(
             'headers' => $this->getAuthorizedHeaders('tiago')
-        ));}
 
 
-    /*
-    public function testCompleteScenario()
-    {
-        // Create a new client to browse the application
-        $client = static::createClient();
-
-        // Create a new entry in the database
-        $crawler = $client->request('GET', '/estabelecimento/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /estabelecimento/");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
-
-        // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'uloc_bundle_appbundle_estabelecimento[field_name]'  => 'Test',
-            // ... other fields to fill
         ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
-        // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
-
-        // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
-
-        $form = $crawler->selectButton('Update')->form(array(
-            'uloc_bundle_appbundle_estabelecimento[field_name]'  => 'Foo',
-            // ... other fields to fill
-        ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
-        // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
-
-        // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
-
-        // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+        $this->assertEquals(200, $response->getStatusCode());
     }
-
-    */
 }

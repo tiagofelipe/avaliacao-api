@@ -45,6 +45,8 @@ class CriterioController extends BaseController
      * @Route("/api/criterio/new", name="criterio_new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('ROLE_INTRANET')")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -71,6 +73,8 @@ class CriterioController extends BaseController
      *
      * @Route("/api/public/criterio/{id}", name="criterio_show")
      * @Method("GET")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction($id)
     {
@@ -88,9 +92,13 @@ class CriterioController extends BaseController
     /**
      * Displays a form to edit an existing criterio entity.
      *
-     * @Route("/api/public/criterio/{id}/edit", name="criterio_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/api/criterio/{id}/update", name="criterio_update")
+     * @Method("POST")
      * @Security("is_granted('ROLE_INTRANET')")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
      */
     public function editAction(Request $request, $id)
     {
@@ -117,8 +125,10 @@ class CriterioController extends BaseController
      * @Route("/api/criterio/{id}", name="criterio_delete")
      * @Method("DELETE")
      * @Security("is_granted('ROLE_INTRANET')")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
         $criterio = $this->getDoctrine()->getRepository(Criterio::class)->find($id);
 

@@ -22,7 +22,7 @@ class EstabelecimentoController extends BaseController
     /**
      * Lists all estabelecimento entities.
      *
-     * @Route("api/public/estabelecimento/", name="estabelecimento_index")
+     * @Route("/api/public/estabelecimento/", name="estabelecimento_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -32,8 +32,9 @@ class EstabelecimentoController extends BaseController
         $estabelecimentos = $em->getRepository('UlocAppBundle:Estabelecimento')->findAll();
 
         if (!$estabelecimentos){
-            throw $this->throwApiProblemException('Não há ', JsonResponse::HTTP_NOT_FOUND);
+            throw $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados', JsonResponse::HTTP_NOT_FOUND);
         }
+        return $this->createApiResponse($estabelecimentos, JsonResponse::HTTP_OK);
 
     }
 
@@ -60,9 +61,8 @@ class EstabelecimentoController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        $response = $this->createApiResponse($estabelecimento, JsonResponse::HTTP_CREATED);
+        return $this->createApiResponse($estabelecimento, JsonResponse::HTTP_CREATED);
 
-        return $response;
     }
 
     /**
@@ -87,11 +87,11 @@ class EstabelecimentoController extends BaseController
         $file = $request->files->get('file');
 
         if (!$file){
-            throw $this->throwApiProblemException(array('Problemas com o logo' => $file), JsonResponse::HTTP_BAD_REQUEST);
+            throw $this->throwApiProblemException(array('Problemas com a imagem' => $file), JsonResponse::HTTP_BAD_REQUEST);
         }
 
 
-        $excluido = unlink($dir.'/'.$estabelecimento->getlogo());
+        $excluido = unlink($dir.'/'.$estabelecimento->getLogo());
 
         if(!$excluido){
             throw $this->throwApiProblemException('Erro ao excluir logo, tente novamente', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
@@ -114,38 +114,39 @@ class EstabelecimentoController extends BaseController
     }
 
 
-
     /**
      * Creates a new estabelecimento entity.
      *
-     * @Route("api/estabelecimento/new", name="estabelecimento_new")
-     * @Method({"GET", "POST"})
+     * @Route("/api/estabelecimento/new", name="estabelecimento_new")
+     * @Method("POST")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request)
     {
         $estabelecimento = new Estabelecimento();
         $form = $this->createForm('Uloc\Bundle\AppBundle\Form\EstabelecimentoType', $estabelecimento);
-        $form->handleRequest($request);
+        $this->processForm($request, $form);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if(!$form->isValid()){
+            throw $this->throwApiProblemValidationException($form);
+        }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($estabelecimento);
             $em->flush();
 
-            return $this->redirectToRoute('estabelecimento_show', array('id' => $estabelecimento->getId()));
-        }
+        return $this->createApiResponse($estabelecimento, JsonResponse::HTTP_CREATED);
 
-        return $this->render('estabelecimento/new.html.twig', array(
-            'estabelecimento' => $estabelecimento,
-            'form' => $form->createView(),
-        ));
     }
 
     /**
      * Finds and displays a estabelecimento entity.
      *
-     * @Route("api/public/estabelecimento/{id}", name="estabelecimento_show")
+     * @Route("/api/public/estabelecimento/{id}", name="estabelecimento_show")
      * @Method("GET")
+     * @param $id
+     * @return Response
      */
     public function showAction($id)
     {
@@ -196,16 +197,16 @@ class EstabelecimentoController extends BaseController
      * @Route("/api/estabelecimento/{id}", name="api_estabelecimento_delete")
      * @Method("DELETE")
      * @param Estabelecimento $estabelecimento
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      * @internal param $id
      */
     public function deleteAction(Estabelecimento $estabelecimento)
     {
         if(!$estabelecimento){
-            $this->throwApiProblemException('Banner não cadastrado', JsonResponse::HTTP_NOT_FOUND);
+            $this->throwApiProblemException('Estabelecimento não cadastrado', JsonResponse::HTTP_NOT_FOUND);
         }
 
-        if(!$estabelecimento->getlogo()) {
+        if(!$estabelecimento->getLogo()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($estabelecimento);
             $em->flush();
@@ -215,7 +216,7 @@ class EstabelecimentoController extends BaseController
 
         $dir = $this->get('app.file_uploader')->getDestino().'/images/logos';
 
-        $excluido = unlink($dir.'/'.$estabelecimento->getlogo());
+        $excluido = unlink($dir.'/'.$estabelecimento->getLogo());
 
         if(!$excluido){
             throw $this->throwApiProblemException('Erro ao excluir o estabelecimento, tente novamente', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);

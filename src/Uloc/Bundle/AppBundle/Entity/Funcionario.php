@@ -4,6 +4,7 @@ namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * Funcionario
@@ -177,5 +178,21 @@ class Funcionario
     public function addAvaliacoes(Avaliacao $avaliacao)
     {
         $this->avaliacoes = $avaliacao;
+    }
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'foto',
+                'nome',
+                'cargo',
+                'estabelecimento'=>
+                    array('id','cnpj', 'nomeFantasia', 'razaoSocial','tipo'),
+                'avaliacoes'=>
+                    array('id','comentario','dataCriacao','nota', 'usuario'=>
+                        array('nome','id'))
+            ]);
+        $representation->build();
     }
 }

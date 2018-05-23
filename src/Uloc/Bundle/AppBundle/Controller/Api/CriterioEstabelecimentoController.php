@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
+use Uloc\Bundle\AppBundle\Form\CriterioEstabelecimentoType;
 
 /**
  * Criterioestabelecimento controller.
@@ -40,103 +41,95 @@ class CriterioEstabelecimentoController extends BaseController
     /**
      * Creates a new criterioEstabelecimento entity.
      *
-     * @Route("/new", name="criterioestabelecimento_new")
+     * @Route("/api/criterioestabelecimento/new", name="criterioestabelecimento_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
-        $criterioEstabelecimento = new Criterioestabelecimento();
-        $form = $this->createForm('Uloc\Bundle\AppBundle\Form\CriterioEstabelecimentoType', $criterioEstabelecimento);
-        $form->handleRequest($request);
+        $criterio = new CriterioEstabelecimento();
+        $form = $this->createForm(CriterioEstabelecimentoType::class, $criterio);
+        $this->processForm($request, $form);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($criterioEstabelecimento);
-            $em->flush();
-
-            return $this->redirectToRoute('criterioestabelecimento_show', array('id' => $criterioEstabelecimento->getId()));
+        if(!$form->isValid()){
+            throw $this->throwApiProblemValidationException($form);
         }
 
-        return $this->render('criterioestabelecimento/new.html.twig', array(
-            'criterioEstabelecimento' => $criterioEstabelecimento,
-            'form' => $form->createView(),
-        ));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($criterio);
+        $em->flush();
+
+        $response = $this->createApiResponse($criterio, JsonResponse::HTTP_CREATED);
+
+        return $response;
     }
 
     /**
      * Finds and displays a criterioEstabelecimento entity.
      *
-     * @Route("/{id}", name="criterioestabelecimento_show")
+     * @Route("/api/public/criterioestabelecimento/show/{id}", name="criterioestabelecimento_show")
      * @Method("GET")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(CriterioEstabelecimento $criterioEstabelecimento)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($criterioEstabelecimento);
+        $repository = $this->getDoctrine()->getManager()->getRepository('UlocAppBundle:CriterioEstabelecimento');
+        $criterio = $repository->find($id);
+        if(!$criterio){
+            $this->throwApiProblemException('Criterio não encontrado', JsonResponse::HTTP_NOT_FOUND);
+        }
 
-        return $this->render('criterioestabelecimento/show.html.twig', array(
-            'criterioEstabelecimento' => $criterioEstabelecimento,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $response = $this->createApiResponse($criterio, JsonResponse::HTTP_OK);
+
+        return ($response);
     }
 
     /**
      * Displays a form to edit an existing criterioEstabelecimento entity.
      *
-     * @Route("/{id}/edit", name="criterioestabelecimento_edit")
+     * @Route("/api/criterioestabelecimento/{id}/update", name="criterioestabelecimento_update")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param CriterioEstabelecimento $criterio
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, CriterioEstabelecimento $criterioEstabelecimento)
+    public function editAction(Request $request, CriterioEstabelecimento $criterio)
     {
-        $deleteForm = $this->createDeleteForm($criterioEstabelecimento);
-        $editForm = $this->createForm('Uloc\Bundle\AppBundle\Form\CriterioEstabelecimentoType', $criterioEstabelecimento);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('criterioestabelecimento_edit', array('id' => $criterioEstabelecimento->getId()));
+        if(!$criterio){
+            $this->throwApiProblemException('Não encontramos o critério informado', JsonResponse::HTTP_NOT_FOUND);
         }
 
-        return $this->render('criterioestabelecimento/edit.html.twig', array(
-            'criterioEstabelecimento' => $criterioEstabelecimento,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $form = $this->createForm(CriterioEstabelecimentoType::class, $criterio);
+        $this->processForm($request, $form);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        $response = $this->createApiResponse($criterio, JsonResponse::HTTP_CREATED);
+
+        return $response;
     }
 
     /**
      * Deletes a criterioEstabelecimento entity.
      *
-     * @Route("/{id}", name="criterioestabelecimento_delete")
+     * @Route("/api/criterioestabelecimento/{id}", name="criterioestabelecimento_delete")
      * @Method("DELETE")
+     * @param CriterioEstabelecimento $criterio
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param $id
      */
-    public function deleteAction(Request $request, CriterioEstabelecimento $criterioEstabelecimento)
+    public function deleteAction( CriterioEstabelecimento $criterio)
     {
-        $form = $this->createDeleteForm($criterioEstabelecimento);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($criterioEstabelecimento);
-            $em->flush();
+        if(!$criterio){
+            $this->throwApiProblemException('Não encontramos o critério informado', JsonResponse::HTTP_NOT_FOUND);
         }
-
-        return $this->redirectToRoute('criterioestabelecimento_index');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($criterio);
+        $em->flush();
+        return $this->createApiResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 
-    /**
-     * Creates a form to delete a criterioEstabelecimento entity.
-     *
-     * @param CriterioEstabelecimento $criterioEstabelecimento The criterioEstabelecimento entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(CriterioEstabelecimento $criterioEstabelecimento)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('criterioestabelecimento_delete', array('id' => $criterioEstabelecimento->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

@@ -3,6 +3,7 @@
 namespace Uloc\Bundle\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Uloc\Bundle\AppBundle\Entity\Criterio;
 use Uloc\Bundle\AppBundle\Test\ApiTestCase;
 
 class CriterioControllerTest extends ApiTestCase
@@ -25,52 +26,47 @@ class CriterioControllerTest extends ApiTestCase
         $this->assertEquals(201, $response->getStatusCode());
 
     }
+    public function testPUT () {
 
+        $criterio = new Criterio();
+        $criterio->setNome('teste');
+        $criterio->setAtivo(true);
+        $em = $this->getEntityManager();
+        $em->persist($criterio);
+        $em->flush();
 
-    /*
-    public function testCompleteScenario()
-    {
-        // Create a new client to browse the application
-        $client = static::createClient();
+        $data = array(
+            'nome' => 'Atualizado',
+            'ativo' => false,
+        );
 
-        // Create a new entry in the database
-        $crawler = $client->request('GET', '/criterio/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /criterio/");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
-
-        // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'uloc_bundle_appbundle_criterio[field_name]'  => 'Test',
-            // ... other fields to fill
+        $response = $this->client->post('/api/criterio/'.$criterio->getId().'/update', array(
+            'body' => \json_encode($data),
+            'headers' => $this->getAuthorizedHeaders('tiago')
         ));
 
-        $client->submit($form);
-        $crawler = $client->followRedirect();
+        $this->assertEquals(201, $response->getStatusCode());
+        $this->asserter()->assertResponsePropertyContains($response, 'nome', 'Atualizado');
+        $this->asserter()->assertResponsePropertyExists($response, 'ativo');
 
-        // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
-
-        // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
-
-        $form = $crawler->selectButton('Update')->form(array(
-            'uloc_bundle_appbundle_criterio[field_name]'  => 'Foo',
-            // ... other fields to fill
-        ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
-        // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
-
-        // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
-
-        // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
-    */
+    public function testDELETE () {
+
+        $criterio = new Criterio();
+        $criterio->setNome('teste');
+        $criterio->setAtivo(true);
+        $em = $this->getEntityManager();
+        $em->persist($criterio);
+        $em->flush();
+
+
+        $response = $this->client->delete('/api/criterio/'.$criterio->getId(), array(
+            'headers' => $this->getAuthorizedHeaders('tiago')
+        ));
+
+        $this->debugResponse($response);
+        $this->assertEquals(204, $response->getStatusCode());
+
+    }
 }
