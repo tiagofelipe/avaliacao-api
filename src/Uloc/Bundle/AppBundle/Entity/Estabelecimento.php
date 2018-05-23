@@ -4,6 +4,7 @@ namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
 use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 
@@ -88,6 +89,13 @@ class Estabelecimento
      */
     private $proprietarios;
 
+    /**
+     * @var EnderecoFisico[]
+     *
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico", mappedBy="estabelecimento", orphanRemoval=true)
+     */
+    private $enderecos;
+
 
 
     /**
@@ -95,10 +103,11 @@ class Estabelecimento
      */
     public function __construct()
     {
-        $this->criterioEstabelecimentos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->avaliacaos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->funcionarios = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->proprietarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criterioEstabelecimentos = new ArrayCollection();
+        $this->avaliacaos = new ArrayCollection();
+        $this->funcionarios = new ArrayCollection();
+        $this->proprietarios = new ArrayCollection();
+        $this->enderecos = new ArrayCollection();
     }
 
     /**
@@ -373,6 +382,22 @@ class Estabelecimento
     public function getProprietarios()
     {
         return $this->proprietarios;
+    }
+
+    /**
+     * @return EnderecoFisico[]
+     */
+    public function getEnderecos()
+    {
+        return $this->enderecos;
+    }
+
+    /**
+     * @param EnderecoFisico $endereco
+     */
+    public function addEndereco(EnderecoFisico $endereco)
+    {
+        $this->enderecos = $endereco;
     }
 
     public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)

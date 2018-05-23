@@ -45,9 +45,14 @@ class AvaliacaoController extends BaseController
     }
 
     /**
+     * @Route("/api/avaliacao/{id}", name="api_avaliacao_show")
+     * @Method("GET")
      *
+     * @param Avaliacao $avaliacao
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction () {
+    public function showAction (Avaliacao $avaliacao) {
 
+        return $this->createApiResponse($avaliacao, JsonResponse::HTTP_OK);
     }
 }
