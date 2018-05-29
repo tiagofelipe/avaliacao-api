@@ -43,10 +43,16 @@ class TokenController extends BaseController
             return new JsonResponse(['error' => 'Usuário sem permissão'], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $channel = $request->get('channel');
+        /* $channel = $request->get('channel');
 
         if (!in_array('ROLE_INTRANET', $roles) && !in_array('ROLE_ROOT', $roles) && $channel !== 'client') {
             throw new BadCredentialsException('Usuário sem permissão de acesso à intranet');
+        } */
+
+        // verifica as permissões do usuario
+        $roles = $user->getRoles();
+        if((is_array($roles) && count($roles) < 1) || !is_array($roles)) {
+            throw new BadCredentialsException('Usuário sem permissão de acesso');
         }
 
         $isValid = $this->get('security.password_encoder')
@@ -65,7 +71,8 @@ class TokenController extends BaseController
         $userContent = [
             "id" => $user->getId(),
             "email" => $user->getEmail(),
-            "nome" => $user->getPessoa() ? $user->getPessoa()->getNome() : $user->getUsername(),
+            // "nome" => $user->getPessoa() ? $user->getPessoa()->getNome() : $user->getUsername(),
+            "nome" => $user->getNome(),
             "foto" => 'https://www.gravatar.com/avatar/' . trim(strtolower(md5($user->getEmail()))),
 
         ];
