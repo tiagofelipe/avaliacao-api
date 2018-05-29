@@ -33,6 +33,10 @@ use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
  */
 class Usuario implements UserInterface
 {
+
+    const USER_PANEL = 1;
+    const USER_APP = 2;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

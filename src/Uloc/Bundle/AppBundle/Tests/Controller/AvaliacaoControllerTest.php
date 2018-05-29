@@ -30,7 +30,7 @@ class AvaliacaoControllerTest extends ApiTestCase
             'body' => \json_encode($data)
         ));
 
-        $this->debugResponse($response);
+        // $this->debugResponse($response);
         $this->assertEquals(201, $response->getStatusCode());
     }
 
