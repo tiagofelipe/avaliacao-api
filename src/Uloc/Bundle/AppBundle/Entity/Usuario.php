@@ -78,6 +78,20 @@ class Usuario implements UserInterface
     private $pessoa;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string")
+     */
+    private $nome;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tipo_usuario", type="smallint")
+     */
+    private $tipoUsuario;
+
+    /**
      * One Usuario existe One ACL.
      * @ORM\OneToOne(targetEntity="UsuarioACL", mappedBy="usuario")
      */
@@ -332,6 +346,29 @@ class Usuario implements UserInterface
         return $this->username;
     }
 
+    /**
+     * @param string $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTipoUsuario()
+    {
+        return $this->tipoUsuario;
+    }
+
+    /**
+     * @param int $tipoUsuario
+     */
+    public function setTipoUsuario($tipoUsuario)
+    {
+        $this->tipoUsuario = $tipoUsuario;
+    }
 
     /**
      * @return ArrayCollection|Estabelecimento|Estabelecimento[]
