@@ -22,7 +22,7 @@ class CriterioEstabelecimentoController extends BaseController
     /**
      * Lists all criterioEstabelecimento entities. O ID É O ID DO ESTABELECIMENTO
      *
-     * @Route("/api/public/criterioestabelecimento/{id}/", name="criterioestabelecimento_index")
+     * @Route("/api/public/criterioestabelecimento/{id}/", name="api_criterioestabelecimento_index")
      * @Method("GET")
      */
     public function indexAction($id)
@@ -41,7 +41,7 @@ class CriterioEstabelecimentoController extends BaseController
     /**
      * Creates a new criterioEstabelecimento entity.
      *
-     * @Route("/api/criterioestabelecimento/new", name="criterioestabelecimento_new")
+     * @Route("/api/criterioestabelecimento/new", name="api_criterioestabelecimento_new")
      * @Method({"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -68,7 +68,7 @@ class CriterioEstabelecimentoController extends BaseController
     /**
      * Finds and displays a criterioEstabelecimento entity.
      *
-     * @Route("/api/public/criterioestabelecimento/show/{id}", name="criterioestabelecimento_show")
+     * @Route("/api/public/criterioestabelecimento/show/{id}", name="api_criterioestabelecimento_show")
      * @Method("GET")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
@@ -89,7 +89,7 @@ class CriterioEstabelecimentoController extends BaseController
     /**
      * Displays a form to edit an existing criterioEstabelecimento entity.
      *
-     * @Route("/api/criterioestabelecimento/{id}/update", name="criterioestabelecimento_update")
+     * @Route("/api/criterioestabelecimento/{id}/update", name="api_criterioestabelecimento_update")
      * @Method({"GET", "POST"})
      * @param Request $request
      * @param CriterioEstabelecimento $criterio
@@ -115,7 +115,7 @@ class CriterioEstabelecimentoController extends BaseController
     /**
      * Deletes a criterioEstabelecimento entity.
      *
-     * @Route("/api/criterioestabelecimento/{id}", name="criterioestabelecimento_delete")
+     * @Route("/api/criterioestabelecimento/{id}", name="api_criterioestabelecimento_delete")
      * @Method("DELETE")
      * @param CriterioEstabelecimento $criterio
      * @return \Symfony\Component\HttpFoundation\Response

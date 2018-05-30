@@ -22,7 +22,7 @@ class EstabelecimentoController extends BaseController
     /**
      * Lists all estabelecimento entities.
      *
-     * @Route("/api/public/estabelecimento/", name="estabelecimento_index")
+     * @Route("/api/public/estabelecimento/", name="api_estabelecimento_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -117,7 +117,7 @@ class EstabelecimentoController extends BaseController
     /**
      * Creates a new estabelecimento entity.
      *
-     * @Route("/api/estabelecimento/new", name="estabelecimento_new")
+     * @Route("/api/estabelecimento/new", name="api_estabelecimento_new")
      * @Method("POST")
      * @param Request $request
      * @return Response
@@ -143,7 +143,7 @@ class EstabelecimentoController extends BaseController
     /**
      * Finds and displays a estabelecimento entity.
      *
-     * @Route("/api/public/estabelecimento/{id}", name="estabelecimento_show")
+     * @Route("/api/public/estabelecimento/{id}", name="api_estabelecimento_show")
      * @Method("GET")
      * @param $id
      * @return Response

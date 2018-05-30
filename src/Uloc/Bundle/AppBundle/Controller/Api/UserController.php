@@ -73,7 +73,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/api/usuarios/{id}", name="api_usurio_edit")
+     * @Route("/api/usuarios/{id}", name="api_usuario_edit")
      * @Method({"PATCH", "PUT"})
      */
     public function editAction(Request $request, Usuario $usuario)
@@ -137,7 +137,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/api/usuarios/{id}", name="api_usurio_delete")
+     * @Route("/api/usuarios/{id}", name="api_usuario_delete")
      * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, Usuario $usuario)
@@ -153,7 +153,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/api/usuarios/{id}/password", name="api_usurio_password_update")
+     * @Route("/api/usuarios/{id}/password", name="api_usuario_password_update")
      * @Method({"PATCH", "PUT"})
      */
     public function updatePasswordAction(Request $request, Usuario $usuario)

@@ -22,7 +22,7 @@ class CriterioController extends BaseController
     /**
      * Lists all criterio entities.
      *
-     * @Route("/api/public/criterio/", name="criterio_index")
+     * @Route("/api/public/criterio/", name="api_criterio_index")
      * @Method("GET")
      *
      */
@@ -42,7 +42,7 @@ class CriterioController extends BaseController
     /**
      * Creates a new criterio entity.
      *
-     * @Route("/api/criterio/new", name="criterio_new")
+     * @Route("/api/criterio/new", name="api_criterio_new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('ROLE_INTRANET')")
      * @param Request $request
@@ -71,7 +71,7 @@ class CriterioController extends BaseController
     /**
      * Finds and displays a criterio entity.
      *
-     * @Route("/api/public/criterio/{id}", name="criterio_show")
+     * @Route("/api/public/criterio/{id}", name="api_criterio_show")
      * @Method("GET")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
@@ -92,7 +92,7 @@ class CriterioController extends BaseController
     /**
      * Displays a form to edit an existing criterio entity.
      *
-     * @Route("/api/criterio/{id}/update", name="criterio_update")
+     * @Route("/api/criterio/{id}/update", name="api_criterio_update")
      * @Method("POST")
      * @Security("is_granted('ROLE_INTRANET')")
      * @param Request $request
@@ -122,7 +122,7 @@ class CriterioController extends BaseController
     /**
      * Deletes a criterio entity.
      *
-     * @Route("/api/criterio/{id}", name="criterio_delete")
+     * @Route("/api/criterio/{id}", name="api_criterio_delete")
      * @Method("DELETE")
      * @Security("is_granted('ROLE_INTRANET')")
      * @param $id

@@ -22,7 +22,7 @@ class FuncionarioController extends BaseController
     /**
      * Lists all funcionario entities.
      *
-     * @Route("/api/public/funcionario/", name="funcionario_index")
+     * @Route("/api/public/funcionario/", name="api_funcionario_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -117,7 +117,7 @@ class FuncionarioController extends BaseController
     /**
      * Creates a new funcionario entity.
      *
-     * @Route("api/funcionario/new", name="funcionario_new")
+     * @Route("api/funcionario/new", name="api_funcionario_new")
      * @Method("POST")
      * @param Request $request
      * @return Response
@@ -143,7 +143,7 @@ class FuncionarioController extends BaseController
     /**
      * Finds and displays a funcionario entity.
      *
-     * @Route("api/public/funcionario/{id}", name="funcionario_show")
+     * @Route("api/public/funcionario/{id}", name="api_funcionario_show")
      * @Method("GET")
      * @param $id
      * @return Response
