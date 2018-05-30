@@ -73,7 +73,7 @@ class TokenController extends BaseController
             "email" => $user->getEmail(),
             // "nome" => $user->getPessoa() ? $user->getPessoa()->getNome() : $user->getUsername(),
             "nome" => $user->getNome(),
-            "foto" => 'https://www.gravatar.com/avatar/' . trim(strtolower(md5($user->getEmail()))),
+            // "foto" => 'https://www.gravatar.com/avatar/' . trim(strtolower(md5($user->getEmail()))),
 
         ];
 

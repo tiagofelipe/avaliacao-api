@@ -347,7 +347,8 @@ class Usuario implements UserInterface
         if ($this->getPessoa()) {
             return $this->getPessoa()->getNome();
         }
-        return $this->username;
+        // return $this->username;
+        return $this->nome;
     }
 
     /**
