@@ -288,9 +288,12 @@ class ApiTestCase extends KernelTestCase
     /**
      * @param $username
      * @param string $plainPassword
+     * @param string $nome
      * @return Usuario
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    protected function createUser($username, $plainPassword = 'teste1')
+    protected function createUser($username, $plainPassword = 'teste1', $nome = 'Usuário')
     {
         $user = new Usuario();
         $user->setUsername($username);
@@ -298,6 +301,8 @@ class ApiTestCase extends KernelTestCase
         $password = $this->getService('security.password_encoder')->encodePassword($user, $plainPassword);
         $user->setPassword($password);
         $user->setRoles(['ROLE_USER', 'ROLE_INTRANET']);
+        $user->setNome($nome);
+        $user->setTipoUsuario(Usuario::USER_PANEL);
 
         $em = $this->getEntityManager();
         $em->persist($user);

@@ -35,4 +35,28 @@ class UserControllerTest extends ApiTestCase
         $this->assertEquals(201, $response->getStatusCode());
         $this->asserter()->assertResponsePropertyEquals($response, 'username', $login);
     }
+
+    public function testGETEstabelecimentos () {
+
+        $user = $this->createUser('user', 'teste');
+        $user1 = $this->createUser('cobaia');
+        $estab = $this->createEstabelecimento();
+        $estab1 = $this->createEstabelecimento('26.182.818/0001-66', 'Estabelecimento Teste', 'Estabelecimento Teste');
+        $estab2 = $this->createEstabelecimento('93.656.131/0001-02', 'Estabelecimento Teste 2', 'Estabelecimento Teste 2');
+
+        $em = $this->getEntityManager();
+
+        $user->addEstabelecimento($estab);
+        $user->addEstabelecimento($estab1);
+        $user1->addEstabelecimento($estab2);
+        $em->flush();
+
+        $response = $this->client->get('/api/usuario/'.$user->getId().'/listEstabelecimentos', array(
+            'headers' => $this->getAuthorizedHeaders('user')
+        ));
+
+        //$this->debugResponse($response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->asserter()->assertResponsePropertyCount($response, 'estabelecimentos', 2);
+    }
 }

@@ -10,4 +10,10 @@ namespace Uloc\Bundle\AppBundle\Repository;
  */
 class EstabelecimentoRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getEstabelecimentosNames ($usuarioid) {
+        $dql = "SELECT e.id, e.nomeFantasia FROM UlocAppBundle:Usuario u JOIN u.estabelecimentos e WHERE u.id=:usuarioid";
+        $query = $this->getEntityManager()->createQuery($dql)->setParameter('usuarioid', $usuarioid);
+
+        return $query->getResult();
+    }
 }

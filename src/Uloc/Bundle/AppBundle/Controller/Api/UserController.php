@@ -9,6 +9,7 @@ use Uloc\Bundle\AppBundle\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Pessoa\Pessoa;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 use Uloc\Bundle\AppBundle\Form\UsuarioType;
@@ -176,5 +177,22 @@ class UserController extends BaseController
         $em->flush();
 
         return $this->createApiResponseEncodeArray(['status' => 'updated'], 200);
+    }
+
+    /**
+     * @Route("/api/usuario/{id}/listEstabelecimentos", name="api_usuario_listEstabelecimentos")
+     * @Method("GET")
+     */
+    public function listEstabelecimentosNames($id) {
+
+        $list = $this->getDoctrine()->getRepository(Estabelecimento::class)->getEstabelecimentosNames($id);
+
+        if (!$list) {
+            $this->throwApiProblemException('Usuário não cadastrou estabelecimentos', JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $data = [ 'estabelecimentos' => $list ];
+
+        return $this->createApiResponseEncodeArray($data, JsonResponse::HTTP_OK);
     }
 }
