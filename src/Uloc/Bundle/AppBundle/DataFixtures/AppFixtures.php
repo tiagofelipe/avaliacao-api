@@ -11,6 +11,7 @@ namespace Uloc\Bundle\AppBundle\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 
 class AppFixtures extends Fixture
@@ -36,10 +37,11 @@ class AppFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        $this->createUsuario(Usuario::USER_PANEL, 'usuario', 'teste', 'Usuário Teste', 'usertest@gmail.com');
+        $estab = $this->createEstabelecimento();
+        $user = $this->createUsuario(Usuario::USER_PANEL, 'usuario', 'teste', 'Usuário Teste', 'usertest@gmail.com', $estab);
     }
 
-    private function createUsuario ($tipo, $username, $senha, $nome, $email) {
+    private function createUsuario ($tipo, $username, $senha, $nome, $email, Estabelecimento $estabelecimento = null) {
         $user = new Usuario();
 
         $user->setTipoUsuario($tipo);
@@ -49,6 +51,10 @@ class AppFixtures extends Fixture
         $user->setPassword($this->encoder->encodePassword($user, $senha));
 
         $user->setRoles(['ROLE_USER']);
+
+        if ($estabelecimento) {
+            $user->addEstabelecimento($estabelecimento);
+        }
 
         /*
         if (intval($tipo) === Usuario::USUARIO_ROOT) {
@@ -65,5 +71,19 @@ class AppFixtures extends Fixture
         $this->manager->flush();
 
         return $user;
+    }
+
+    private function createEstabelecimento($cnpj = '03.486.845/0001-27', $razaoSocial = 'Estabelecimento Cobaia LTDA', $nomeFantasia = 'Estabelecimento Cobaia'){
+
+        $estab = new Estabelecimento();
+
+        $estab->setRazaoSocial($razaoSocial);
+        $estab->setNomeFantasia($nomeFantasia);
+        $estab->setCnpj($cnpj);
+
+        $this->manager->persist($estab);
+        $this->manager->flush();
+
+        return $estab;
     }
 }
