@@ -41,7 +41,7 @@ class EstabelecimentoController extends BaseController
     /**
      *
      *
-     * @Route("/api/estabelecimento/{id}/upload", name="api_logo_upload")
+     * @Route("/api/estabelecimento/{id}/upload", name="api_estabelecimento_logo_upload")
      * @Method({"POST","PATCH"})
      * @param Request $request
      * @param Estabelecimento $estabelecimento
