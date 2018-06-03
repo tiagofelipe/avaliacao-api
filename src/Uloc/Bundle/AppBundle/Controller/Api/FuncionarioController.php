@@ -41,7 +41,7 @@ class FuncionarioController extends BaseController
     /**
      *
      *
-     * @Route("/api/funcionario/{id}/upload", name="api_foto_upload")
+     * @Route("/api/funcionario/{id}/upload", name="api_funcionario_foto_upload")
      * @Method({"POST","PATCH"})
      * @param Request $request
      * @param Funcionario $funcionario
