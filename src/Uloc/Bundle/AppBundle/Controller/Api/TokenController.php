@@ -35,7 +35,7 @@ class TokenController extends BaseController
             ->loadUserByUsername($userGET, false);
 
         if (!$user) {
-            throw $this->createNotFoundException("Credenciais não encontrada");
+            throw $this->createNotFoundException("Credenciais não encontradas");
         }
 
         $roles = $user->getRoles();
