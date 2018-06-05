@@ -12,6 +12,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
+use Uloc\Bundle\AppBundle\Entity\Pessoa\EnderecoFisico;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 
 class AppFixtures extends Fixture
@@ -86,4 +87,11 @@ class AppFixtures extends Fixture
 
         return $estab;
     }
+
+    private function  createEndereco(){
+        $endereco  = new EnderecoFisico();
+
+
+}
+
 }

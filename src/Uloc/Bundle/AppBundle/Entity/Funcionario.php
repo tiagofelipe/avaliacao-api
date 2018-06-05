@@ -58,9 +58,22 @@ class Funcionario
      */
     private $avaliacoes;
 
+    private $nota=0;
+
     public function __construct()
     {
         $this->avaliacoes = new ArrayCollection();
+    }
+
+
+    public function getNota(){
+        $soma=0;
+        foreach ($this->avaliacoes as $avaliacao){
+            $soma += $avaliacao->getNota();
+
+        }
+        $this->nota = $soma/$this->avaliacoes->count();
+    return $this->nota;
     }
 
     /**
@@ -187,6 +200,7 @@ class Funcionario
                 'foto',
                 'nome',
                 'cargo',
+                'nota',
                 'estabelecimento'=>
                     array('id','cnpj', 'nomeFantasia', 'razaoSocial','tipo'),
                 'avaliacoes'=>
