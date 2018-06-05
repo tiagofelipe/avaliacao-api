@@ -3,7 +3,11 @@
 namespace Uloc\Bundle\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Uloc\Bundle\AppBundle\Entity\App\Municipio;
+use Uloc\Bundle\AppBundle\Entity\Endereco\App\UnidadeFederativa;
+use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
+use Uloc\Bundle\AppBundle\Entity\Usuario;
 use Uloc\Bundle\AppBundle\Test\ApiTestCase;
 
 class EstabelecimentoControllerTest extends ApiTestCase
@@ -14,14 +18,44 @@ class EstabelecimentoControllerTest extends ApiTestCase
         parent::setUp($forcePurge, $basicData);
     }
 
+    public function testGETS(){
+        $usuario = $this->createUser('user', 'teste');
+        $estab = $this->createEstabelecimento('93.656.198/0001-02', 'Estabelecimento Teste 2', 'Estabelecimento Teste 2');
+        $em = $this->getEntityManager();
+
+        $usuario->addEstabelecimento($estab);
+        $em->flush();
+
+        $response = $this->client->get('/api/estabelecimento/usuario/'.$usuario->getId(), array(
+            'headers' => $this->getAuthorizedHeaders('user')
+        ));
+
+        $this->debugResponse($response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
     public function testPOST()
     {
+        $uf = new UnidadeFederativa();
+        $uf->
+        $municipio=new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Municipio();
+        $municipio->setNome('Montes Claros');
+        $municipio-> setIbge('MOC');
+        $municipio->setUf($uf);
+
+        $endereco = new EnderecoFisico();
+        $endereco->setNumero('312');
+        $endereco->setMunicipio($municipio);
+
 
         $data = array(
             'cnpj' => '121212',
             'nomeFantasia' => 'nome de teste',
             'razaoSocial' => 'razao de teste',
             'tipo' => 1,
+            'enderecos' => array(
+
+                )
         );
 
         $response = $this->client->post('/api/estabelecimento/new', array(

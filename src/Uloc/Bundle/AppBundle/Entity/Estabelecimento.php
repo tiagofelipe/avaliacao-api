@@ -406,6 +406,7 @@ class Estabelecimento
             ->addProperties([
                 'id',
                 'cnpj',
+                'logo',
                 'nomeFantasia',
                 'razaoSocial',
                 'tipo',

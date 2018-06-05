@@ -10,6 +10,7 @@ use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Uloc\Bundle\AppBundle\Entity\Usuario;
 use Uloc\Bundle\AppBundle\Form\EstabelecimentoType;
 
 /**
@@ -35,6 +36,31 @@ class EstabelecimentoController extends BaseController
             throw $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados', JsonResponse::HTTP_NOT_FOUND);
         }
         return $this->createApiResponse($estabelecimentos, JsonResponse::HTTP_OK);
+
+    }
+
+    /**
+     * Lists all estabelecimento entities.
+     *
+     * @Route("/api/estabelecimento/usuario/{id}", name="api_estabelecimento_usuario_index")
+     * @Method("GET")
+     * @param $id
+     * @return Response
+     */
+    public function indexByUsuarioAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $estabelecimentos = $em->getRepository(Estabelecimento::class)->getEstabelecimentosProprietario($id);
+
+        if (!$estabelecimentos){
+            throw $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados para esse usuário', JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $resposta = [ 'estabelecimentos' => $estabelecimentos ];
+
+        return $this->createApiResponseEncodeArray($resposta, JsonResponse::HTTP_OK);
+
 
     }
 

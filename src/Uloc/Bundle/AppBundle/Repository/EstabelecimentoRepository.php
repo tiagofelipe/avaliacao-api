@@ -16,4 +16,11 @@ class EstabelecimentoRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    public function getEstabelecimentosProprietario ($usuarioid) {
+        $dql = "SELECT e.id, e.nomeFantasia, e.razaoSocial, e.logo, e.tipo, e.cnpj  FROM UlocAppBundle:Usuario u JOIN u.estabelecimentos e WHERE u.id=:usuarioid";
+        $query = $this->getEntityManager()->createQuery($dql)->setParameter('usuarioid', $usuarioid);
+
+        return $query->getResult();
+    }
 }

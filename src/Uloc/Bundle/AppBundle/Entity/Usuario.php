@@ -435,6 +435,13 @@ class Usuario implements UserInterface
                 'roles',
                 'image',
                 'ultimoAcesso',
+                'estabelecimentos' => array(
+                    'id',
+                    'cnpj',
+                    'logo',
+                    'nomeFantasia',
+                    'razaoSocial',
+                    'tipo'),
                 'pessoa' => array(
                     'id',
                     'nome',
