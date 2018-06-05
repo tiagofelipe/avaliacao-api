@@ -2,6 +2,7 @@
 
 namespace Uloc\Bundle\AppBundle\Controller\Api;
 
+use Proxies\__CG__\Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Uloc\Bundle\AppBundle\Controller\BaseController;
@@ -22,15 +23,15 @@ class CriterioController extends BaseController
     /**
      * Lists all criterio entities.
      *
-     * @Route("/api/public/criterio/", name="api_criterio_index")
+     * @Route("/api/public/criterio/estabelecimento/{$id}", name="api_criterio_index")
      * @Method("GET")
      *
      */
-    public function indexAction()
+    public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $criterios = $em->getRepository('UlocAppBundle:Criterio')->findAll();
+        $estabelecimento = $em->getRepository(Estabelecimento::class)->find($id);
+        $criterios = $em->getRepository('UlocAppBundle:Criterio')->findByEstabelecimento($estabelecimento);
 
         if (!$criterios){
             $this->throwApiProblemException('nenhum critério foi encontrado', JsonResponse::HTTP_NOT_FOUND);

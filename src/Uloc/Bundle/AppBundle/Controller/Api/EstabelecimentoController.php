@@ -33,7 +33,7 @@ class EstabelecimentoController extends BaseController
         $estabelecimentos = $em->getRepository('UlocAppBundle:Estabelecimento')->findAll();
 
         if (!$estabelecimentos){
-            throw $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados', JsonResponse::HTTP_NOT_FOUND);
+             $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados', JsonResponse::HTTP_NOT_FOUND);
         }
         return $this->createApiResponse($estabelecimentos, JsonResponse::HTTP_OK);
 
@@ -54,7 +54,7 @@ class EstabelecimentoController extends BaseController
         $estabelecimentos = $em->getRepository(Estabelecimento::class)->getEstabelecimentosProprietario($id);
 
         if (!$estabelecimentos){
-            throw $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados para esse usuário', JsonResponse::HTTP_NOT_FOUND);
+             $this->throwApiProblemException('Não se encontrou Estabelecimentos Cadastrados para esse usuário', JsonResponse::HTTP_NOT_FOUND);
         }
 
         $resposta = [ 'estabelecimentos' => $estabelecimentos ];
@@ -113,14 +113,14 @@ class EstabelecimentoController extends BaseController
         $file = $request->files->get('file');
 
         if (!$file){
-            throw $this->throwApiProblemException(array('Problemas com a imagem' => $file), JsonResponse::HTTP_BAD_REQUEST);
+             $this->throwApiProblemException(array('Problemas com a imagem' => $file), JsonResponse::HTTP_BAD_REQUEST);
         }
 
 
         $excluido = unlink($dir.'/'.$estabelecimento->getLogo());
 
         if(!$excluido){
-            throw $this->throwApiProblemException('Erro ao excluir logo, tente novamente', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+             $this->throwApiProblemException('Erro ao excluir logo, tente novamente', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
 
@@ -155,7 +155,7 @@ class EstabelecimentoController extends BaseController
         $this->processForm($request, $form);
 
         if(!$form->isValid()){
-            throw $this->throwApiProblemValidationException($form);
+             $this->throwApiProblemValidationException($form);
         }
 
             $em = $this->getDoctrine()->getManager();
@@ -245,7 +245,7 @@ class EstabelecimentoController extends BaseController
         $excluido = unlink($dir.'/'.$estabelecimento->getLogo());
 
         if(!$excluido){
-            throw $this->throwApiProblemException('Erro ao excluir o estabelecimento, tente novamente', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+             $this->throwApiProblemException('Erro ao excluir o estabelecimento, tente novamente', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         $em = $this->getDoctrine()->getManager();

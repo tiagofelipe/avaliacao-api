@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Uloc\Bundle\AppBundle\Controller\BaseController;
+use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Funcionario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,16 +21,17 @@ use Uloc\Bundle\AppBundle\Form\FuncionarioType;
 class FuncionarioController extends BaseController
 {
     /**
-     * Lists all funcionario entities.
+     * Lists all funcionario pelo id do estabelecimento
      *
-     * @Route("/api/public/funcionario/", name="api_funcionario_index")
+     * @Route("/api/public/funcionario/estabelecimento/{id}", name="api_funcionario_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $estabelecimento = $em->getRepository(Estabelecimento::class)->find($id);
 
-        $funcionarios = $em->getRepository('UlocAppBundle:Funcionario')->findAll();
+        $funcionarios = $em->getRepository('UlocAppBundle:Funcionario')->findByEstabelecimento($estabelecimento);
 
         if (!$funcionarios){
             throw $this->throwApiProblemException('Não há Funcionários cadastrados ainda', JsonResponse::HTTP_NOT_FOUND);

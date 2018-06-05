@@ -4,6 +4,7 @@ namespace Uloc\Bundle\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Uloc\Bundle\AppBundle\Entity\App\Municipio;
+use Uloc\Bundle\AppBundle\Entity\Endereco\App\Pais;
 use Uloc\Bundle\AppBundle\Entity\Endereco\App\UnidadeFederativa;
 use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
@@ -36,16 +37,30 @@ class EstabelecimentoControllerTest extends ApiTestCase
 
     public function testPOST()
     {
+        $em = $this->getEntityManager();
+
+        $pais= new Pais();
+        $pais->setSigla('BR');
+        $pais->setNome('Brasil');
+        $pais->setNomeGlobal('Brasil');
+        $em->persist($pais);
+
         $uf = new UnidadeFederativa();
-        $uf->
+        $uf->setNome('Minas Gerais');
+        $uf->setSigla('MG');
+        $uf->setPais($pais);
+        $em->persist($uf);
+
         $municipio=new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Municipio();
         $municipio->setNome('Montes Claros');
         $municipio-> setIbge('MOC');
         $municipio->setUf($uf);
+        $em->persist($municipio);
 
         $endereco = new EnderecoFisico();
         $endereco->setNumero('312');
         $endereco->setMunicipio($municipio);
+
 
 
         $data = array(
@@ -53,9 +68,7 @@ class EstabelecimentoControllerTest extends ApiTestCase
             'nomeFantasia' => 'nome de teste',
             'razaoSocial' => 'razao de teste',
             'tipo' => 1,
-            'enderecos' => array(
-
-                )
+            'enderecos' => $endereco
         );
 
         $response = $this->client->post('/api/estabelecimento/new', array(
