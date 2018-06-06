@@ -32,7 +32,7 @@ class FuncionarioController extends BaseController
         $estabelecimento = $em->getRepository(Estabelecimento::class)->find($id);
 
         $funcionarios = $em->getRepository('UlocAppBundle:Funcionario')->findByEstabelecimento($estabelecimento);
-        
+
         if (!$funcionarios){
             throw $this->throwApiProblemException('Não há Funcionários cadastrados ainda', JsonResponse::HTTP_NOT_FOUND);
         }
