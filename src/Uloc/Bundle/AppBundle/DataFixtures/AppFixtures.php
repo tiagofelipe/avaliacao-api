@@ -11,8 +11,10 @@ namespace Uloc\Bundle\AppBundle\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+use Uloc\Bundle\AppBundle\Entity\Endereco\App\UnidadeFederativa;
+use Uloc\Bundle\AppBundle\Entity\Endereco\App\Pais;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
-use Uloc\Bundle\AppBundle\Entity\Pessoa\EnderecoFisico;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 
 class AppFixtures extends Fixture
@@ -89,8 +91,39 @@ class AppFixtures extends Fixture
     }
 
     private function  createEndereco(){
-        $endereco  = new EnderecoFisico();
 
+        $em = $this->manager;
+
+        $pais= new Pais();
+        $pais->setSigla('BR');
+        $pais->setNome('Brasil');
+        $pais->setNomeGlobal('Brasil');
+        $em->persist($pais);
+
+        $uf = new UnidadeFederativa();
+        $uf->setNome('Minas Gerais');
+        $uf->setSigla('MG');
+        $uf->setPais($pais);
+        $em->persist($uf);
+
+        $municipio=new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Municipio();
+        $municipio->setNome('Montes Claros');
+        $municipio-> setIbge('MOC');
+        $municipio->setUf($uf);
+        $em->persist($municipio);
+
+        $bairro=new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Bairro();
+        $bairro->setMunicipio($municipio);
+        $bairro->setNome('Centro');
+        $em->persist($bairro);
+
+        $endereco = new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Endereco();
+        $endereco->setLogradouro('312');
+        $endereco->setBairro($bairro);
+        $endereco->setComplemento('a');
+        $em->persist($endereco);
+
+        return $endereco;
 
 }
 
