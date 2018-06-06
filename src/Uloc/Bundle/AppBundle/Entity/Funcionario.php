@@ -72,7 +72,7 @@ class Funcionario
             $soma += $avaliacao->getNota();
 
         }
-      if( $this->avaliacoes){ $this->nota = $soma/$this->avaliacoes->count();}
+      if( $this->avaliacoes->count() != 0){ $this->nota = $soma/$this->avaliacoes->count();}
     return $this->nota;
     }
 
