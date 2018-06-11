@@ -58,7 +58,6 @@ class Funcionario
      */
     private $avaliacoes;
 
-    private $nota=0;
 
     public function __construct()
     {
@@ -68,12 +67,19 @@ class Funcionario
 
     public function getNota(){
         $soma=0;
+
+        $totalAvaliacoes = $this->avaliacoes->count();
+
+        if ($totalAvaliacoes < 1) {
+            return 0;
+        }
+
         foreach ($this->avaliacoes as $avaliacao){
             $soma += $avaliacao->getNota();
 
         }
-      if( $this->avaliacoes->count() != 0){ $this->nota = $soma/$this->avaliacoes->count();}
-    return $this->nota;
+
+         return round($soma / $totalAvaliacoes, 1);
     }
 
     /**
