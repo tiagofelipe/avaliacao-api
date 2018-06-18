@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
-
+        $this->createEndereco('chile', 'a', '39402302');
         $estab = $this->createEstabelecimento();
         $user = $this->createUsuario(Usuario::USER_PANEL, 'usuario', 'teste', 'Usuário Teste', 'usertest@gmail.com', $estab);
     }
@@ -90,7 +90,7 @@ class AppFixtures extends Fixture
         return $estab;
     }
 
-    private function  createEndereco(){
+    private function  createEndereco($rua, $complemento, $cep){
 
         $em = $this->manager;
 
@@ -118,11 +118,12 @@ class AppFixtures extends Fixture
         $em->persist($bairro);
 
         $endereco = new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Endereco();
-        $endereco->setLogradouro('312');
+        $endereco->setLogradouro($rua);
         $endereco->setBairro($bairro);
-        $endereco->setComplemento('a');
+        $endereco->setComplemento($complemento);
+        $endereco->setCep($cep);
         $em->persist($endereco);
-
+        $em->flush();
         return $endereco;
 
 }

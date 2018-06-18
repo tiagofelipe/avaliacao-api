@@ -41,7 +41,7 @@ class FixturesData
     }
 
     /**
-     * Módulo Endereco
+     * Módulo logradouro
      */
 
     public function createPais($nome, $sigla)

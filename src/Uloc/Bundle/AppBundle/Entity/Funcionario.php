@@ -67,12 +67,12 @@ class Funcionario
 
 
     public function getNota(){
+        if( $this->avaliacoes->count() != 0){
         $soma=0;
         foreach ($this->avaliacoes as $avaliacao){
             $soma += $avaliacao->getNota();
-
         }
-      if( $this->avaliacoes->count() != 0){ $this->nota = $soma/$this->avaliacoes->count();}
+       $this->nota = $soma/$this->avaliacoes->count();}
     return $this->nota;
     }
 
