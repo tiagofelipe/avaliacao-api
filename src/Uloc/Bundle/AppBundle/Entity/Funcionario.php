@@ -67,13 +67,20 @@ class Funcionario
 
 
     public function getNota(){
-        if( $this->avaliacoes->count() != 0){
         $soma=0;
+
+        $totalAvaliacoes = $this->avaliacoes->count();
+
+        if ($totalAvaliacoes < 1) {
+            return 0;
+        }
+
         foreach ($this->avaliacoes as $avaliacao){
             $soma += $avaliacao->getNota();
+
         }
-       $this->nota = $soma/$this->avaliacoes->count();}
-    return $this->nota;
+
+         return round($soma / $totalAvaliacoes, 1);
     }
 
     /**
