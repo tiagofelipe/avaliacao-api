@@ -12,6 +12,7 @@ namespace Uloc\Bundle\AppBundle\Entity\Enderecos;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * Pais
@@ -213,5 +214,22 @@ class Pais
     public function getUfs()
     {
         return $this->ufs;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'nome',
+                'sigla',
+                'ufs' => array(
+                    'id',
+                    'nome',
+                    'sigla',
+                    'ibge'
+                )
+            ]);
+        $representation->build();
     }
 }

@@ -88,19 +88,25 @@ class EstabelecimentoControllerTest extends ApiTestCase
 
     public function testGETEstabelecimentoIndex()
     {
-
+        $em = $this->getEntityManager();
         $estabelecimento = new Estabelecimento();
         $estabelecimento->setCnpj('11111000110010');
         $estabelecimento->setNomeFantasia('Fantasia de natal');
         $estabelecimento->setRazaoSocial('Exiks');
+        $em->persist($estabelecimento);
+        $em->flush();
 
-        $endereco = $this->createEndereco();
+
+        $endereco = $this->createEndereco('fundo','39400000');
+        $endereco->setEstabelecimento($estabelecimento);
+        $em->flush();
 
         $response = $this->client->get('/api/public/estabelecimento/', array(
             'headers' => $this->getAuthorizedHeaders('tiago')
 
 
         ));
+        $this->debugResponse($response);
         $this->assertEquals(200, $response->getStatusCode());
     }
 }

@@ -4,7 +4,7 @@ namespace Uloc\Bundle\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco;
 use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 
@@ -90,9 +90,9 @@ class Estabelecimento
     private $proprietarios;
 
     /**
-     * @var EnderecoFisico[]
+     * @var Endereco[]
      *
-     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico", mappedBy="estabelecimento", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco", mappedBy="estabelecimento", orphanRemoval=true)
      */
     private $enderecos;
 
@@ -385,7 +385,7 @@ class Estabelecimento
     }
 
     /**
-     * @return EnderecoFisico[]
+     * @return Endereco[]
      */
     public function getEnderecos()
     {
@@ -393,9 +393,9 @@ class Estabelecimento
     }
 
     /**
-     * @param EnderecoFisico $endereco
+     * @param Endereco $endereco
      */
-    public function addEndereco(EnderecoFisico $endereco)
+    public function addEndereco(Endereco $endereco)
     {
         $this->enderecos = $endereco;
     }

@@ -36,10 +36,12 @@ class EnderecoType extends AbstractType
             ))
             ->add('estabelecimento', EntityType::class, array(
                 'class' => Estabelecimento::class,
+                'required' => false,
                 'invalid_message' => 'Estabelecimento não encontrado'
             ))
             ->add('usuario', EntityType::class, array(
                 'class' => Usuario::class,
+                'required' => false,
                 'invalid_message' => 'Usuario não encontrado'
             ))
         ;

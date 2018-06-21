@@ -12,8 +12,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-use Uloc\Bundle\AppBundle\Entity\Endereco\App\UnidadeFederativa;
-use Uloc\Bundle\AppBundle\Entity\Endereco\App\Pais;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Logradouro;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\UnidadeFederativa;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Pais;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 
@@ -39,7 +40,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
-        $this->createEndereco('chile', 'a', '39402302');
+        $this->createEndereco( 'a', '39402302');
         $estab = $this->createEstabelecimento();
         $user = $this->createUsuario(Usuario::USER_PANEL, 'usuario', 'teste', 'Usuário Teste', 'usertest@gmail.com', $estab);
     }
@@ -90,7 +91,7 @@ class AppFixtures extends Fixture
         return $estab;
     }
 
-    private function  createEndereco($rua, $complemento, $cep){
+    private function  createEndereco( $complemento, $cep){
 
         $em = $this->manager;
 
@@ -106,20 +107,27 @@ class AppFixtures extends Fixture
         $uf->setPais($pais);
         $em->persist($uf);
 
-        $municipio=new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Municipio();
+        $municipio=new \Uloc\Bundle\AppBundle\Entity\Enderecos\Municipio();
         $municipio->setNome('Montes Claros');
         $municipio-> setIbge('MOC');
         $municipio->setUf($uf);
         $em->persist($municipio);
 
-        $bairro=new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Bairro();
+        $bairro=new \Uloc\Bundle\AppBundle\Entity\Enderecos\Bairro();
         $bairro->setMunicipio($municipio);
         $bairro->setNome('Centro');
         $em->persist($bairro);
 
-        $endereco = new \Uloc\Bundle\AppBundle\Entity\Endereco\App\Endereco();
+
+        $rua = new Logradouro();
+        $rua->setBairro($bairro);
+        $rua->setCep('39400000');
+        $rua->setLogradouro('avenida');
+        $em->persist($rua);
+
+        $endereco = new \Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco();
         $endereco->setLogradouro($rua);
-        $endereco->setBairro($bairro);
+
         $endereco->setComplemento($complemento);
         $endereco->setCep($cep);
         $em->persist($endereco);

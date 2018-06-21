@@ -12,6 +12,7 @@ namespace Uloc\Bundle\AppBundle\Entity\Enderecos;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * logradouro
@@ -44,12 +45,7 @@ class Logradouro
      */
     private $logradouro;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="complemento", type="string", length=255)
-     */
-    private $complemento;
+
 
     /**
      * Muitos Logradouros tem Um Bairro.
@@ -131,29 +127,6 @@ class Logradouro
         return $this->logradouro;
     }
 
-    /**
-     * Set complemento.
-     *
-     * @param string $complemento
-     *
-     * @return Logradouro
-     */
-    public function setComplemento($complemento)
-    {
-        $this->complemento = $complemento;
-
-        return $this;
-    }
-
-    /**
-     * Get complemento.
-     *
-     * @return string
-     */
-    public function getComplemento()
-    {
-        return $this->complemento;
-    }
 
     /**
      * Set bairro.
@@ -213,5 +186,27 @@ class Logradouro
     public function getEnderecos()
     {
         return $this->enderecos;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'cep',
+                'logradouro',
+                'bairro'=> array(
+                    'id',
+                    'nome',
+                    'municipio'=>array(
+                        'id',
+                        'nome',
+                        'ufs' => array(
+                            'id',
+                            'nome',
+                            'sigla',
+                )))
+            ]);
+        $representation->build();
     }
 }

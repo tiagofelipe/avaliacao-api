@@ -2,9 +2,12 @@
 
 namespace Uloc\Bundle\AppBundle\Test;
 
-use Uloc\Bundle\AppBundle\Entity\App\Municipio;
-use Uloc\Bundle\AppBundle\Entity\App\Pais;
-use Uloc\Bundle\AppBundle\Entity\App\UnidadeFederativa;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Bairro;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Logradouro;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Municipio;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Pais;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\UnidadeFederativa;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -324,6 +327,50 @@ class ApiTestCase extends KernelTestCase
         $em->flush();
 
         return $estab;
+    }
+
+    protected function  createEndereco($complemento, $cep){
+
+        $em = $this->getEntityManager();
+
+        $pais= new Pais();
+        $pais->setSigla('BR');
+        $pais->setNome('Brasil');
+        $pais->setNomeGlobal('Brasil');
+        $em->persist($pais);
+
+        $uf = new UnidadeFederativa();
+        $uf->setNome('Minas Gerais');
+        $uf->setSigla('MG');
+        $uf->setPais($pais);
+        $em->persist($uf);
+
+        $municipio=new Municipio();
+        $municipio->setNome('Montes Claros');
+        $municipio-> setIbge('MOC');
+        $municipio->setUf($uf);
+        $em->persist($municipio);
+
+        $bairro=new Bairro();
+        $bairro->setMunicipio($municipio);
+        $bairro->setNome('Centro');
+        $em->persist($bairro);
+
+
+        $rua = new Logradouro();
+        $rua->setBairro($bairro);
+        $rua->setCep('39400000');
+        $rua->setLogradouro('avenida');
+        $em->persist($rua);
+
+        $endereco = new Endereco();
+        $endereco->setLogradouro($rua);
+        $endereco->setComplemento($complemento);
+        $endereco->setCep($cep);
+        $em->persist($endereco);
+        $em->flush();
+        return $endereco;
+
     }
 
     protected function createBasicData()

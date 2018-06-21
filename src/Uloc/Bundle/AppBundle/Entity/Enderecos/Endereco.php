@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * logradouro
@@ -290,5 +291,33 @@ class Endereco
     public function getEstabelecimento()
     {
         return $this->estabelecimento;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'complemento',
+                'numero',
+                'latitude',
+                'longitude',
+                'logradouro'=>array(
+                    'id',
+                    'cep',
+                    'logradouro',
+                    'bairro'=> array(
+                        'id',
+                        'nome',
+                        'municipio'=>array(
+                            'id',
+                            'nome',
+                            'ufs' => array(
+                                'id',
+                                'nome',
+                                'sigla',
+                            ))))
+            ]);
+        $representation->build();
     }
 }

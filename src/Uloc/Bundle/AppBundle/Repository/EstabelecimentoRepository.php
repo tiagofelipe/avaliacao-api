@@ -23,4 +23,22 @@ class EstabelecimentoRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    public function getEstabelecimentosMunicipio ($municipioid) {
+
+        $dql = "
+         SELECT es.id, es.nomeFantasia, es.cnpj, es.razaoSocial, es.logo, es.tipo  FROM UlocAppBundle:Estabelecimento es 
+          JOIN es.enderecos e  
+            JOIN e.logradouro l 
+              JOIN l.bairro b 
+                JOIN b.municipio m
+                where m.id=:municipioid";
+
+       // $dql = "SELECT e.id, e.nomeFantasia FROM UlocAppBundle:Usuario u JOIN u.estabelecimentos e WHERE u.id=:municipioid";
+
+        $query = $this->getEntityManager()->createQuery($dql)->setParameter('municipioid', $municipioid);
+
+        return $query->getResult();
+    }
+
 }

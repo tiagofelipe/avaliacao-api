@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco;
 use Uloc\Bundle\AppBundle\Entity\Notificacao\Notificacao;
 use Uloc\Bundle\AppBundle\Entity\Pessoa\Pessoa;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -135,9 +136,9 @@ class Usuario implements UserInterface
     private $avaliacoes;
 
     /**
-     * @var EnderecoFisico[]
+     * @var Endereco[]
      *
-     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco", mappedBy="usuario")
      */
     private $enderecos;
 
