@@ -3,10 +3,12 @@
 namespace Uloc\Bundle\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Uloc\Bundle\AppBundle\Entity\App\Municipio;
-use Uloc\Bundle\AppBundle\Entity\Endereco\App\Pais;
-use Uloc\Bundle\AppBundle\Entity\Endereco\App\UnidadeFederativa;
-use Uloc\Bundle\AppBundle\Entity\Endereco\EnderecoFisico;
+
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Bairro;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Logradouro;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Pais;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\UnidadeFederativa;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 use Uloc\Bundle\AppBundle\Test\ApiTestCase;
@@ -109,4 +111,58 @@ class EstabelecimentoControllerTest extends ApiTestCase
         $this->debugResponse($response);
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    public function testPostEndereco(){
+        $em = $this->getEntityManager();
+
+        $pais= new Pais();
+        $pais->setSigla('BR');
+        $pais->setNome('Brasil');
+        $pais->setNomeGlobal('Brasil');
+        $em->persist($pais);
+
+        $uf = new UnidadeFederativa();
+        $uf->setNome('Minas Gerais');
+        $uf->setSigla('MG');
+        $uf->setPais($pais);
+        $em->persist($uf);
+
+        $municipio=new \Uloc\Bundle\AppBundle\Entity\Enderecos\Municipio();
+        $municipio->setNome('Montes Claros');
+        $municipio-> setIbge('MOC');
+        $municipio->setUf($uf);
+        $em->persist($municipio);
+
+        $bairro=new Bairro();
+        $bairro->setMunicipio($municipio);
+        $bairro->setNome('Centro');
+        $em->persist($bairro);
+
+
+        $rua = new Logradouro();
+        $rua->setBairro($bairro);
+        $rua->setCep('39400000');
+        $rua->setLogradouro('avenida');
+        $em->persist($rua);
+
+        $em->flush();
+
+        $data = array(
+            'logradouro' => $rua->getId(),
+            'cep' => $rua->getCep(),
+            'complemento' => 'teste',
+
+
+        );
+
+        $response = $this->client->post('/api/endereco/new', array(
+            'body' => \json_encode($data),
+            'headers' => $this->getAuthorizedHeaders('tiago')
+        ));
+
+        $this->assertEquals(201, $response->getStatusCode());
+
+    }
+
+
 }

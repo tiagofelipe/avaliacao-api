@@ -22,7 +22,7 @@ class UsuarioType extends AbstractType
             ->add('email', EmailType::class)
             ->add('nome', TextType::class)
             ->add('tipoUsuario', IntegerType::class)
-            ->add('enderecos', CollectionType::class, array(
+            ->add('Enderecos', CollectionType::class, array(
                 'entry_type' => EnderecoFisicoType::class,
                 'invalid_message' => 'Endereços defined is invalid',
                 'by_reference' => false,

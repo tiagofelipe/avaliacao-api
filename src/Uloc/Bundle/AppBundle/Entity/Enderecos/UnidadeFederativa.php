@@ -12,12 +12,13 @@ namespace Uloc\Bundle\AppBundle\Entity\Enderecos;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * UnidadeFederativa
  *
  * @ORM\Table(name="unidades_federativas")
- * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\App\UnidadeFederativaRepository")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Enderecos\UnidadeFederativaRepository")
  */
 class UnidadeFederativa
 {
@@ -244,5 +245,16 @@ class UnidadeFederativa
     public function getMunicipios()
     {
         return $this->municipios;
+    }
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id', // TODO: FINALIZAR
+                'nome',
+                'sigla'
+            ]);
+        $representation->build();
     }
 }

@@ -12,12 +12,13 @@ namespace Uloc\Bundle\AppBundle\Entity\Enderecos;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 
 /**
  * Municipio
  *
  * @ORM\Table(name="municipios")
- * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\App\MunicipioRepository")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Enderecos\MunicipioRepository")
  */
 class Municipio
 {
@@ -185,5 +186,17 @@ class Municipio
     public function getBairros()
     {
         return $this->bairros;
+    }
+
+
+    public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
+    {
+        $representation->setGroup('public')
+            ->addProperties([
+                'id',
+                'nome',
+                'ibge',
+                ]);
+        $representation->build();
     }
 }

@@ -452,7 +452,7 @@ class Usuario implements UserInterface
                     'pjNomeFantasia as nomeFantasia',
                     'pjInscricaoEstadual as inscricaoEstadual',
                     'telefones' => array('id', 'telefone'),
-                    'enderecos' => array(
+                    'Enderecos' => array(
                         'id',
                         'logradouro',
                         'bairro',
@@ -508,7 +508,7 @@ class Usuario implements UserInterface
                         'observacao',
                         "emails" => array("email", "finalidade"),
                         "telefones" => array("telefone", "celular", "principal", "tipoFinalidade as finalidade", "finalidadeOutros"),
-                        "enderecos" => array(
+                        "Enderecos" => array(
                             "finalidade" => array("id", "nome"),
                             "cep",
                             "logradouro",

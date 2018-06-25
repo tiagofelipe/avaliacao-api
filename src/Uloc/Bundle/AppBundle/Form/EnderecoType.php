@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Uloc\Bundle\AppBundle\Entity\Enderecos\Logradouro;
 use Uloc\Bundle\AppBundle\Entity\Enderecos\Municipio;
 use Uloc\Bundle\AppBundle\Entity\Enderecos\Endereco;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
@@ -18,7 +19,7 @@ class EnderecoType extends AbstractType
     {
         $builder
             ->add('logradouro', EntityType::class, array(
-                'class' => Municipio::class,
+                'class' => Logradouro::class,
                 'required' => true,
                 'invalid_message' => 'Logradouro inválido'
             ))

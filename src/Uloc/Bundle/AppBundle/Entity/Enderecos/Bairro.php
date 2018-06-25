@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Bairro
  *
  * @ORM\Table(name="bairros")
- * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\App\BairroRepository")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Enderecos\BairroRepository")
  */
 class Bairro
 {

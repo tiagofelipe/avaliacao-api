@@ -28,7 +28,7 @@ class EstabelecimentoRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "
          SELECT es.id, es.nomeFantasia, es.cnpj, es.razaoSocial, es.logo, es.tipo  FROM UlocAppBundle:Estabelecimento es 
-          JOIN es.enderecos e  
+          JOIN es.Enderecos e  
             JOIN e.logradouro l 
               JOIN l.bairro b 
                 JOIN b.municipio m

@@ -19,8 +19,8 @@ use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
 /**
  * logradouro
  *
- * @ORM\Table(name="enderecos")
- * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\App\EnderecoRepository")
+ * @ORM\Table(name="Enderecos")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Enderecos\EnderecoRepository")
  */
 class Endereco
 {
@@ -312,7 +312,7 @@ class Endereco
                         'municipio'=>array(
                             'id',
                             'nome',
-                            'ufs' => array(
+                            'uf' => array(
                                 'id',
                                 'nome',
                                 'sigla',

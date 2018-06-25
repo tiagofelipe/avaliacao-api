@@ -18,7 +18,7 @@ use Uloc\Bundle\AppBundle\Serializer\ApiRepresentationMetadataInterface;
  * Pais
  *
  * @ORM\Table(name="paises")
- * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\App\PaisRepository")
+ * @ORM\Entity(repositoryClass="Uloc\Bundle\AppBundle\Repository\Enderecos\PaisRepository")
  */
 class Pais
 {

@@ -886,7 +886,7 @@ class Pessoa extends CommonEntity
             ->addProperties([
                 "emails" => array("email", "finalidade"),
                 "telefones" => array("ddd", "telefone", "celular", "principal", "tipoFinalidade as finalidade", "finalidadeOutros"),
-                "enderecos" => array("finalidade" => array("id", "nome"), "logradouro", "numero", "complemento", "bairro", "municipio" => array("id", "nome", "uf" => array("id", "nome", "sigla"))),
+                "Enderecos" => array("finalidade" => array("id", "nome"), "logradouro", "numero", "complemento", "bairro", "municipio" => array("id", "nome", "uf" => array("id", "nome", "sigla"))),
                 "origemCadastro as origem" => array("id", "nome as origem"),
                 "camposExtras as extras" => array("id", "campoExtra" => array("id", "nome", "descricao", "obrigatorio"), "valor")
             ])

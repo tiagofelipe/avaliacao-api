@@ -140,7 +140,7 @@ trait Utils
      * Montagem com relacionamentos:
      *
      * montaObjeto($listaEntities, array("id", "nome", "dataCadastro"=>array("timestamp"), "origemCadastro"=>array("id", "nome", "pessoas"=>array("id","nome","origemCadastro")),
-     *               "enderecos"=>array(
+     *               "Enderecos"=>array(
      *                   "pais"=>array(
      *                       "nome"),
      *                   "municipio",

@@ -55,21 +55,24 @@ class EnderecoController extends BaseController
 
     public  function  indexMunicipios($id){
         $em = $this->getDoctrine()->getManager();
-        $uf = $em->getRepository(UnidadeFederativa::class)->find($id);
-        $municipios = $em->getRepository(UnidadeFederativa::class)->findByUf($uf);
 
-        if (!$municipios){
-            $this->throwApiProblemException('Não se encontrou municípios Cadastrados nesse estado', JsonResponse::HTTP_NOT_FOUND);
-        }
+        /** @var UnidadeFederativa $uf */
+        $uf = $em->getRepository(Municipio::class)->getMunicipiosUF($id);
 
-        $resposta = [ 'municipios' => $municipios ];
+        // $municipios = $em->getRepository(Municipio::class)->findBy(['uf' => $id]);  //(['uf'=>$uf->getId()]);
 
-        return $this->createApiResponseEncodeArray($resposta, JsonResponse::HTTP_OK);
+        /* if (!$municipios){
+            $this->throwApiProblemException('Não se encontrou municípios cadastrados nesse estado', JsonResponse::HTTP_NOT_FOUND);
+        } */
+
+        $resposta = [ 'municipios' => $uf ];
+
+        return $this->createApiResponse($resposta, JsonResponse::HTTP_OK);
 
     }
 
     /**
-     * Lista cidades pelo id do estado
+     * encontra um logradouro pelo cep
      *
      * @Route("/api/public/logradouro/{cep}", name="api_logradouro_show")
      * @Method("GET")
