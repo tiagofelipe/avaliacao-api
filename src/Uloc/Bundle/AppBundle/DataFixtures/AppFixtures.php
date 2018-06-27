@@ -16,6 +16,7 @@ use Uloc\Bundle\AppBundle\Entity\Enderecos\Logradouro;
 use Uloc\Bundle\AppBundle\Entity\Enderecos\UnidadeFederativa;
 use Uloc\Bundle\AppBundle\Entity\Enderecos\Pais;
 use Uloc\Bundle\AppBundle\Entity\Estabelecimento;
+use Uloc\Bundle\AppBundle\Entity\Funcionario;
 use Uloc\Bundle\AppBundle\Entity\Usuario;
 
 class AppFixtures extends Fixture
@@ -40,9 +41,19 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
+
+        /* criando endereços*/
         $this->createEndereco( 'a', '39402302');
+
+        /* criando estabelecimentos*/
         $estab = $this->createEstabelecimento();
+
+        /* criando usuários*/
         $user = $this->createUsuario(Usuario::USER_PANEL, 'usuario', 'teste', 'Usuário Teste', 'usertest@gmail.com', $estab);
+
+        /* criando funcionários*/
+        $func1 = $this->createFuncionario($estab);
+        $func2 = $this->createFuncionario($estab, 'João da Silva Souza Santos', 'Garçom');
     }
 
     private function createUsuario ($tipo, $username, $senha, $nome, $email, Estabelecimento $estabelecimento = null) {
@@ -134,6 +145,19 @@ class AppFixtures extends Fixture
         $em->flush();
         return $endereco;
 
-}
+    }
 
+    public function createFuncionario (Estabelecimento $estabelecimento, $nome = 'Funcionário Teste', $cargo = 'Tester', $foto = null) {
+        $func = new Funcionario();
+
+        $func->setNome($nome);
+        $func->setCargo($cargo);
+        $func->setFoto($foto);
+        $func->setEstabelecimento($estabelecimento);
+
+        $this->manager->persist($func);
+        $this->manager->flush();
+
+        return $func;
+    }
 }
