@@ -42,7 +42,7 @@ class EstabelecimentoController extends BaseController
     /**
      * Lists all estabelecimento entities.
      *
-     * @Route("/api/public/estabelecimento/usuario/{id}", name="api_estabelecimento_usuario_index")
+     * @Route("/api/estabelecimento/usuario/{id}", name="api_estabelecimento_usuario_index")
      * @Method("GET")
      * @param $id
      * @return Response

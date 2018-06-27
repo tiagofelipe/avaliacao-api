@@ -10,4 +10,5 @@ namespace Uloc\Bundle\AppBundle\Repository;
  */
 class FuncionarioRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }
