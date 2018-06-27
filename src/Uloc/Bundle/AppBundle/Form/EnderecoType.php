@@ -15,6 +15,9 @@ use Uloc\Bundle\AppBundle\Entity\Usuario;
 
 class EnderecoType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -58,6 +61,6 @@ class EnderecoType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'uloc_app_bundle_endereco_fisico_type';
+        return 'uloc_app_bundle_endereco';
     }
 }

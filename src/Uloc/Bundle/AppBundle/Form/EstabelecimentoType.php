@@ -22,12 +22,14 @@ class EstabelecimentoType extends AbstractType
             ->add('nomeFantasia')
             ->add('razaoSocial')
             ->add('tipo', IntegerType::class)
-            ->add('Enderecos', CollectionType::class, array(
-                'entry_type' => EnderecoFisicoType::class,
+            /*->add('Enderecos', CollectionType::class, array(
+                'entry_type' => EnderecoType::class,
                 'invalid_message' => 'Endereços defined is invalid',
                 'by_reference' => false,
-                'allow_add' => true
-            ));
+                'allow_add' => true,
+
+            )
+            )*/;
     }
     /**
      * {@inheritdoc}

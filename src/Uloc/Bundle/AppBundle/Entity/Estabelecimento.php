@@ -394,11 +394,15 @@ class Estabelecimento
 
     /**
      * @param Endereco $endereco
+     * @return Estabelecimento
      */
     public function addEndereco(Endereco $endereco)
     {
-        $this->enderecos = $endereco;
+        $this->enderecos[] = $endereco;
+        return $this;
     }
+
+
 
     public static function loadApiRepresentation(ApiRepresentationMetadataInterface $representation)
     {
